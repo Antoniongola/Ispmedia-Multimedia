@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,6 +35,7 @@ import static java.lang.System.out;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurity implements WebMvcConfigurer {
     @Value("${chave.publica}")
     private RSAPublicKey pub;
@@ -41,15 +43,16 @@ public class WebSecurity implements WebMvcConfigurer {
     @Value("${chave.privada}")
     private RSAPrivateKey key;
 
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/signup").permitAll()
-                        .anyRequest().authenticated())
+                        //.requestMatchers(HttpMethod.POST, "api/login").permitAll()
+                        //.requestMatchers(HttpMethod.POST, "api/signup").permitAll()
+                        //.requestMatchers("api/user/**").permitAll()
+                        //.anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .oauth2ResourceServer(oauth->oauth.jwt(Customizer.withDefaults()));
 
         return http.build();
@@ -62,7 +65,7 @@ public class WebSecurity implements WebMvcConfigurer {
 
     @Bean
     public JwtEncoder jwtEncoder(){
-        JWK jwk = new RSAKey.Builder((RSAPublicKey) this.pub).privateKey((RSAPrivateKey) this.pvt).build();
+        JWK jwk = new RSAKey.Builder((RSAPublicKey) this.pub).privateKey((RSAPrivateKey) this.key).build();
         var jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
     }
