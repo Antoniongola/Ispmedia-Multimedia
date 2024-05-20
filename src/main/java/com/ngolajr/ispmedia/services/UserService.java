@@ -34,6 +34,7 @@ public class UserService {
 
     public boolean atualizarUser(Utilizador user, String username){
         if(repository.existsById(username)){
+            user.setPassword(encoder.encode(user.getPassword()));
             repository.save(user);
             return true;
         }else{

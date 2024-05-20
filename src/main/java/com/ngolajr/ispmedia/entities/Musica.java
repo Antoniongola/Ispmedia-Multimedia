@@ -1,20 +1,24 @@
 package com.ngolajr.ispmedia.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@ToString
+@Getter
+@Setter
 public class Musica extends Conteudo{
     @ManyToMany
     private List<Artista> artists;
-    @OneToOne
+    @ManyToOne
     private Album album;
     private int duration;
+    private String path;
 }

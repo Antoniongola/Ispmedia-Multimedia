@@ -48,11 +48,10 @@ public class WebSecurity implements WebMvcConfigurer {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
-                        //.requestMatchers(HttpMethod.POST, "api/login").permitAll()
-                        //.requestMatchers(HttpMethod.POST, "api/signup").permitAll()
-                        //.requestMatchers("api/user/**").permitAll()
-                        //.anyRequest().authenticated())
-                        .anyRequest().permitAll())
+                        .requestMatchers(HttpMethod.POST, "api/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/signup").permitAll()
+                        .requestMatchers("api/user/**").permitAll()
+                        .requestMatchers("api/conteudo/**").hasAuthority("SCOPE_EDITOR"))
                 .oauth2ResourceServer(oauth->oauth.jwt(Customizer.withDefaults()));
 
         return http.build();
