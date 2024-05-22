@@ -51,7 +51,9 @@ public class WebSecurity implements WebMvcConfigurer {
                         .requestMatchers(HttpMethod.POST, "api/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "api/signup").permitAll()
                         .requestMatchers("api/user/**").permitAll()
-                        .requestMatchers("api/conteudo/**").hasAuthority("SCOPE_EDITOR"))
+                        //.requestMatchers("api/conteudo/**").hasAuthority("SCOPE_EDITOR"
+                        .requestMatchers("api/conteudo/**").permitAll()
+                        )
                 .oauth2ResourceServer(oauth->oauth.jwt(Customizer.withDefaults()));
 
         return http.build();
@@ -59,7 +61,9 @@ public class WebSecurity implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        //WebMvcConfigurer.super.addCorsMappings(registry);
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:4200")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
     }
 
     @Bean

@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 public class MusicaService {
     private final MusicaRepository repository;
-
+    
     public boolean createMusica(MusicaDto dto){
         Musica musica = new Musica();
         musica.setDescricao(dto.descricao());

@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.services;
 
+import com.ngolajr.ispmedia.dtos.AuthResponse;
 import com.ngolajr.ispmedia.dtos.LoginDto;
 import com.ngolajr.ispmedia.entities.enums.Roles;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
@@ -21,7 +22,7 @@ public class AuthenticationService {
     private final UtilizadorRepository repository;
     private final JwtEncoder jwtEncoder;
 
-    public String login(LoginDto dto){
+    public AuthResponse login(LoginDto dto){
         var user = repository.findByUsername(dto.username());
 
         if(user.isEmpty() || !isLoginCorrect(dto)){
@@ -43,8 +44,9 @@ public class AuthenticationService {
                 .claim("scope", scopes)
                 .build();
 
+        String jwt = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        return new AuthResponse(jwt, expiresIn);
     }
 
     private boolean isLoginCorrect(LoginDto dto) {

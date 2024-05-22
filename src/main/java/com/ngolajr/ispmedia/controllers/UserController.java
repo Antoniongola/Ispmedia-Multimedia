@@ -48,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(service.selecionarUser(id));
     }
 
-    @GetMapping("/user/")
+    @GetMapping("/user")
     @PreAuthorize("hasAuthority('SCOPE_EDITOR')")
     public ResponseEntity<List<Utilizador>> selecionarTodosUsers(){
         return ResponseEntity.ok(service.selecionarUsers());
