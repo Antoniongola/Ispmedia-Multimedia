@@ -1,6 +1,7 @@
 package com.ngolajr.ispmedia.controllers;
 
 import com.ngolajr.ispmedia.dtos.SignUpDto;
+import com.ngolajr.ispmedia.dtos.SignupResponse;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +19,11 @@ public class UserController {
     private final UserService service;
     
     @PostMapping("/signup")
-    public ResponseEntity<String> newUser(@RequestBody SignUpDto dto){
+    public ResponseEntity<SignupResponse> newUser(@RequestBody SignUpDto dto){
         if(service.cadastro(dto))
-            return ResponseEntity.ok("User criado com sucesso!");
+            return ResponseEntity.ok(new SignupResponse("User criado com sucesso!"));
 
-        return ResponseEntity.ok("Conta já existente");
+        return ResponseEntity.status(500).body(new SignupResponse("Conta já existente"));
     }
 
     @PutMapping("/user/{id}")

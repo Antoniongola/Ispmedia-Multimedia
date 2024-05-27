@@ -4,6 +4,7 @@ import {LoginDto} from "../../dtos/LoginDto";
 import {Observable} from "rxjs";
 import {LoginResponse} from "../../dtos/LoginResponse";
 import {SignupDto} from "../../dtos/SignupDto";
+import {SignupResponse} from "../../dtos/SignupResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class SignupService {
   private apiUrl:string = "http://localhost:8080/api/signup";
   constructor(private http: HttpClient) { }
 
-  cadastrar(signup: SignupDto): Observable<string> {
+  cadastrar(signup: SignupDto): Observable<SignupResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<string>(this.apiUrl, signup);
+    return this.http.post<SignupResponse>(this.apiUrl, signup);
   }
 }

@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {LoginServiceService} from "../../services/login-service.service";
 import {SignupService} from "../../services/signup/signup.service";
 import {SignupDto} from "../../dtos/SignupDto";
+import {SignupResponse} from "../../dtos/SignupResponse";
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +13,7 @@ import {SignupDto} from "../../dtos/SignupDto";
 })
 export class SignupComponent implements OnInit{
   signupForm!:FormGroup;
-  resultado : string = '';
+  resultado !: SignupResponse;
   teste = "User criado com sucesso!";
 
   constructor(private router:Router, private fb:FormBuilder, private service: SignupService) {
@@ -26,7 +27,7 @@ export class SignupComponent implements OnInit{
     this.service.cadastrar(dto).subscribe((response)=>{
       this.resultado = response;
       console.log(response);
-      if(this.resultado == this.teste)
+      if(this.resultado.response == this.teste)
         this.router.navigate(['']);
 
     },error => {
