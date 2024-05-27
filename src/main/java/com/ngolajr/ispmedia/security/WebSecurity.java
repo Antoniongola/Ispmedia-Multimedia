@@ -53,7 +53,9 @@ public class WebSecurity implements WebMvcConfigurer {
                         .requestMatchers("api/user/**").permitAll()
                         //.requestMatchers("api/conteudo/**").hasAuthority("SCOPE_EDITOR"
                         .requestMatchers("api/conteudo/**").permitAll()
-                        )
+                        .requestMatchers(HttpMethod.POST, "api/upload/**").permitAll()
+                        .anyRequest().permitAll()
+                )
                 .oauth2ResourceServer(oauth->oauth.jwt(Customizer.withDefaults()));
 
         return http.build();

@@ -1,4 +1,4 @@
 package com.ngolajr.ispmedia.dtos;
 
-public record AuthResponse(String acessToken, long expiresIn) {
+public record AuthResponse(String accessToken, long expiresIn) {
 }

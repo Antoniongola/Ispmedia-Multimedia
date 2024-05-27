@@ -8,7 +8,6 @@ import java.util.List;
 @Entity
 @Data
 public class Playlist {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
