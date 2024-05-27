@@ -1,0 +1,139 @@
+/* You can add global styles to this file, and also import other style files */
+*{
+  padding: 0;
+  margin: 0;
+}
+
+.cabecalho{
+  background-color:#1A1A1A;
+  .login{
+    color:black;
+    background-color: white;
+    border-radius: 20px;
+    width: 180px;
+  }
+  .login:hover{
+  }
+}
+
+.linha{
+  display: flex;
+  flex-direction: column;
+  margin:10px;
+
+  div{
+    display: flex;
+    flex-direction: column;
+  }
+  .iconeLinha{
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+  }
+
+  .textoLinha{
+    color: darkgray;;
+  }
+}
+
+.spc{
+  margin: 5px;
+}
+
+.reprodutor{
+  width: 100%;
+  .imagem-musica{
+    width: 50px;
+    height:50px;
+  }
+  .controladorMusica{
+    align-items: center;
+    margin-left: 5px;
+  }
+  .controladorColunas{
+    align-items: center;
+    margin-left: 5px;
+  }
+}
+
+.seccao{
+  border-radius: 6px;
+  background-color:#242424;
+  margin-left:5px;
+  margin-top: 5px;
+}
+
+.biblioteca{
+  justify-content: center;
+  .img-biblioteca{
+    width: 200px;
+    height: 200px;
+    align-items: center;
+  }
+
+  .titulo-biblioteca:active{
+    color: forestgreen;
+  }
+}
+
+.biblioteca:hover{
+  background-color: #2A2A2A;
+}
+
+.fundo{
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+
+.texto{
+  color: darkgray;
+  font-size: 20px;
+}
+
+.texto:hover{
+  text-decoration: underline;
+  color: white;
+  font-size: 25px;
+}
+
+.icone{
+  color: darkgray;
+  font-size: 20px;
+}
+
+.icone:hover{
+  background-color: #2A2A2A;
+  border-radius: 50%;
+  color: white;
+  font-size: 25px;
+}
+
+.head-biblioteca{
+  justify-content: center;
+  margin: 5px;
+
+  display:flex;
+  flex-direction: row;
+  .icone{
+    flex-direction: row-reverse;
+    margin-left: 5px;
+  }
+
+  img{
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+  }
+}
+
+a{
+  text-decoration: none;
+}
+
+
+.middleCol{
+  div{
+    width:135%;
+  }
+}

@@ -1,0 +1,102 @@
+<div class="fundo">
+  <div class="row">
+
+    <!--Coluna do lado esquerdo -->
+    <div class="col-3 ">
+      <div class="row seccao">
+        <div *ngIf="token == null" class="linha spc">
+          <a [routerLink]="['']">
+            <img class="iconeLinha" src="assets/spotify.png">
+            <span class="textoLinha">SNT-ISPMEDIA</span>
+          </a>
+
+        </div>
+
+        <div class="linha spc">
+          <a [routerLink]="['']">
+            <img class="iconeLinha" src="assets/home.png">
+            <span class="textoLinha">Inicio</span>
+          </a>
+        </div>
+
+        <div class="linha spc">
+          <a [routerLink]="['search']">
+            <img class="iconeLinha" src="assets/loupe.png">
+            <span class="textoLinha">Pesquisar</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="row seccao">
+        <div class="head-biblioteca">
+          <img src="assets/playlist.png">
+          <p class="texto" >A tua biblioteca</p>
+          <span class="icone">+</span>
+          <span class="icone">-></span>
+        </div>
+        <div class="biblioteca">
+          <img class="img-biblioteca" src="assets/FS4Life%20(Frente)%20.jpg">
+          <p>Teste</p>
+        </div>
+      </div>
+    </div>
+
+    <!--Coluna do meio (onde vai apresentar os conteúdos)-->
+    <div class="col seccao">
+
+      <div class="row cabecalho">
+        <div class="row">
+          <div class="col">
+              <span class="spc">Recuar</span>
+              <span class="spc">avançar</span>
+          </div>
+          <div class="col" *ngIf="token == ''">
+            <a [routerLink]="['signup']"><p class="texto spc">Cadastrar</p></a>
+            <a [routerLink]="['login']"><button class="login spc">Iniciar Sessão</button></a>
+          </div>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-three-dots"></i>
+            </button>
+            <ul class="dropdown-menu cabecalho" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item cabecalho" href="#">Ação 1</a></li>
+              <li><a class="dropdown-item cabecalho" href="#">Ação 2</a></li>
+              <li><a class="dropdown-item cabecalho" (click)="terminarSessao()">Terminar sessão</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <p class="texto" >conteudo do meio</p>
+      <router-outlet></router-outlet>
+    </div>
+
+    <!--Coluna do lado direito-->
+    <div class="col-3" *ngIf="token != null">
+      <div class="seccao">
+        <p class="texto" >sobre a musica em reprodução</p>
+      </div>
+    </div>
+  </div>
+
+  <!--Segunda linha, linha de baixo-->
+  <div class="row">
+    <div class="col reprodutor">
+      <div class="col">
+        <img class="imagem-musica" src="assets/FS4Life%20(Frente)%20.jpg">
+      </div>
+      <div class="col">
+        <div class="row"><span>Titulo da música</span></div>
+        <div class="row"><span>Cantor</span></div>
+      </div>
+    </div>
+
+    <div class="col controladorMusica">
+      <p class="texto" >sobre a musica em reprodução</p>
+    </div>
+
+    <div class="col controladorColunas">
+      <p class="texto" >sobre a musica em reprodução</p>
+    </div>
+  </div>
+</div>

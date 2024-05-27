@@ -1,0 +1,46 @@
+<div class="loginBackground">
+  <div class="row loginNavbar">
+    <div class="loginLogo">
+      <span><img class="" src="assets/spotify.png"> Spotify</span>
+    </div>
+  </div>
+  <div class="loginSection">
+    <h2 class="text-center loginTitulo">Iniciar Sessão No SNT-ISPMEDIA</h2>
+    <div class="centtraliza row">
+      <button class="networkButons text-center">Continuar com o Google</button>
+      <button class="networkButons text-center">Continuar com o Facebook</button>
+      <button class="networkButons text-center">Continuar com o Apple</button>
+    </div>
+    <hr>
+    <div>
+      <form class="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="centraliza">
+          <div>
+            <label class="loginFormLabel" for="username">Username</label>
+            <br>
+            <input id="username" placeholder="Insira o seu username" formControlName="username" type="text" class="custom-input">
+          </div>
+
+          <div>
+            <label class="loginFormLabel" for="password">Palavra-passe</label>
+            <br>
+            <input id="password" placeholder="Insira a sua senha" formControlName="password" type="password" class="custom-input">
+          </div>
+
+          <button type="submit" class="text-center greenPrimary btn loginButton">Inicie Sessão</button>
+        </div>
+        <div class="text-center loginSignupArea">
+          <span class="signupNow">Esqueceste-te da tua palavra-passe?</span>
+        </div>
+        <div class="text-center loginSignupArea">
+          <span class="customPlaceholder">Não tens conta? <a href="../signup"><span class="signupNow">Regista-te no Spotify</span></a></span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="text-center loginFooter">
+    <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
+  </div>
+</div>
+
