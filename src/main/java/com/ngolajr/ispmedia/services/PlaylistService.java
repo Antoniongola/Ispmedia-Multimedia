@@ -22,14 +22,9 @@ public class PlaylistService {
         if(existente)
             return null;
 
-        Playlist play = new Playlist();
-        play.setOwner(playlist.getOwner());
-        play.setMusicas(playlist.getMusicas());
-        play.setTitulo(playlist.getTitulo());
-
         //System.out.println(playlist.toString());
 
-        repository.save(play);
+        repository.save(playlist);
 
         return playlist;
     }

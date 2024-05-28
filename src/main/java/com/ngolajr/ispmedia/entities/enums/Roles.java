@@ -1,6 +1,7 @@
 package com.ngolajr.ispmedia.entities.enums;
 
 public enum Roles {
+    ADMIN("admin"),
     EDITOR("editor"),
     USER("user");
 

@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 public class AdminConfig implements CommandLineRunner {
     @Autowired
@@ -19,15 +21,14 @@ public class AdminConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Utilizador admin = new Utilizador();
+        admin.setNome("António Domingos Lopes Ngola");
         admin.setUsername("ngolajr");
 
 
-        if(repository.existsById(admin.getUsername())){
-            System.out.println("ADMIN JÁ EXISTENTE");
-        }else{
+        if(!repository.existsById(admin.getUsername())){
             admin.setPassword(bcrypt.encode("123456"));
-            admin.getRoles().add(Roles.EDITOR);
-            admin.getRoles().add(Roles.USER);
+            admin.setRoles(Set.of(Roles.ADMIN, Roles.EDITOR, Roles.USER));
+
             repository.save(admin);
         }
     }

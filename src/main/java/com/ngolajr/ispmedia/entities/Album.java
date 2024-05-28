@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,5 +20,7 @@ public class Album extends Conteudo{
     private Artista artista;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Critica> criticas;
+    private Date dataLancamento;
     private double pontuacaoMedia;
+    private long streams;
 }

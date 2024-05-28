@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,4 +22,6 @@ public class Musica extends Conteudo{
     private Album album;
     private int duration;
     private String path;
+    private Date dataLancamento;
+    private long streams;
 }

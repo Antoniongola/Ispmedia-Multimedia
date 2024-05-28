@@ -11,8 +11,8 @@ public class Grupo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @ManyToOne
-    private Utilizador owner;
+    @OneToMany
+    private List<Utilizador> editores;
     @ManyToMany
     private List<Utilizador> participantes;
 }

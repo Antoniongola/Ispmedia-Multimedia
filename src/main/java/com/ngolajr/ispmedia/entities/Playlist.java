@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.entities;
 
+import com.ngolajr.ispmedia.entities.enums.Privacidade;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,4 +17,5 @@ public class Playlist {
     private List<Musica> musicas;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Utilizador owner;
+    private Privacidade privacidade;
 }

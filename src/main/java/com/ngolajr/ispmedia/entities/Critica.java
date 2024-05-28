@@ -1,9 +1,6 @@
 package com.ngolajr.ispmedia.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Critica {
@@ -12,4 +9,7 @@ public class Critica {
     private long id;
     private int nota;
     private String critica;
+    //verificar
+    @OneToOne
+    private Utilizador critico;
 }
