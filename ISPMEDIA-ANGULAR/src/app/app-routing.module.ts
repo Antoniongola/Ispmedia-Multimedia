@@ -7,6 +7,7 @@ import {MusicsComponent} from "./components/musics/musics.component";
 import {HomeComponent} from "./components/home/home.component";
 import {SignupComponent} from "./components/signup/signup.component";
 import {SearchComponent} from "./components/search/search.component";
+import {MusicUploadComponent} from "./components/music-upload/music-upload.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent, children:[
@@ -16,7 +17,9 @@ const routes: Routes = [
   ]},
   {path:'login', component:LoginComponent},
   {path:'signup', component:SignupComponent},
-  {path:'musics', component: MusicsComponent}
+  {path:'musics', component: MusicsComponent, children:[
+      {path: 'new', component: MusicUploadComponent}
+    ]}
 ];
 
 @NgModule({

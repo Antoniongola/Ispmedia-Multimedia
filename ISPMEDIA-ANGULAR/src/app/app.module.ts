@@ -15,7 +15,7 @@ import { ArtistCreationComponent } from './components/artist-creation/artist-cre
 import { MusicUploadComponent } from './components/music-upload/music-upload.component';
 import {UploadService} from "./services/upload.service";
 import { SignupComponent } from './components/signup/signup.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
@@ -36,7 +36,8 @@ import { SearchComponent } from './components/search/search.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [LoginServiceService,
   UploadService],

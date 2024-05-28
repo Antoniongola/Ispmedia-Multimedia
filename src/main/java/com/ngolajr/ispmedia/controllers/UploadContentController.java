@@ -1,29 +1,71 @@
 package com.ngolajr.ispmedia.controllers;
 
 import com.ngolajr.ispmedia.dtos.MusicaDto;
+import com.ngolajr.ispmedia.dtos.SignupResponse;
 import com.ngolajr.ispmedia.entities.Musica;
 import com.ngolajr.ispmedia.entities.Video;
 import com.ngolajr.ispmedia.services.MusicaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping(path = "/api/upload", produces = "application/json")
+@RequestMapping(path = "/api/upload")
 @RequiredArgsConstructor
 public class UploadContentController {
     private final MusicaService musicaService;
     private final String imagePath = "src/main/resources/static/imagens";
     private final String videoPath="src/main/resources/static/videos";
+
+    @PostMapping
+    public ResponseEntity<SignupResponse> uploadFiles(@RequestParam String teste, @RequestPart("file") MultipartFile[] files) {
+        for(MultipartFile file : files) {
+            try {
+                saveFile(file);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new SignupResponse("ERRO DE UPLOAD"));
+            }
+        }
+        return ResponseEntity.ok(new SignupResponse("ERRO DE UPLOAD"));
+    }
+
+    /*@PostMapping
+    public ResponseEntity<String> uploadFiles(@RequestParam String teste, @RequestPart("file") MultipartFile[] files) {
+        try {
+            if (files.length == 0) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Empty file(s) found.");
+            }
+            for (MultipartFile file : files) {
+                System.out.println("salvou ficheiro: "+file.getName());
+                saveFile(file);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body("Files uploaded successfully.");
+        } catch (Exception e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during upload.");
+        }
+    }*/
+
+    private void saveFile(MultipartFile file) throws IOException {
+        /*
+        File staticDir = ResourceUtils.getFile("classpath:static/imagens");
+        Path uploadPath = Paths.get(staticDir.getAbsolutePath());*/
+        Path uploadPath = Path.of("C:\\Users\\Ngola\\IdeaProjects\\ISPMEDIA\\src\\main\\resources\\static\\imagens");
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+        Path filePath = uploadPath.resolve(file.getOriginalFilename());
+        file.transferTo(filePath.toFile());
+    }
 
     @PostMapping("/musica")
     public ResponseEntity<String> handleMusicUpload(@RequestPart("data") Musica data,

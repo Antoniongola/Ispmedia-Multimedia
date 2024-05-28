@@ -1,56 +1,54 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UploadService} from "../../services/upload.service";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-music-upload',
   templateUrl: './music-upload.component.html',
   styleUrl: './music-upload.component.css'
 })
-export class MusicUploadComponent implements OnInit {
-  // @ts-ignore
-  uploadForm: FormGroup;
-  artists = ['Artist 1', 'Artist 2', 'Artist 3']; // Replace with real artist data
+export class MusicUploadComponent{
+  musicForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private uploadService: UploadService) { }
-
-  ngOnInit(): void {
-    this.uploadForm = this.fb.group({
-      musicName: ['', Validators.required],
-      musicGenre: ['', Validators.required],
-      artist: ['', Validators.required],
-      musicFile: [null, Validators.required]
+  constructor(private fb: FormBuilder, private http:HttpClient) {
+    this.musicForm = this.fb.group({
+      teste: [''],
+      genre: [''],
+      album: [''],
+      albumImage: [null],
+      artistImage: [null]
     });
   }
 
-  // @ts-ignore
-  onFileChange(event) {
-    // @ts-ignore
-    const file = (event.target as HTMLInputElement).files[0];
-    this.uploadForm.patchValue({
-      musicFile: file
-    });
+  onFileChange(event: any, controlName: string) {
+    const file = event.target.files[0];
+    if (file) {
+      this.musicForm.patchValue({
+        [controlName]: file
+      });
+    }
   }
 
   onSubmit() {
-    if (this.uploadForm.invalid) {
-      return;
+    if (this.musicForm.valid) {
+      const formData = new FormData();
+      formData.append('teste', this.musicForm.get('teste')?.value);
+      formData.append('genre', this.musicForm.get('genre')?.value);
+      formData.append('album', this.musicForm.get('album')?.value);
+      formData.append('albumImage', this.musicForm.get('albumImage')?.value);
+      formData.append('artistImage', this.musicForm.get('artistImage')?.value);
+
+      this.http.post("http://localhost:8080/api/upload", formData).subscribe(
+        response=>{
+          console.log('response: '+response)
+        }, error => {
+          console.log('erro: '+error);
+        }
+      );
+
+      // Envie o formData para o backend
+      console.log('Form Submitted', formData);
     }
-
-    const formValue = this.uploadForm.value;
-    const musicData = {
-      name: formValue.musicName,
-      genre: formValue.musicGenre,
-      artist: formValue.artist
-    };
-
-    this.uploadService.uploadMusic(musicData, formValue.musicFile).subscribe(
-      response => {
-        console.log('Upload successful', response);
-      },
-      error => {
-        console.error('Upload failed', error);
-      }
-    );
   }
 }

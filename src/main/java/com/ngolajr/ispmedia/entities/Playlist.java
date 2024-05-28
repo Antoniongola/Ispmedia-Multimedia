@@ -13,7 +13,7 @@ public class Playlist {
     private long id;
     private String titulo;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Musica> lista;
+    private List<Musica> musicas;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Utilizador owner;
 }

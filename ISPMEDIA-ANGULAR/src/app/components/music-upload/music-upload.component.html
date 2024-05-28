@@ -1,28 +1,28 @@
-<div class="container">
-  <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="musicName">Music Name</label>
-      <input id="musicName" formControlName="musicName" type="text" class="form-control">
-    </div>
+<form [formGroup]="musicForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="teste">Nome da Música:</label>
+    <input id="teste" formControlName="teste" type="text">
+  </div>
 
-    <div class="form-group">
-      <label for="musicGenre">Music Genre</label>
-      <input id="musicGenre" formControlName="musicGenre" type="text" class="form-control">
-    </div>
+  <div>
+    <label for="genre">Gênero da Música:</label>
+    <input id="genre" formControlName="genre" type="text">
+  </div>
 
-    <div class="form-group">
-      <label for="artist">Artist</label>
-      <select id="artist" formControlName="artist" class="form-control">
-        <option *ngFor="let artist of artists" [value]="artist">{{ artist }}</option>
-      </select>
-    </div>
+  <div>
+    <label for="album">Álbum:</label>
+    <input id="album" formControlName="album" type="text">
+  </div>
 
-    <div class="form-group">
-      <label for="musicFile">Upload Music File</label>
-      <input id="musicFile" type="file" (change)="onFileChange($event)" class="form-control">
-    </div>
+  <div>
+    <label for="albumImage">Imagem do Álbum:</label>
+    <input id="albumImage" formControlName="albumImage" type="file" (change)="onFileChange($event, 'albumImage')">
+  </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
+  <div>
+    <label for="artistImage">Imagem do Artista:</label>
+    <input id="artistImage" formControlName="artistImage" type="file" (change)="onFileChange($event, 'artistImage')">
+  </div>
 
+  <button type="submit">Enviar</button>
+</form>
