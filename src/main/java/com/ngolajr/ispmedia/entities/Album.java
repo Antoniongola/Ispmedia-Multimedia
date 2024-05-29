@@ -22,5 +22,9 @@ public class Album extends Conteudo{
     private List<Critica> criticas;
     private Date dataLancamento;
     private double pontuacaoMedia;
-    private long streams;
+    private int streams;
+    public Album(){
+        super();
+        this.streams = 0;
+    }
 }

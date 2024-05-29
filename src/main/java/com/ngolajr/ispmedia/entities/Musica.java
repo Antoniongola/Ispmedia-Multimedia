@@ -16,12 +16,18 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Musica extends Conteudo{
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Artista> artists;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Album album;
     private int duration;
     private String path;
     private Date dataLancamento;
-    private long streams;
+    private int streams;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Genero genero;
+    public Musica(){
+        super();
+        this.streams=0;
+    }
 }

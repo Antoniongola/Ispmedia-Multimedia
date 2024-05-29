@@ -1,6 +1,7 @@
 package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.entities.Playlist;
+import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.repositories.PlaylistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,13 +17,11 @@ public class PlaylistService {
         List<Playlist> playlists = repository.findAll();
 
         for (Playlist list : playlists)
-            if (playlist.getTitulo().equalsIgnoreCase(list.getTitulo()))
+            if (playlist.getTitulo().equalsIgnoreCase(list.getTitulo()) && playlist.getOwner().equals(list.getOwner()))
                 existente = true;
 
         if(existente)
             return null;
-
-        //System.out.println(playlist.toString());
 
         repository.save(playlist);
 

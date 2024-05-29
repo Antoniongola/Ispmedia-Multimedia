@@ -3,6 +3,7 @@ package com.ngolajr.ispmedia.entities;
 import com.ngolajr.ispmedia.entities.enums.Roles;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CurrentTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -20,11 +21,9 @@ public class Utilizador {
     private String username;
     private String password;
     private Set<Roles> roles;
-    @CreatedDate
+    @CurrentTimestamp
     @Column(updatable = false)
     private LocalDateTime createdDate;
-    //@OneToMany
-    //private List<Grupo> grupos;
-
-
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Playlist> playlists;
 }

@@ -12,4 +12,9 @@ import lombok.ToString;
 public class Video extends Conteudo{
     private int duration;
     private String path;
+    private int streams;
+    public Video(){
+        super();
+        this.streams = 0;
+    }
 }

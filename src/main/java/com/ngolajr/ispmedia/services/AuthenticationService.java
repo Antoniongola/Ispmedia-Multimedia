@@ -30,7 +30,7 @@ public class AuthenticationService {
         }
 
         var now = Instant.now();
-        var expiresIn = 3600L;
+        var expiresIn = 7200L;
         var scopes = user.get().getRoles()
                 .stream()
                 .map(Roles::name)

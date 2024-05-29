@@ -1,18 +1,16 @@
 package com.ngolajr.ispmedia.controllers;
 
 import com.ngolajr.ispmedia.dtos.MusicaDto;
-import com.ngolajr.ispmedia.dtos.SignupResponse;
+import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.Musica;
 import com.ngolajr.ispmedia.entities.Video;
 import com.ngolajr.ispmedia.services.MusicaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,15 +25,15 @@ public class UploadContentController {
     private final String videoPath="src/main/resources/static/videos";
 
     @PostMapping
-    public ResponseEntity<SignupResponse> uploadFiles(@RequestParam String teste, @RequestPart("file") MultipartFile[] files) {
+    public ResponseEntity<Response> uploadFiles(@RequestParam String teste, @RequestPart("file") MultipartFile[] files) {
         for(MultipartFile file : files) {
             try {
                 saveFile(file);
             } catch (IOException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new SignupResponse("ERRO DE UPLOAD"));
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("ERRO DE UPLOAD"));
             }
         }
-        return ResponseEntity.ok(new SignupResponse("ERRO DE UPLOAD"));
+        return ResponseEntity.ok(new Response("ERRO DE UPLOAD"));
     }
 
     /*@PostMapping

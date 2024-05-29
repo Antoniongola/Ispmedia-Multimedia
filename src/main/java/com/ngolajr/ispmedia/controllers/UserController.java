@@ -1,13 +1,12 @@
 package com.ngolajr.ispmedia.controllers;
 
 import com.ngolajr.ispmedia.dtos.SignUpDto;
-import com.ngolajr.ispmedia.dtos.SignupResponse;
+import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -19,11 +18,11 @@ public class UserController {
     private final UserService service;
     
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponse> newUser(@RequestBody SignUpDto dto){
+    public ResponseEntity<Response> newUser(@RequestBody SignUpDto dto){
         if(service.cadastro(dto))
-            return ResponseEntity.ok(new SignupResponse("User criado com sucesso!"));
+            return ResponseEntity.ok(new Response("User criado com sucesso!"));
 
-        return ResponseEntity.status(500).body(new SignupResponse("Conta já existente"));
+        return ResponseEntity.status(500).body(new Response("Conta já existente"));
     }
 
     @PutMapping("/user/{id}")
