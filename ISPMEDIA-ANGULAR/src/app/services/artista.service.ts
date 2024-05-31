@@ -14,10 +14,10 @@ export class ArtistaService {
 
   constructor(private http: HttpClient, private loginService:LoginServiceService) { }
 
-  getArtistas():Observable<any> {
+  getArtistas():Observable<Artista[]> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     //console.log(this.http.get<any>(this.apiUrl));
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<Artista[]>(this.apiUrl);
   }
 
 

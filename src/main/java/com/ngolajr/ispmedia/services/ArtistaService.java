@@ -17,29 +17,20 @@ import java.util.UUID;
 public class ArtistaService {
     @Getter
     private final ArtistaRepository repository;
-    private final ConteudoRepository conteudo;
 
-    public boolean newArtista(ArtistaDto dto){
-        Artista artista = new Artista();
-        artista.setTitulo(dto.titulo());
-        artista.setThumbNailUri(dto.thumbnailUri());
-        artista.setAlbums(dto.albums());
+    public boolean newArtista(Artista dto){
 
-        if(repository.existsArtistaByTitulo(dto.titulo()))
+        if(repository.existsArtistaByTitulo(dto.getTitulo()))
             return false;
 
-        repository.save(artista);
+        repository.save(dto);
         return true;
     }
 
-    public boolean updateArtista(ArtistaDto dto, UUID id){
-        Artista artista = new Artista();
-        artista.setTitulo(dto.titulo());
-        artista.setThumbNailUri(dto.thumbnailUri());
-        //artista.setAlbums(dto.albuns());
+    public boolean updateArtista(Artista dto, UUID id){
 
         if(repository.existsById(id)){
-            repository.save(artista);
+            repository.save(dto);
             return true;
         }
 

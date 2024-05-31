@@ -22,10 +22,10 @@ public class Musica extends Conteudo{
     private Album album;
     private int duration;
     private String path;
-    private Date dataLancamento;
+    private String editora;
+    @Column(length = 2000)
+    private String letra;
     private int streams;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Genero genero;
     public Musica(){
         super();
         this.streams=0;

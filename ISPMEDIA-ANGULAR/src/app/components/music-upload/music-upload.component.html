@@ -1,17 +1,33 @@
 <form [formGroup]="musicForm" (ngSubmit)="onSubmit()">
   <div>
-    <label for="teste">Nome da Música:</label>
-    <input id="teste" formControlName="teste" type="text">
+    <label for="tituloMusica">Nome da Música:</label>
+    <input id="tituloMusica" formControlName="tituloMusica" type="text">
   </div>
 
   <div>
-    <label for="genre">Gênero da Música:</label>
-    <input id="genre" formControlName="genre" type="text">
+    <label for="autor">autor da música:</label>
+    <select id="autor">
+      <option>---autor da Música---</option>
+      <option *ngFor="let artista of artistas" value="{{artista.id}}">{{artista.titulo}}</option>
+    </select>
   </div>
 
   <div>
-    <label for="album">Álbum:</label>
-    <input id="album" formControlName="album" type="text">
+    <label for="generoMusica">Genero da música:</label>
+    <select id="generoMusica">
+      <option>---Gênero da Música---</option>
+      <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nome}}</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="editora">Nome da editora:</label>
+    <input id="editora" formControlName="editora" type="text">
+  </div>
+
+  <div>
+    <label for="musicFile">Ficheiro da musica</label>
+    <input id="musicFile" formControlName="musicFile" type="file" (change)="onFileChange($event, 'musicFile')">
   </div>
 
   <div>
@@ -20,8 +36,11 @@
   </div>
 
   <div>
-    <label for="artistImage">Imagem do Artista:</label>
-    <input id="artistImage" formControlName="artistImage" type="file" (change)="onFileChange($event, 'artistImage')">
+    <label for="generoAlbum">Genero do album:</label>
+    <select id="generoAlbum">
+      <option>---Gênero do Album---</option>
+      <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nome}}</option>
+    </select>
   </div>
 
   <button type="submit">Enviar</button>

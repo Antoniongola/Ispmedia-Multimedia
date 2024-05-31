@@ -18,9 +18,9 @@ public class ArtistaController {
     private final ArtistaService service;
 
     @PostMapping("artista")
-    public ResponseEntity<Artista> newArtista(@RequestBody ArtistaDto dto){
+    public ResponseEntity<Artista> newArtista(@RequestBody Artista dto){
         if(service.newArtista(dto))
-            return ResponseEntity.ok(service.getRepository().findArtistaByTitulo(dto.titulo()).get());
+            return ResponseEntity.ok(service.getRepository().findArtistaByTitulo(dto.getTitulo()).get());
 
         return ResponseEntity.ok(null);
     }
@@ -39,7 +39,7 @@ public class ArtistaController {
     }
 
     @PutMapping("artista/{id}")
-    public ResponseEntity<Artista> updateArtista(@RequestBody ArtistaDto dto, @PathVariable UUID id){
+    public ResponseEntity<Artista> updateArtista(@RequestBody Artista dto, @PathVariable UUID id){
         if(service.updateArtista(dto, id))
             return ResponseEntity.ok(service.selecionarArtista(id));
 

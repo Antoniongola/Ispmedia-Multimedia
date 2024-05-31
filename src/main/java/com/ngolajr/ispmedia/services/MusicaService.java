@@ -16,21 +16,19 @@ import java.util.UUID;
 public class MusicaService {
     private final MusicaRepository repository;
     
-    public boolean createMusica(MusicaDto dto){
-        Musica musica = new Musica();
-        musica.setDescricao(dto.descricao());
-        musica.setTitulo(dto.titulo());
-        musica.setThumbNailUri(dto.thumbnailUri());
-        musica.setPath(dto.path());
-        musica.setDuration(dto.duration());
+    public boolean createMusica(Musica dto){
+        dto.setPath("C:\\Users\\Ngola\\IdeaProjects\\ISPMEDIA\\src\\main\\resources\\static\\"+dto.getPath());
+        System.out.println("Genero: "+dto.getGenero());
 
-        repository.save(musica);
+        repository.save(dto);
         return true;
     }
 
     public Musica selecionarMusica(UUID id){
         if(repository.existsById(id)){
-            return repository.findById(id).get();
+            Musica musica = repository.findById(id).get();
+            musica.setStreams(musica.getStreams()+1);
+            return musica;
         }
 
         return null;
@@ -40,16 +38,9 @@ public class MusicaService {
         return repository.findAll();
     }
 
-    public boolean updateMusica(MusicaDto dto, UUID id){
-        Musica musica = new Musica();
-        musica.setDescricao(dto.descricao());
-        musica.setTitulo(dto.titulo());
-        musica.setThumbNailUri(dto.thumbnailUri());
-        musica.setPath(dto.path());
-        musica.setDuration(dto.duration());
-
+    public boolean updateMusica(Musica dto, UUID id){
         if(repository.existsById(id)) {
-            repository.save(musica);
+            repository.save(dto);
             return true;
         }
 

@@ -1,5 +1,11 @@
 package com.ngolajr.ispmedia.dtos;
 
-public record AlbumDto(String titulo, String descricao, String thumbnailUri) {
+import java.util.Date;
+
+public record AlbumDto(String titulo,
+                       String descricao,
+                       Date dataLancamento,
+
+                       String thumbnailUri) {
 
 }

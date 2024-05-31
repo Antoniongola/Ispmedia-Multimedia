@@ -18,7 +18,7 @@ public class MusicaController {
     private final MusicaService service;
 
     @PostMapping()
-    public ResponseEntity<Boolean> addMusica(@RequestBody MusicaDto musica){
+    public ResponseEntity<Boolean> addMusica(@RequestBody Musica musica){
         if(service.createMusica(musica))
             return ResponseEntity.ok(true);
 
@@ -30,10 +30,14 @@ public class MusicaController {
         return ResponseEntity.ok(service.selecionarTodasMusicas());
     }
 
+    @GetMapping("/{id}")
+    public void selectMusic(@PathVariable UUID id){
+        this.service.selecionarMusica(id);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteMusic(@PathVariable UUID id){
         this.service.deleteMusica(id);
     }
-
 
 }

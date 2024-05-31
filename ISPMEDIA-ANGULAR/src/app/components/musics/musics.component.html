@@ -1,2 +1,13 @@
 <p>musics works!</p>
+
+<div>
+  <div *ngFor="let music of musicas">
+    <div>{{music.titulo}}</div>
+    <audio src="assets/Acabar%20Com%20Os%20Abusos.mp3" controls></audio>
+  </div>
+  <button (click)="playMusic('song.mp3')">Play Song</button>
+</div>
+
+<!--
 <router-outlet></router-outlet>
+-->
