@@ -5,8 +5,10 @@ import com.ngolajr.ispmedia.entities.Musica;
 import com.ngolajr.ispmedia.services.MusicaService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,11 +20,10 @@ public class MusicaController {
     private final MusicaService service;
 
     @PostMapping()
-    public ResponseEntity<Boolean> addMusica(@RequestBody Musica musica){
-        if(service.createMusica(musica))
-            return ResponseEntity.ok(true);
-
-        return ResponseEntity.ok(false);
+    public ResponseEntity<Object> addMusica(@RequestPart("musica") Musica musica,
+                                             @RequestPart("musicFile") MultipartFile musicFile,
+                                             @RequestPart("musicImage") MultipartFile musicImage){
+        return service.createMusica(musica, musicFile, musicImage);
     }
 
     @GetMapping
@@ -31,8 +32,8 @@ public class MusicaController {
     }
 
     @GetMapping("/{id}")
-    public void selectMusic(@PathVariable UUID id){
-        this.service.selecionarMusica(id);
+    public ResponseEntity<Resource> selectMusic(@PathVariable UUID id){
+        return this.service.selecionarMusica(id);
     }
 
     @DeleteMapping("/{id}")

@@ -17,6 +17,12 @@ import {UploadService} from "./services/upload.service";
 import { SignupComponent } from './components/signup/signup.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { SearchComponent } from './components/search/search.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { RadiosComponent } from './components/radios/radios.component';
+import { VideosComponent } from './components/videos/videos.component';
+import { VideoUploadComponent } from './components/video-upload/video-upload.component';
+import { AlbumCreationComponent } from './components/album-creation/album-creation.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,13 @@ import { SearchComponent } from './components/search/search.component';
     ArtistCreationComponent,
     MusicUploadComponent,
     SignupComponent,
-    SearchComponent
+    SearchComponent,
+    NavbarComponent,
+    FooterComponent,
+    RadiosComponent,
+    VideosComponent,
+    VideoUploadComponent,
+    AlbumCreationComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import com.ngolajr.ispmedia.services.ArtistaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,11 +19,10 @@ public class ArtistaController {
     private final ArtistaService service;
 
     @PostMapping("artista")
-    public ResponseEntity<Artista> newArtista(@RequestBody Artista dto){
-        if(service.newArtista(dto))
-            return ResponseEntity.ok(service.getRepository().findArtistaByTitulo(dto.getTitulo()).get());
+    public ResponseEntity<Object> newArtista(@RequestPart("artista") Artista artista,
+                                             @RequestPart("artistImage")MultipartFile artistImage){
 
-        return ResponseEntity.ok(null);
+        return service.newArtista(artista, artistImage);
     }
 
     @GetMapping("artista/{id}")
