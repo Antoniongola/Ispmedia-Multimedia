@@ -1,1 +1,38 @@
-<p>artist-creation works!</p>
+<form [formGroup]="artistForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nome">Nome do artista:</label><br>
+    <input id="nome" formControlName="nome" type="text">
+  </div>
+
+  <div>
+    <label for="editora">Editora do artista:</label><br>
+    <input id="editora" formControlName="editora" type="text">
+  </div>
+
+  <div>
+    <label for="descricao">Descricao do artista:</label><br>
+    <textarea id="descricao" formControlName="descricao"></textarea>
+  </div>
+
+  <select id="genero">
+    <option value="">--Selecione o genero musical do artista--</option>
+    <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nome}}</option>
+  </select>
+
+  <div>
+    <label for="anoInicioCarreira">Inicio de carreira:</label><br>
+    <input id="anoInicioCarreira" formControlName="anoInicioCarreira" type="number">
+  </div>
+
+  <div>
+    <label for="anoFimCarreira">Fim de carreira:</label><br>
+    <input id="anoFimCarreira" formControlName="nome" type="number">
+  </div>
+
+  <div>
+    <label for="artistImage">Imagem do artista</label><br>
+    <input id="artistImage" formControlName="artistImage" type="file" (change)="onFileChange($event)">
+  </div>
+
+  <button class="btn btn-outline-primary" type="submit">Adicionar novo artista</button>
+</form>

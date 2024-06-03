@@ -29,8 +29,11 @@ export class ArtistaService {
     return this.http.get<Artista[]>(this.apiUrl);
   }
 
-  addArtista(artista: Artista): Observable<Artista> {
-    return this.http.post<Artista>(this.apiUrl, artista);
+  addArtista(artista: Artista, artistaImage:File): Observable<any> {
+    const formData:FormData = new FormData();
+    formData.append('artist', new Blob([JSON.stringify(artista)], {type:'application/json'}));
+    formData.append('artistImage', artistaImage);
+    return this.http.post<any>(this.apiUrl, formData);
   }
 
   updateArtista(id: string, artista: Artista): Observable<Artista> {

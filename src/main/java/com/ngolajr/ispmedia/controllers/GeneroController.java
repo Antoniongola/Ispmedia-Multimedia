@@ -16,7 +16,7 @@ import java.util.List;
 public class GeneroController {
     private final GeneroService service;
 
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity<List<Genero>> todosGeneros(){
         return ResponseEntity.ok(service.todosGeneros());
     }

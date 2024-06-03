@@ -16,4 +16,6 @@ import java.util.UUID;
 public class Artista extends Conteudo {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Album> albums;
+    private int anoInicioCarreira;
+    private int anoFimCarreira;
 }

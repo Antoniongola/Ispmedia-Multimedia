@@ -18,4 +18,5 @@ public class Conteudo {
     protected String descricao;
     @ManyToOne
     protected Genero genero;
+    private String editora;
 }

@@ -11,6 +11,6 @@ export class GeneroService {
   constructor(private http:HttpClient) { }
 
   todosGeneros():Observable<Genero[]>{
-    return this.http.get<Genero[]>("http://localhost:8008/api/genero/");
+    return this.http.get<Genero[]>("http://localhost:8080/api/genero");
   }
 }
