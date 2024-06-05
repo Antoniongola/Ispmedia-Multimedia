@@ -4,6 +4,7 @@ import com.ngolajr.ispmedia.dtos.AlbumDto;
 import com.ngolajr.ispmedia.entities.Album;
 import com.ngolajr.ispmedia.services.AlbumService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @CrossOrigin("**")
 public class AlbumController {
     private final AlbumService service;
+    private final ResourceLoader resourceLoader;
 
     @PostMapping("/album")
     public ResponseEntity<Object> createAlbum(@RequestPart("album") Album album,

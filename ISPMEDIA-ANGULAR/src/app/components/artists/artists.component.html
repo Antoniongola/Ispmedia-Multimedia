@@ -1,1 +1,7 @@
-<p>artists works!</p>
+<div class="card" *ngFor="let artista of artistas">
+  <div class="card-img">
+    <img *ngIf="artistas.length > 0" (loadstart)="loadImage(artista.id)" [src]="imageUrl">
+  </div>
+  <div class="card-header text-center">{{artista.titulo}}</div>
+  <div class="card-body">{{artista.descricao}}</div>
+</div>

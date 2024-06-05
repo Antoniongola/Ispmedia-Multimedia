@@ -32,7 +32,7 @@ export class ArtistCreationComponent implements OnInit{
       genero:['0'],
       anoInicioCarreira:['0'],
       anoFimCarreira:['0'],
-      artistImage:[null]
+      artistImage: [null]
     });
   }
 
@@ -46,15 +46,14 @@ export class ArtistCreationComponent implements OnInit{
   }
 
   onSubmit():void{
-    //(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero, editora:string, albums: Album[], inicio:number, fim:number)
     const genero : Genero = new Genero();
     genero.id = this.artistForm.get('genero')?.value;
     const formData : FormData = new FormData();
     const artista : Artista = new Artista('', this.artistForm.get('nome')?.value,'', this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value,[],
       this.artistForm.get('anoInicioCarreira')?.value, this.artistForm.get('anoFimCarreira')?.value);
-    const artistImage :File = this.artistForm.get('artistImage')?.value;
+    //const artistImage :File = this.artistForm.get('artistImage')?.value;
 
-    this.artistaService.addArtista(artista, artistImage).subscribe(response=>{
+    this.artistaService.addArtista(artista, this.artistForm.get('artistImage')?.value).subscribe(response=>{
       console.log('DEU CERTO PORRAAAAAAA');
     }, error=>{
       console.log('DEU ERRADO PIDIMOOOO');

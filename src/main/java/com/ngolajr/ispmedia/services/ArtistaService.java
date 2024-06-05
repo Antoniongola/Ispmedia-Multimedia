@@ -4,6 +4,7 @@ import com.ngolajr.ispmedia.dtos.ArtistaDto;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.Artista;
 import com.ngolajr.ispmedia.entities.Conteudo;
+import com.ngolajr.ispmedia.entities.FileManager;
 import com.ngolajr.ispmedia.entities.Genero;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.ArtistaRepository;
@@ -21,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import static com.ngolajr.ispmedia.entities.FileManager.saveFile;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +29,7 @@ public class ArtistaService {
     @Getter
     private final ArtistaRepository repository;
     private final GeneroRepository generoRepository;
+    private final FileManager fileManager;
     @Value("${upload.imagem}")
     String imageLocation;
 
@@ -37,7 +38,7 @@ public class ArtistaService {
             try {
                 Genero genero = generoRepository.findById(dto.getGenero().getId()).get();
                 dto.setGenero(genero);
-                saveFile(artistImage, TipoFicheiro.IMAGEM);
+                fileManager.saveFile(artistImage, TipoFicheiro.IMAGEM);
                 dto.setThumbNailUri(artistImage.getOriginalFilename());
                 repository.save(dto);
                 return ResponseEntity.ok(new Response("ARTISTA CRIADO COM SUCESSO!"));

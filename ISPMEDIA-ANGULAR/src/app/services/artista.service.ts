@@ -14,9 +14,12 @@ export class ArtistaService {
 
   constructor(private http: HttpClient, private loginService:LoginServiceService) { }
 
+  getImage(id: string) {
+    return this.http.get(`${this.apiUrl}/${id}/{imagem}`, { responseType: 'blob' });
+  }
+
   getArtistas():Observable<Artista[]> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    //console.log(this.http.get<any>(this.apiUrl));
     return this.http.get<Artista[]>(this.apiUrl);
   }
 
@@ -31,8 +34,9 @@ export class ArtistaService {
 
   addArtista(artista: Artista, artistaImage:File): Observable<any> {
     const formData:FormData = new FormData();
-    formData.append('artist', new Blob([JSON.stringify(artista)], {type:'application/json'}));
+    formData.append('artista', new Blob([JSON.stringify(artista)], {type:'application/json'}));
     formData.append('artistImage', artistaImage);
+
     return this.http.post<any>(this.apiUrl, formData);
   }
 
