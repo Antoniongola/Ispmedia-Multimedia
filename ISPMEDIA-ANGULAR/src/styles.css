@@ -4,6 +4,26 @@
   margin: 0;
 }
 
+a{
+  text-decoration: none;
+  color: black;
+}
+
+.imagem-card{
+  width:250px;
+  height:250px;
+}
+
+.card-item{
+  div{
+    width: 250px;
+    height: 250px;
+  }
+}
+
+/*
+
+abaixo sao estilos malucos do layout passado, layout do spotify
 .cabecalho{
   background-color:#1A1A1A;
   .login{
@@ -127,13 +147,9 @@
   }
 }
 
-a{
-  text-decoration: none;
-}
-
-
 .middleCol{
   div{
     width:135%;
   }
 }
+*/

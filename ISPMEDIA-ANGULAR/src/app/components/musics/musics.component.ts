@@ -16,6 +16,7 @@ export class MusicsComponent implements OnInit{
   }
 
   ngOnInit(): void {
+  /*
     this.musicaService.getMusicById("9decd238-3d8d-4fbc-b238-706568949e2c").subscribe(response=>{
       this.musica = response;
     })
@@ -25,16 +26,17 @@ export class MusicsComponent implements OnInit{
     }, error => {
       console.log('erro nas músicas')
     })
+    */
   }
 
   playMusic(filename: string) {
-    this.musicaService.getMusicById(filename).subscribe(response => {
-      this.musica = response;/*
+  /* this.musicaService.getMusicById(filename).subscribe(response => {
+      this.musica = response;
       const url = window.URL.createObjectURL(this.musica.path);
       const audio = new Audio(url);
       audio.play();
-      */
-    });
+
+    });*/
   }
 
 }

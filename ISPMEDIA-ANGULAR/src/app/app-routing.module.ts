@@ -8,18 +8,25 @@ import {HomeComponent} from "./components/home/home.component";
 import {SignupComponent} from "./components/signup/signup.component";
 import {SearchComponent} from "./components/search/search.component";
 import {MusicUploadComponent} from "./components/music-upload/music-upload.component";
+import {RadiosComponent} from "./components/radios/radios.component";
+import {VideosComponent} from "./components/videos/videos.component";
+import {ArtistCreationComponent} from "./components/artist-creation/artist-creation.component";
+import {AlbumCreationComponent} from "./components/album-creation/album-creation.component";
 
 const routes: Routes = [
-  {path:'', component:HomeComponent, children:[
-    {path:'search', component:SearchComponent},
-    {path:'albums', component: AlbumsComponent},
-    {path:'artists', component:ArtistsComponent},
-  ]},
+  {path:'', component:HomeComponent},
   {path:'login', component:LoginComponent},
   {path:'signup', component:SignupComponent},
-  {path:'musics', component: MusicsComponent, children:[
-      {path: 'new', component: MusicUploadComponent}
-    ]}
+  {path:'search', component:SearchComponent},
+  {path:'albums', component: AlbumsComponent},
+  {path:'albums/new', component: AlbumCreationComponent},
+  {path:'artists', component:ArtistsComponent},
+  {path:'artists/new', component:ArtistCreationComponent},
+  {path:'musics', component: MusicsComponent},
+  {path:'musics/new', component: MusicUploadComponent},
+  {path:'radios', component:RadiosComponent},
+  {path:'videos', component:VideosComponent},
+  {path:'videos/new', component: MusicUploadComponent},
 ];
 
 @NgModule({

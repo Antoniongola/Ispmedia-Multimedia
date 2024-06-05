@@ -9,8 +9,8 @@ export class Musica extends Conteudo {
   duration: number;
   path: string;
 
-  constructor(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero ,artists: Artista[], album: Album, duration: number, path: string) {
-    super(id, titulo, thumbNailUri, descricao, genero);
+  constructor(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero, editora:string, artists: Artista[], album: Album, duration: number, path: string) {
+    super(id, titulo, thumbNailUri, descricao, genero, editora);
     this.artists = artists;
     this.album = album;
     this.duration = duration;

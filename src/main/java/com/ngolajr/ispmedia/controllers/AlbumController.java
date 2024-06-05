@@ -6,6 +6,7 @@ import com.ngolajr.ispmedia.services.AlbumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,12 +19,9 @@ public class AlbumController {
     private final AlbumService service;
 
     @PostMapping("/album")
-    public ResponseEntity<String> createAlbum(@RequestBody AlbumDto dto){
-        if(service.createAlbum(dto)){
-            return ResponseEntity.ok("ALBUM CRIADO COM SUCESSO");
-        }
-
-        return ResponseEntity.ofNullable("ERRO AO CRIAR ALBUM");
+    public ResponseEntity<Object> createAlbum(@RequestPart("album") Album album,
+                                              @RequestPart("albumImage")MultipartFile albumImage){
+        return service.createAlbum(album, albumImage);
     }
 
     @GetMapping("/album/{id}")

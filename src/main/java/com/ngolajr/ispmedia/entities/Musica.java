@@ -22,7 +22,6 @@ public class Musica extends Conteudo{
     private Album album;
     private int duration;
     private String path;
-    private String editora;
     @Column(length = 2000)
     private String letra;
     private int streams;

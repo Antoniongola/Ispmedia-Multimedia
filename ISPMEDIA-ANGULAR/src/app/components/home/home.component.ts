@@ -8,6 +8,7 @@ import {LoginServiceService} from "../../services/login-service.service";
 })
 export class HomeComponent implements OnInit{
   token : string | null = this.apiService.getToken();
+  albuns = ['', '', '', '', '', ''];
   constructor(private apiService: LoginServiceService){
 
   }

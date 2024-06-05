@@ -10,8 +10,8 @@ export class Album extends Conteudo {
   criticas: Critica[];
   pontuacaoMedia: number;
 
-  constructor(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero,musics: Musica[], artista: Artista, criticas: Critica[], pontuacaoMedia: number) {
-    super(id, titulo, thumbNailUri, descricao, genero);
+  constructor(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero,editora:string, musics: Musica[], artista: Artista, criticas: Critica[], pontuacaoMedia: number) {
+    super(id, titulo, thumbNailUri, descricao, genero, editora);
     this.musics = musics;
     this.artista = artista;
     this.criticas = criticas;

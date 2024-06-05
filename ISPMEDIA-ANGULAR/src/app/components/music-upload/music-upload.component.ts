@@ -70,7 +70,7 @@ export class MusicUploadComponent implements OnInit{
       formData.append('albumImage', this.musicForm.get('albumImage')?.value);
       formData.append('artistImage', this.musicForm.get('artistImage')?.value);
 
-      this.http.post("http://localhost:8080/api/upload", {formData}).subscribe(
+      this.http.post("http://localhost:8080/api/musica", {formData}).subscribe(
         response=>{
           console.log('response: '+response)
         }, error => {
@@ -78,7 +78,6 @@ export class MusicUploadComponent implements OnInit{
         }
       );
 
-      console.log('Form Submitted', formData);
     }
   }
 }
