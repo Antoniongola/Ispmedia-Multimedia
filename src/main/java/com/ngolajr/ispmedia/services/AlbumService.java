@@ -3,6 +3,7 @@ package com.ngolajr.ispmedia.services;
 import com.ngolajr.ispmedia.dtos.AlbumDto;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.Album;
+import com.ngolajr.ispmedia.entities.FileManager;
 import com.ngolajr.ispmedia.entities.Genero;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.AlbumRepository;
@@ -16,20 +17,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import static com.ngolajr.ispmedia.entities.FileManager.saveFile;
 
 @Service
 @RequiredArgsConstructor
 public class AlbumService {
      private final AlbumRepository repository;
      private final GeneroRepository generoRepository;
+     private final FileManager fileManager;
 
      public ResponseEntity<Object> createAlbum (Album dto, MultipartFile albumImage){
           try{
                dto.setThumbNailUri(albumImage.getOriginalFilename());
                Genero genero = generoRepository.findById(dto.getGenero().getId()).get();
                dto.setGenero(genero);
-               saveFile(albumImage, TipoFicheiro.IMAGEM);
+               fileManager.saveFile(albumImage, TipoFicheiro.IMAGEM);
                repository.save(dto);
                return ResponseEntity.ok(new Response("ALBUM CRIADO COM SUCESSO"));
           }catch(IOException e){

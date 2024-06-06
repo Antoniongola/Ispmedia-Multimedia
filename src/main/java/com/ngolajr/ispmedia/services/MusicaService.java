@@ -2,10 +2,7 @@ package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.MusicaDto;
 import com.ngolajr.ispmedia.dtos.Response;
-import com.ngolajr.ispmedia.entities.Album;
-import com.ngolajr.ispmedia.entities.Artista;
-import com.ngolajr.ispmedia.entities.Genero;
-import com.ngolajr.ispmedia.entities.Musica;
+import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.AlbumRepository;
 import com.ngolajr.ispmedia.repositories.ArtistaRepository;
@@ -30,12 +27,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.ngolajr.ispmedia.entities.FileManager.saveFile;
 
 @Service
 @RequiredArgsConstructor
 @Data
 public class MusicaService {
+    private final FileManager fm;
     private final MusicaRepository repository;
     private final ArtistaRepository artistaRepository;
     private final GeneroRepository generoRepository;
@@ -58,7 +55,7 @@ public class MusicaService {
             }
             dto.setArtists(artistas);
             if(dto.getAlbum() == null){
-                saveFile(musicImage, TipoFicheiro.IMAGEM);
+                fm.saveFile(musicImage, TipoFicheiro.IMAGEM);
             }else{
                 if(albumRepository.findById(dto.getAlbum().getId()).isPresent()) {
                     album = albumRepository.findById(dto.getAlbum().getId()).get();
@@ -67,7 +64,7 @@ public class MusicaService {
                 }
             }
 
-            saveFile(musicFIle, TipoFicheiro.MUSICA);
+            fm.saveFile(musicFIle, TipoFicheiro.MUSICA);
             repository.save(dto);
             //albumRepository.save(album);
             return ResponseEntity.ok().body(new Response("UPLOAD DE MUSICA FEITO COM SUCESSO"));

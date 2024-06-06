@@ -15,8 +15,9 @@ public class Conteudo {
     protected UUID id;
     protected String titulo;
     protected String thumbNailUri;
+    @Column(length = 1000000000)
     protected String descricao;
     @ManyToOne
     protected Genero genero;
-    private String editora;
+    protected String editora;
 }

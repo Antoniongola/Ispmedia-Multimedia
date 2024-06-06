@@ -13,6 +13,7 @@ import {ArtistaService} from "../../services/artista.service";
 export class ArtistCreationComponent implements OnInit{
   artistForm !: FormGroup;
   generos!:Genero[];
+  artistImage!:File;
 
   constructor(private generoService:GeneroService,
               private artistaService:ArtistaService,
@@ -29,19 +30,17 @@ export class ArtistCreationComponent implements OnInit{
       nome:[''],
       editora:[''],
       descricao:[''],
-      genero:['0'],
+      genero:[''],
       anoInicioCarreira:['0'],
       anoFimCarreira:['0'],
-      artistImage:[null]
     });
   }
 
-  onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.artistForm.patchValue({
-        artistImage: file
-      });
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.artistImage = file;
     }
   }
 
@@ -52,12 +51,13 @@ export class ArtistCreationComponent implements OnInit{
     const formData : FormData = new FormData();
     const artista : Artista = new Artista('', this.artistForm.get('nome')?.value,'', this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value,[],
       this.artistForm.get('anoInicioCarreira')?.value, this.artistForm.get('anoFimCarreira')?.value);
-    const artistImage :File = this.artistForm.get('artistImage')?.value;
 
-    this.artistaService.addArtista(artista, artistImage).subscribe(response=>{
-      console.log('DEU CERTO PORRAAAAAAA');
+    //const artistImage :File = this.artistForm.get('artistImage')?.value;
+
+    this.artistaService.addArtista(artista, this.artistImage).subscribe(response=>{
+      console.log('DEU CERTO PORRAAAAAAA: '+response);
     }, error=>{
-      console.log('DEU ERRADO PIDIMOOOO');
+      console.log('DEU ERRADO PIDIMOOOO: '+error);
     });
   }
 }

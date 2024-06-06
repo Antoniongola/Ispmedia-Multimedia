@@ -14,9 +14,9 @@
     <textarea id="descricao" formControlName="descricao"></textarea>
   </div>
 
-  <select id="genero">
-    <option value="">--Selecione o genero musical do artista--</option>
-    <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nome}}</option>
+  <select id="genero" formControlName="genero">
+    <option>--Selecione o genero musical do artista--</option>
+    <option *ngFor="let genero of generos" [value]="genero.id">{{genero.nome}},{{genero.id}}</option>
   </select>
 
   <div>
@@ -31,7 +31,7 @@
 
   <div>
     <label for="artistImage">Imagem do artista</label><br>
-    <input id="artistImage" formControlName="artistImage" type="file" (change)="onFileChange($event)">
+    <input id="artistImage" type="file" (change)="onFileChange($event)">
   </div>
 
   <button class="btn btn-outline-primary" type="submit">Adicionar novo artista</button>
