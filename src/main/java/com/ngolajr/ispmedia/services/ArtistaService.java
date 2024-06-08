@@ -13,20 +13,25 @@ import com.ngolajr.ispmedia.repositories.GeneroRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
-
-
+@Getter
 @Service
 @RequiredArgsConstructor
 public class ArtistaService {
-    @Getter
+
     private final ArtistaRepository repository;
     private final GeneroRepository generoRepository;
     private final FileManager fileManager;
@@ -36,6 +41,7 @@ public class ArtistaService {
     public ResponseEntity<Object> newArtista(Artista dto, MultipartFile artistImage){
         if(!repository.existsArtistaByTitulo(dto.getTitulo())){
             try {
+                System.out.println("genero id: "+dto.getGenero().getId());
                 Genero genero = generoRepository.findById(dto.getGenero().getId()).get();
                 dto.setGenero(genero);
                 fileManager.saveFile(artistImage, TipoFicheiro.IMAGEM);
@@ -50,8 +56,19 @@ public class ArtistaService {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("JA EXISTE UM ARTISTA COM ESTE NOME"));
     }
 
-    public boolean updateArtista(Artista dto, UUID id){
+    public ResponseEntity<Resource> getArtistImage(UUID id) throws IOException {
+        Artista artista = this.selecionarArtista(id);
+        File file = new File(imageLocation+artista.getThumbNailUri());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename="+artista.getThumbNailUri());
+        headers.add("Content-Type", Files.probeContentType(file.toPath()));
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+        return ResponseEntity.ok().
+                headers(headers).
+                body(resource);
+    }
 
+    public boolean updateArtista(Artista dto, UUID id){
         if(repository.existsById(id)){
             repository.save(dto);
             return true;

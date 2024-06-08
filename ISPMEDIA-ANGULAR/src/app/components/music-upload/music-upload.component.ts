@@ -4,7 +4,7 @@ import {UploadService} from "../../services/upload.service";
 import {HttpClient} from "@angular/common/http";
 import {Genero} from "../../entities/Genero";
 import {GeneroService} from "../../services/genero/genero.service";
-import {ArtistaService} from "../../services/artista.service";
+import {ArtistaService} from "../../services/artista/artista.service";
 import {Artista} from "../../entities/Artista";
 
 @Component({

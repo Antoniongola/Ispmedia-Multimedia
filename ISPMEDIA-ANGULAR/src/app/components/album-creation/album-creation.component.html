@@ -1,1 +1,40 @@
 <p>album-creation works!</p>
+<form [formGroup]="albumForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nome">Nome do album:</label><br>
+    <input id="nome" formControlName="nome" type="text">
+  </div>
+
+  <div>
+    <label for="editora">Editora do album:</label><br>
+    <input id="editora" formControlName="editora" type="text">
+  </div>
+
+  <div>
+    <label for="descricao">Descricao do album:</label><br>
+    <textarea id="descricao" formControlName="descricao"></textarea>
+  </div>
+
+  <select id="genero" formControlName="genero">
+    <option>--Selecione o genero musical do album--</option>
+    <option *ngFor="let genero of generos" [value]="genero.id">{{genero.nome}}</option>
+  </select>
+
+  <br><br>
+  <select id="artista" formControlName="artista">
+    <option>--Selecione o artista do album--</option>
+    <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
+  </select>
+
+  <div>
+    <label for="dataLancamento">Data de lançamento:</label><br>
+    <input id="dataLancamento" formControlName="dataLancamento" type="date">
+  </div>
+
+  <div>
+    <label for="albumImage">Imagem do album</label><br>
+    <input id="albumImage" type="file" (change)="onFileChange($event)">
+  </div>
+
+  <button class="btn btn-outline-primary" type="submit">Adicionar novo album</button>
+</form>

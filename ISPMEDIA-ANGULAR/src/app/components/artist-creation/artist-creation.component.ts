@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {GeneroService} from "../../services/genero/genero.service";
 import {Genero} from "../../entities/Genero";
 import {Artista} from "../../entities/Artista";
-import {ArtistaService} from "../../services/artista.service";
+import {ArtistaService} from "../../services/artista/artista.service";
 
 @Component({
   selector: 'app-artist-creation',
@@ -13,6 +13,7 @@ import {ArtistaService} from "../../services/artista.service";
 export class ArtistCreationComponent implements OnInit{
   artistForm !: FormGroup;
   generos!:Genero[];
+  artistImage!:File;
 
   constructor(private generoService:GeneroService,
               private artistaService:ArtistaService,
@@ -29,34 +30,34 @@ export class ArtistCreationComponent implements OnInit{
       nome:[''],
       editora:[''],
       descricao:[''],
-      genero:['0'],
+      genero:[''],
       anoInicioCarreira:['0'],
       anoFimCarreira:['0'],
-      artistImage: [null]
     });
   }
 
-  onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.artistForm.patchValue({
-        artistImage: file
-      });
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.artistImage = file;
     }
   }
 
   onSubmit():void{
+    //(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero, editora:string, albums: Album[], inicio:number, fim:number)
     const genero : Genero = new Genero();
     genero.id = this.artistForm.get('genero')?.value;
     const formData : FormData = new FormData();
     const artista : Artista = new Artista('', this.artistForm.get('nome')?.value,'', this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value,[],
       this.artistForm.get('anoInicioCarreira')?.value, this.artistForm.get('anoFimCarreira')?.value);
+
     //const artistImage :File = this.artistForm.get('artistImage')?.value;
 
-    this.artistaService.addArtista(artista, this.artistForm.get('artistImage')?.value).subscribe(response=>{
-      console.log('DEU CERTO PORRAAAAAAA');
+    this.artistaService.addArtista(artista, this.artistImage).subscribe(response=>{
+      console.log('DEU CERTO PORRAAAAAAA: '+response);
     }, error=>{
-      console.log('DEU ERRADO PIDIMOOOO');
+      console.log('DEU ERRADO PIDIMOOOO: '+error);
     });
   }
 }

@@ -12,6 +12,9 @@ import {RadiosComponent} from "./components/radios/radios.component";
 import {VideosComponent} from "./components/videos/videos.component";
 import {ArtistCreationComponent} from "./components/artist-creation/artist-creation.component";
 import {AlbumCreationComponent} from "./components/album-creation/album-creation.component";
+import {ArtistComponent} from "./components/artist/artist.component";
+//import {ArtistsAlbumsComponent} from "./components/artists-albums/artists-albums.component";
+import {ArtistAlbumMusicsComponent} from "./components/artist-album-musics/artist-album-musics.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -20,7 +23,13 @@ const routes: Routes = [
   {path:'search', component:SearchComponent},
   {path:'albums', component: AlbumsComponent},
   {path:'albums/new', component: AlbumCreationComponent},
-  {path:'artists', component:ArtistsComponent},
+  {path:'artist/:id', component: ArtistComponent, children:[
+      {path:'', component: ArtistAlbumMusicsComponent}
+
+    ]
+  },
+  {path:'artists', component:ArtistsComponent
+  },
   {path:'artists/new', component:ArtistCreationComponent},
   {path:'musics', component: MusicsComponent},
   {path:'musics/new', component: MusicUploadComponent},

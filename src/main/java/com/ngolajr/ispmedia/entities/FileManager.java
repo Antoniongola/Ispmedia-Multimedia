@@ -22,9 +22,8 @@ public class FileManager {
 
         if(tipoFicheiro == TipoFicheiro.MUSICA)
             uploadPath = Path.of(musicas);
-        else if(tipoFicheiro == TipoFicheiro.IMAGEM) {
+        else if(tipoFicheiro == TipoFicheiro.IMAGEM)
             uploadPath = Path.of(imagens);
-        }
         else if(tipoFicheiro == TipoFicheiro.VIDEO)
             uploadPath = Path.of(videos);
 

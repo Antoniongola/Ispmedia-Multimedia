@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import {DomSanitizer} from "@angular/platform-browser";
-import {ArtistaService} from "../../services/artista.service";
+import {Component, OnInit} from '@angular/core';
+import {ArtistaService} from "../../services/artista/artista.service";
 import {Artista} from "../../entities/Artista";
 
 @Component({
@@ -8,27 +7,19 @@ import {Artista} from "../../entities/Artista";
   templateUrl: './artists.component.html',
   styleUrl: './artists.component.css'
 })
-
-export class ArtistsComponent {
-  imageUrl: any;
+export class ArtistsComponent implements OnInit{
   artistas !: Artista[];
+  artistImages: { [key: string]: any } = {};
 
-  constructor(private artistaService: ArtistaService, private sanitizer: DomSanitizer) {}
-
-  ngOnInit(): void {
-    this.artistaService.getTodosArtistas().subscribe(response=>{
-      this.artistas = response;
-    }, error=>{
-      this.artistas = [];
-    })
+  constructor(private artistService: ArtistaService) {
   }
 
-  loadImage(artistaId: string) {
-    this.artistaService.getImage(artistaId).subscribe(response => {
-      const objectURL = URL.createObjectURL(response);
-      this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-    }, error=>{
-      console.log(error);
+  ngOnInit(){
+    this.artistService.getTodosArtistas().subscribe(response=>{
+      this.artistas = response;
+      this.artistService.loadImages(this.artistas, this.artistImages);
+    }, error => {
+      console.log('erro nos artistas: '+error);
     });
   }
 }
