@@ -6,10 +6,9 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { MusicsComponent } from './components/musics/musics.component';
 import {HttpClientModule} from "@angular/common/http";
-import {LoginServiceService} from "./services/login-service.service";
+import {LoginServiceService} from "./services/login/login-service.service";
 import { AlbumsComponent } from './components/albums/albums.component';
 import { ArtistsComponent } from './components/artists/artists.component';
-import { ArtistsAlbumsComponent } from './components/artists-albums/artists-albums.component';
 import { HomeComponent } from './components/home/home.component';
 import { ArtistCreationComponent } from './components/artist-creation/artist-creation.component';
 import { MusicUploadComponent } from './components/music-upload/music-upload.component';
@@ -23,6 +22,8 @@ import { RadiosComponent } from './components/radios/radios.component';
 import { VideosComponent } from './components/videos/videos.component';
 import { VideoUploadComponent } from './components/video-upload/video-upload.component';
 import { AlbumCreationComponent } from './components/album-creation/album-creation.component';
+import { ArtistComponent } from './components/artist/artist.component';
+import { ArtistAlbumMusicsComponent } from './components/artist-album-musics/artist-album-musics.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,6 @@ import { AlbumCreationComponent } from './components/album-creation/album-creati
     MusicsComponent,
     AlbumsComponent,
     ArtistsComponent,
-    ArtistsAlbumsComponent,
     HomeComponent,
     ArtistCreationComponent,
     MusicUploadComponent,
@@ -42,7 +42,9 @@ import { AlbumCreationComponent } from './components/album-creation/album-creati
     RadiosComponent,
     VideosComponent,
     VideoUploadComponent,
-    AlbumCreationComponent
+    AlbumCreationComponent,
+    ArtistComponent,
+    ArtistAlbumMusicsComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {GeneroService} from "../../services/genero/genero.service";
 import {Genero} from "../../entities/Genero";
 import {Artista} from "../../entities/Artista";
-import {ArtistaService} from "../../services/artista.service";
+import {ArtistaService} from "../../services/artista/artista.service";
 
 @Component({
   selector: 'app-artist-creation',

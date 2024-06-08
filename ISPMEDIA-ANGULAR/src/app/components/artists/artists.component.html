@@ -1,1 +1,17 @@
-<p>artists works!</p>
+<div class="col" *ngFor="let artist of artistas">
+  <a [routerLink]="['artist/'+artist.id]">
+    <div class="card">
+      <div class="card-img align-items-center">
+        <img *ngIf="artistImages[artist.id]" [src]="artistImages[artist.id]" alt="{{artist.titulo}}" class="imagem-card">
+      </div>
+      <div class="card-header text-center">
+        <p>{{artist.titulo}}</p>
+      </div>
+      <div class="card-body">
+        <span>
+          {{artist.descricao}}
+        </span>
+      </div>
+    </div>
+  </a>
+</div>

@@ -45,6 +45,7 @@ public class AlbumService {
                     System.out.println("artista: "+dto.getArtista().getTitulo());
                     System.out.println("id do atista: "+dto.getArtista().getId());
                }else{
+                    System.out.println("erro aqui no arista");
                     return ResponseEntity.
                             badRequest().
                             body(new Response("Impossível pegar o artista"));
@@ -57,13 +58,15 @@ public class AlbumService {
                this.repository.save(dto);
                if(artista.getAlbums()==null){
                     artista.setAlbums(new ArrayList<Album>());
-                    artista.getAlbums().add(this.repository.findAll().get(this.repository.findAll().toArray().length-1));
+                    for(Album album : this.repository.findAll())
+                         artista.getAlbums().add(album);
                }else{
                     artista.getAlbums().add(this.repository.findAll().get(this.repository.findAll().toArray().length-1));
                }
                artistaRepository.save(artista);
                return ResponseEntity.ok(new Response("ALBUM CRIADO COM SUCESSO"));
           }catch(IOException e){
+               System.out.println("erro aqui no ficheiro");
                return ResponseEntity.
                        badRequest().
                        body(new Response("ERRO NA CRIACAO DO ALBUM"));

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Album} from "../../entities/Album";
 import {Observable} from "rxjs";
+import {DomSanitizer} from "@angular/platform-browser";
+import {Artista} from "../../entities/Artista";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,21 @@ import {Observable} from "rxjs";
 export class AlbumService {
   apiUri:string = "http://localhost:8080/api/conteudo/album";
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,
+              private sanitizer: DomSanitizer) { }
+
+  loadImages(albums:Album[], albumImages: { [key: string]: any }) {
+    albums.forEach(album => {
+      this.getImage(album.id).subscribe(response => {
+        const objectURL = URL.createObjectURL(response);
+        albumImages[album.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      });
+    });
+  }
+
+  getImage(id: string): Observable<Blob> {
+    return this.http.get(`${this.apiUri}/${id}/imagem`, { responseType: 'blob' });
+  }
 
   getAlbums():Observable<Album[]>{
     return this.http.get<Album[]>(this.apiUri);

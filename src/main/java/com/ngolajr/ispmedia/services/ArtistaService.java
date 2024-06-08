@@ -27,11 +27,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
-
+@Getter
 @Service
 @RequiredArgsConstructor
 public class ArtistaService {
-    @Getter
+
     private final ArtistaRepository repository;
     private final GeneroRepository generoRepository;
     private final FileManager fileManager;
@@ -62,7 +62,6 @@ public class ArtistaService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename="+artista.getThumbNailUri());
         headers.add("Content-Type", Files.probeContentType(file.toPath()));
-
         InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
         return ResponseEntity.ok().
                 headers(headers).
@@ -70,7 +69,6 @@ public class ArtistaService {
     }
 
     public boolean updateArtista(Artista dto, UUID id){
-
         if(repository.existsById(id)){
             repository.save(dto);
             return true;

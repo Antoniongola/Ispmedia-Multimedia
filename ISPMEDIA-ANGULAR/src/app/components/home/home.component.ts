@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginServiceService} from "../../services/login-service.service";
+import {LoginServiceService} from "../../services/login/login-service.service";
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,6 @@ import {LoginServiceService} from "../../services/login-service.service";
 })
 export class HomeComponent implements OnInit{
   token : string | null = this.apiService.getToken();
-  albuns = ['', '', '', '', '', ''];
   constructor(private apiService: LoginServiceService){
 
   }

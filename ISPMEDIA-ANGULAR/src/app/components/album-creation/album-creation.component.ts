@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {AlbumService} from "../../services/album/album.service";
 import {Genero} from "../../entities/Genero";
 import {Artista} from "../../entities/Artista";
-import {ArtistaService} from "../../services/artista.service";
+import {ArtistaService} from "../../services/artista/artista.service";
 import {GeneroService} from "../../services/genero/genero.service";
 import {Album} from "../../entities/Album";
 
@@ -37,16 +37,15 @@ export class AlbumCreationComponent implements OnInit{
     this.generoService.todosGeneros().subscribe(response=>{
       this.generos = response;
     }, error=>{
-      console.log('erro: '+error);
+      console.log('erro, impossível carregar gêneros: '+error);
     });
 
     this.artistaService.getTodosArtistas().subscribe(response=>{
       console.log(response);
       this.artistas = response;
     }, error=>{
-      console.log('erro: '+error);
+      console.log('erro, impossível carregar artistas: '+error);
     });
-
   }
 
   onFileChange(event: Event) {

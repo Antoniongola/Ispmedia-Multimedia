@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginServiceService} from "./services/login-service.service";
+import {LoginServiceService} from "./services/login/login-service.service";
 import {LoginDto} from "./dtos/LoginDto";
-import {ArtistaService} from "./services/artista.service";
+import {ArtistaService} from "./services/artista/artista.service";
 import {Artista} from "./entities/Artista";
 
 @Component({
