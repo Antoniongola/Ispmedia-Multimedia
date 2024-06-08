@@ -63,7 +63,7 @@ public class AlbumService {
                }else{
                     artista.getAlbums().add(this.repository.findAll().get(this.repository.findAll().toArray().length-1));
                }
-               artistaRepository.save(artista);
+               //artistaRepository.save(artista);
                return ResponseEntity.ok(new Response("ALBUM CRIADO COM SUCESSO"));
           }catch(IOException e){
                System.out.println("erro aqui no ficheiro");
