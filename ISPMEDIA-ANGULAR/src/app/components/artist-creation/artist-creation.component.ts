@@ -4,6 +4,7 @@ import {GeneroService} from "../../services/genero/genero.service";
 import {Genero} from "../../entities/Genero";
 import {Artista} from "../../entities/Artista";
 import {ArtistaService} from "../../services/artista/artista.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-artist-creation',
@@ -17,7 +18,8 @@ export class ArtistCreationComponent implements OnInit{
 
   constructor(private generoService:GeneroService,
               private artistaService:ArtistaService,
-              private fb:FormBuilder){}
+              private fb:FormBuilder,
+              private router:Router){}
 
   ngOnInit():void{
     this.generoService.todosGeneros().subscribe(response=>{
@@ -45,19 +47,25 @@ export class ArtistCreationComponent implements OnInit{
   }
 
   onSubmit():void{
-    //(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero, editora:string, albums: Album[], inicio:number, fim:number)
-    const genero : Genero = new Genero();
-    genero.id = this.artistForm.get('genero')?.value;
-    const formData : FormData = new FormData();
-    const artista : Artista = new Artista('', this.artistForm.get('nome')?.value,'', this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value,[],
-      this.artistForm.get('anoInicioCarreira')?.value, this.artistForm.get('anoFimCarreira')?.value);
+    if(this.artistImage){
+      const genero : Genero = new Genero();
+      genero.id = this.artistForm.get('genero')?.value;
+      const formData : FormData = new FormData();
+      const artista : Artista = new Artista('', this.artistForm.get('nome')?.value,'', this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value,[],
+        this.artistForm.get('anoInicioCarreira')?.value, this.artistForm.get('anoFimCarreira')?.value);
 
-    //const artistImage :File = this.artistForm.get('artistImage')?.value;
+      //const artistImage :File = this.artistForm.get('artistImage')?.value;
 
-    this.artistaService.addArtista(artista, this.artistImage).subscribe(response=>{
-      console.log('DEU CERTO PORRAAAAAAA: '+response);
-    }, error=>{
-      console.log('DEU ERRADO PIDIMOOOO: '+error);
-    });
+      this.artistaService.addArtista(artista, this.artistImage).subscribe(response=>{
+        console.log('DEU CERTO PORRAAAAAAA: '+response);
+        alert("NOVO ARTISTA ADICIONADO COM SUCESSO");
+        this.router.navigate(['/']);
+
+      }, error=>{
+        console.log('DEU ERRADO PIDIMOOOO: '+error);
+      });
+    }else {
+      alert("INSIRA UMA IMAGEM");
+    }
   }
 }

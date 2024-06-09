@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -41,6 +42,7 @@ public class MusicaService {
     String musicLocation;
     @Value("${upload.imagem}")
     String imageLocation;
+    /*
     public ResponseEntity<Object> createMusica(Musica dto, MultipartFile musicFIle, MultipartFile musicImage){
         try {
             dto.setPath(musicFIle.getOriginalFilename());
@@ -56,34 +58,114 @@ public class MusicaService {
                     artistas.add(artista);
             }
             dto.setArtists(artistas);
+            Artista autor = new Artista();
+            if(!dto.getArtists().isEmpty()){
+                autor = dto.getArtists().get(0);
+                fm.saveFile(musicFIle, TipoFicheiro.MUSICA);
+            }
 
-            fm.saveFile(musicFIle, TipoFicheiro.MUSICA);
-            repository.save(dto);
-            if(albumRepository.findById(dto.getAlbum().getId()).isPresent()) {
-                Album album = albumRepository.findById(dto.getAlbum().getId()).get();
-                for(Musica musica: this.selecionarTodasMusicas()){
-                    if(musica.getAlbum().equals(album) && !album.getMusics().contains(musica)) {
-                        if (album.getMusics().isEmpty()) {
-                            album.setMusics(new ArrayList<>());
-                            album.getMusics().add(musica);
+            if(dto.getAlbum()!=null){
+                if(albumRepository.findById(dto.getAlbum().getId()).isPresent()) {
+                    Album album = albumRepository.findById(dto.getAlbum().getId()).get();
+                    autor.getAlbums().remove(album);
+
+                    for (Musica musica : this.selecionarTodasMusicas()) {
+                        if (musica.getAlbum().getId().equals(album.getId()) && !album.getMusics().contains(musica)) {
+                            if (album.getMusics().isEmpty()) {
+                                album.setMusics(new ArrayList<>());
+                                album.getMusics().add(musica);
+                            } else {
+                                album.getMusics().add(musica);
+                            }
                         }
                     }
+
+                    autor.getAlbums().add(album);
+                    artistaRepository.save(autor);
+                    albumRepository.save(album);
                 }
-                dto.setThumbNailUri(album.getThumbNailUri());
-                albumRepository.save(album);
             }else{
                 fm.saveFile(musicImage, TipoFicheiro.IMAGEM);
             }
 
+            repository.save(dto);
             return ResponseEntity.ok().body(new Response("UPLOAD DE MUSICA FEITO COM SUCESSO"));
         } catch (IOException e) {
             return ResponseEntity.badRequest().body(new Response("ERRO COM OS FICHEIROS ENVIADOS"));
         }
+    }*/
+
+    public ResponseEntity<Object> createMusica(Musica dto, MultipartFile musicFile, MultipartFile musicImage) {
+        try {
+            // Define os caminhos dos arquivos
+            dto.setPath(musicFile.getOriginalFilename());
+            if (musicImage != null)
+                dto.setThumbNailUri(musicImage.getOriginalFilename());
+
+            // Recupera o gênero e associa ao DTO
+            Optional<Genero> generoOpt = generoRepository.findById(dto.getGenero().getId());
+            if (!generoOpt.isPresent()) {
+                return ResponseEntity.badRequest().body(new Response("Gênero não encontrado"));
+            }
+            Genero genero = generoOpt.get();
+            dto.setGenero(genero);
+
+            // Recupera e associa os artistas
+            List<Artista> artistas = new ArrayList<>();
+            for (Artista artista : dto.getArtists()) {
+                Optional<Artista> artistaOpt = artistaRepository.findById(artista.getId());
+                if (artistaOpt.isPresent()) {
+                    artistas.add(artistaOpt.get());
+                }
+            }
+            if (artistas.isEmpty()) {
+                return ResponseEntity.badRequest().body(new Response("Nenhum artista válido encontrado"));
+            }
+            dto.setArtists(artistas);
+
+            Artista autor = artistas.get(0);
+
+            // Salva os arquivos
+            fm.saveFile(musicFile, TipoFicheiro.MUSICA);
+            if (musicImage != null) {
+                fm.saveFile(musicImage, TipoFicheiro.IMAGEM);
+            }
+
+            // Associa o álbum, se houver
+            if (dto.getAlbum() != null) {
+                Optional<Album> albumOpt = albumRepository.findById(dto.getAlbum().getId());
+                if (!albumOpt.isPresent()) {
+                    return ResponseEntity.badRequest().body(new Response("Álbum não encontrado"));
+                }
+                Album album = albumOpt.get();
+                autor.getAlbums().remove(album);
+
+                for (Musica musica : this.selecionarTodasMusicas()) {
+                    if (musica.getAlbum().getId().equals(album.getId()) && !album.getMusics().contains(musica)) {
+                        album.getMusics().add(musica);
+                    }
+                }
+
+                autor.getAlbums().add(album);
+                artistaRepository.save(autor);
+                albumRepository.save(album);
+            }
+
+            // Salva a música
+            repository.save(dto);
+
+            return ResponseEntity.ok().body(new Response("UPLOAD DE MUSICA FEITO COM SUCESSO"));
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().body(new Response("ERRO COM OS FICHEIROS ENVIADOS"));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new Response("Erro ao salvar a música: " + e.getMessage()));
+        }
     }
 
-    public ResponseEntity<Resource> getArtistImage(UUID id) throws IOException {
+
+    public ResponseEntity<Resource> getMusicImage(UUID id) throws IOException {
         Musica musica = this.repository.findById(id).orElseThrow();
-        File file = new File(imageLocation+musica.getThumbNailUri());
+        File file = new File(imageLocation+"\\"+musica.getThumbNailUri());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename="+musica.getThumbNailUri());
         headers.add("Content-Type", Files.probeContentType(file.toPath()));
@@ -98,7 +180,7 @@ public class MusicaService {
             Musica musica = repository.findById(id).get();
             musica.setStreams(musica.getStreams()+1);
             repository.save(musica);
-            File file = new File(musicLocation + musica.getPath());
+            File file = new File(musicLocation+"\\"+musica.getPath());
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "attachment; filename=" + musica.getPath());
             try {

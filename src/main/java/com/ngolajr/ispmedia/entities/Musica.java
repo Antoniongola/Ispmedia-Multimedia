@@ -22,8 +22,9 @@ public class Musica extends Conteudo{
     private Album album;
     private int duration;
     private String path;
-    @Column(length = 2000)
+    @Column(length = 20000)
     private String letra;
+    private Date dataLancamento;
     private int streams;
     public Musica(){
         super();

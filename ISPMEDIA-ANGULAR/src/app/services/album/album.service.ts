@@ -23,6 +23,13 @@ export class AlbumService {
     });
   }
 
+  loadImage(album:Album, albumImages: { [key: string]: any }) {
+    this.getImage(album.id).subscribe(response => {
+      const objectURL = URL.createObjectURL(response);
+      albumImages[album.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    });
+  }
+
   getImage(id: string): Observable<Blob> {
     return this.http.get(`${this.apiUri}/${id}/imagem`, { responseType: 'blob' });
   }

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,11 @@ public class MusicaController {
                                              @RequestPart("musicFile") MultipartFile musicFile,
                                              @RequestPart("musicImage") MultipartFile musicImage){
         return service.createMusica(musica, musicFile, musicImage);
+    }
+
+    @GetMapping("/{id}/imagem")
+    public ResponseEntity<Resource> musicImage(@PathVariable UUID id) throws IOException {
+        return this.service.getMusicImage(id);
     }
 
     @GetMapping

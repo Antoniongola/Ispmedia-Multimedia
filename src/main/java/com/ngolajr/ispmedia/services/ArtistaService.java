@@ -58,7 +58,7 @@ public class ArtistaService {
 
     public ResponseEntity<Resource> getArtistImage(UUID id) throws IOException {
         Artista artista = this.selecionarArtista(id);
-        File file = new File(imageLocation+artista.getThumbNailUri());
+        File file = new File(imageLocation+"\\"+artista.getThumbNailUri());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename="+artista.getThumbNailUri());
         headers.add("Content-Type", Files.probeContentType(file.toPath()));

@@ -55,7 +55,7 @@ public class AlbumService {
                dto.setArtista(artista);
                dto.setGenero(genero);
                this.fileManager.saveFile(albumImage, TipoFicheiro.IMAGEM);
-               this.repository.save(dto);
+
                if(artista.getAlbums()==null){
                     artista.setAlbums(new ArrayList<Album>());
                     for(Album album : this.repository.findAll())
@@ -63,7 +63,8 @@ public class AlbumService {
                }else{
                     artista.getAlbums().add(this.repository.findAll().get(this.repository.findAll().toArray().length-1));
                }
-               //artistaRepository.save(artista);
+               artistaRepository.save(artista);
+               this.repository.save(dto);
                return ResponseEntity.ok(new Response("ALBUM CRIADO COM SUCESSO"));
           }catch(IOException e){
                System.out.println("erro aqui no ficheiro");
@@ -75,7 +76,7 @@ public class AlbumService {
 
      public ResponseEntity<Resource> getAlbumImage(UUID id) throws IOException {
           Album album = this.selectAlbum(id);
-          File file = new File(imageLocation+album.getThumbNailUri());
+          File file = new File(imageLocation+"\\"+album.getThumbNailUri());
           HttpHeaders headers = new HttpHeaders();
           headers.add("Content-Disposition", "attachment; filename="+album.getThumbNailUri());
           headers.add("Content-Type", Files.probeContentType(file.toPath()));

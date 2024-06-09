@@ -24,6 +24,7 @@ import { VideoUploadComponent } from './components/video-upload/video-upload.com
 import { AlbumCreationComponent } from './components/album-creation/album-creation.component';
 import { ArtistComponent } from './components/artist/artist.component';
 import { ArtistAlbumMusicsComponent } from './components/artist-album-musics/artist-album-musics.component';
+import { ArtistAlbumsComponent } from './components/artist-albums/artist-albums.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ArtistAlbumMusicsComponent } from './components/artist-album-musics/art
     VideoUploadComponent,
     AlbumCreationComponent,
     ArtistComponent,
-    ArtistAlbumMusicsComponent
+    ArtistAlbumMusicsComponent,
+    ArtistAlbumsComponent
   ],
   imports: [
     BrowserModule,

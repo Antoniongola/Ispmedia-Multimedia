@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +15,12 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Album extends Conteudo{
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Musica> musics;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @JsonBackReference
     private Artista artista;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Critica> criticas;
     private Date dataLancamento;
     private double pontuacaoMedia;

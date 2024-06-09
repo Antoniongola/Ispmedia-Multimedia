@@ -6,6 +6,7 @@ import {Artista} from "../../entities/Artista";
 import {ArtistaService} from "../../services/artista/artista.service";
 import {GeneroService} from "../../services/genero/genero.service";
 import {Album} from "../../entities/Album";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-album-creation',
@@ -22,7 +23,8 @@ export class AlbumCreationComponent implements OnInit{
   constructor(private albumService:AlbumService,
               private artistaService:ArtistaService,
               private generoService:GeneroService,
-              private fb:FormBuilder) {
+              private fb:FormBuilder,
+              private router:Router) {
     this.albumForm = this.fb.group({
       nome:[''],
       descricao:[''],
@@ -57,24 +59,29 @@ export class AlbumCreationComponent implements OnInit{
   }
 
   onSubmit(){
-    this.artistaService.getArtista(this.albumForm.get('artista')?.value).subscribe(response=>{
-      this.sArtista = response;
-    }, error=>{
-      console.log('erro no artista: '+error);
-    });
-    const genero :Genero = new Genero();
-    genero.id=this.albumForm.get('genero')?.value;
+    if(this.albumImage){
+      this.artistaService.getArtista(this.albumForm.get('artista')?.value).subscribe(response=>{
+        this.sArtista = response;
+      }, error=>{
+        console.log('erro no artista: '+error);
+      });
+      const genero :Genero = new Genero();
+      genero.id=this.albumForm.get('genero')?.value;
 
-    const album : Album = new Album('',
-      this.albumForm.get('nome')?.value, '',this.albumForm.get('descricao')?.value,
-      genero, this.albumForm.get('editora')?.value,[], this.sArtista, [],0,
-      this.albumForm.get('dataLancamento')?.value, 0);
+      const album : Album = new Album('',
+        this.albumForm.get('nome')?.value, '',this.albumForm.get('descricao')?.value,
+        genero, this.albumForm.get('editora')?.value,[], this.sArtista, [],0,
+        this.albumForm.get('dataLancamento')?.value, 0);
 
-    this.albumService.addAlbum(album, this.albumImage).subscribe(response=>{
-      console.log("DEU CERTO, ALBUM CRIADO COM SUCESSO!");
-    }, error=>{
-      console.log("DEU ERRO: "+error)
-    });
+      this.albumService.addAlbum(album, this.albumImage).subscribe(response=>{
+        alert("ALBUM "+album.titulo+" CRIADO COM SUCESSO")
+      }, error=>{
+        alert("NAO FOI POSSIVEL CRIAR O ALBUM");
+        console.log("DEU ERRO: "+error)
+      });
+    }else{
+      alert("ESCOLHA UMA IMAGEM PRO ALBUM!");
+    }
   }
 
 }

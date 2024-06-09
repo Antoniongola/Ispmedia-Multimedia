@@ -26,12 +26,15 @@ export class ArtistaService {
     });
   }
 
-  getImage(id: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/${id}/imagem`, { responseType: 'blob' });
+  loadImage(artists:Artista, artistImages: { [key: string]: any }) {
+      this.getImage(artists.id).subscribe(response => {
+        const objectURL = URL.createObjectURL(response);
+        artistImages[artists.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      });
   }
 
-  getImage(id: string) {
-    return this.http.get(`${this.apiUrl}/${id}/{imagem}`, { responseType: 'blob' });
+  getImage(id: string): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/${id}/imagem`, { responseType: 'blob' });
   }
 
   getArtistas():Observable<Artista[]> {

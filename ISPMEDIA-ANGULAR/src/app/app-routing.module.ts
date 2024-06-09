@@ -15,6 +15,7 @@ import {AlbumCreationComponent} from "./components/album-creation/album-creation
 import {ArtistComponent} from "./components/artist/artist.component";
 //import {ArtistsAlbumsComponent} from "./components/artists-albums/artists-albums.component";
 import {ArtistAlbumMusicsComponent} from "./components/artist-album-musics/artist-album-musics.component";
+import {ArtistAlbumsComponent} from "./components/artist-albums/artist-albums.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -23,9 +24,9 @@ const routes: Routes = [
   {path:'search', component:SearchComponent},
   {path:'albums', component: AlbumsComponent},
   {path:'albums/new', component: AlbumCreationComponent},
-  {path:'artist/:id', component: ArtistComponent, children:[
-      {path:'', component: ArtistAlbumMusicsComponent}
-
+  {path:'artist/:idArtista', component: ArtistComponent, children:[
+      {path:'', component: ArtistAlbumsComponent},
+      {path:'album/:idAlbum', component: ArtistAlbumMusicsComponent}
     ]
   },
   {path:'artists', component:ArtistsComponent

@@ -5,19 +5,40 @@
   </div>
 
   <div>
-    <label for="autor">autor da música:</label>
-    <select id="autor">
-      <option>---autor da Música---</option>
-      <option *ngFor="let artista of artistas" value="{{artista.id}}">{{artista.titulo}}</option>
+    <label for="descricao">Letra da música:</label><br>
+    <textarea id="descricao" formControlName="descricao"></textarea>
+  </div>
+
+  <div formArrayName="items">
+    <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
+      <label for="item-{{i}}">Artista {{i + 1}}: </label>
+      <select id="item-{{i}}" formControlName="name">
+        <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
+      </select>
+      <button class="btn btn-outline-danger" type="button" (click)="removeItem(i)">Remover</button>
+    </div>
+  </div>
+  <button class="btn btn-outline-success" type="button" (click)="addItem()">Adicionar mais artistas</button>
+
+  <div *ngIf="!musicForm.get('mostrarCampo')?.value">
+    <label for="album">album da música:</label>
+    <select id="album" formControlName="album">
+      <option *ngFor="let album of albums" value="{{album.id}}">{{album.titulo}}</option>
     </select>
   </div>
 
   <div>
     <label for="generoMusica">Genero da música:</label>
-    <select id="generoMusica">
-      <option>---Gênero da Música---</option>
+    <select id="generoMusica" formControlName="generoMusica">
       <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nome}}</option>
     </select>
+  </div>
+
+  <div>
+    <label>
+      <input type="checkbox" formControlName="mostrarCampo">
+      Single
+    </label>
   </div>
 
   <div>
@@ -26,22 +47,30 @@
   </div>
 
   <div>
+    <label for="letra">Letra da música:</label><br>
+    <textarea id="letra" formControlName="letra"></textarea>
+  </div>
+
+  <div>
     <label for="musicFile">Ficheiro da musica</label>
-    <input id="musicFile" formControlName="musicFile" type="file" (change)="onFileChange($event, 'musicFile')">
+    <input id="musicFile" type="file" (change)="onFileChange($event, 1)">
   </div>
 
-  <div>
-    <label for="albumImage">Imagem do Álbum:</label>
-    <input id="albumImage" formControlName="albumImage" type="file" (change)="onFileChange($event, 'albumImage')">
+  <div *ngIf="musicForm.get('mostrarCampo')?.value">
+    <label for="musicImage">Imagem da música:</label>
+    <input id="musicImage" type="file" (change)="onFileChange($event, 2)">
+    <div>
+      <label for="dataLancamento">Data de lançamento do single: </label>
+      <input id="dataLancamento" formControlName="dataLancamento" type="date">
+    </div>
   </div>
 
-  <div>
-    <label for="generoAlbum">Genero do album:</label>
-    <select id="generoAlbum">
-      <option>---Gênero do Album---</option>
-      <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nome}}</option>
-    </select>
-  </div>
-
-  <button type="submit">Enviar</button>
+  <button class="btn btn-outline-primary" type="submit">Upload de música</button>
 </form>
+
+<div *ngIf="submittedItems.length > 0">
+  <h3>Itens Submetidos:</h3>
+  <ul>
+    <li *ngFor="let item of musicArtists">{{item.titulo}}</li>
+  </ul>
+</div>

@@ -1,4 +1,4 @@
-<div class="col" *ngFor="let album of albums">
+<div class="col" *ngFor="let album of artista.albums">
   <a [routerLink]="['album/'+album.id]">
     <div class="card">
       <div class="card-img align-items-center">
@@ -8,9 +8,9 @@
         <p>{{album.titulo}}</p>
       </div>
       <div class="card-body">
-        <span>
-          {{album.descricao}}
-        </span>
+      <span>
+        {{album.descricao}}
+      </span>
       </div>
     </div>
   </a>

@@ -1,10 +1,22 @@
-<div>
-  <section>
-
+<div class="row">
+  <section class="col">
+    <h2>O ARTISTA</h2>
+    <div class="card">
+      <div class="card-img align-items-center">
+        <img *ngIf="imgSrc[artist.id]" [src]="imgSrc[artist.id]" alt="{{artist.titulo}}" class="imagem-card">
+      </div>
+      <div class="card-header text-center">
+        <p>{{artist.titulo}}</p>
+      </div>
+      <div class="card-body">
+        <span>
+          {{artist.descricao}}
+        </span>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <p>ooiiiiiii</p>
+  <section class="col">
     <router-outlet></router-outlet>
   </section>
 </div>
