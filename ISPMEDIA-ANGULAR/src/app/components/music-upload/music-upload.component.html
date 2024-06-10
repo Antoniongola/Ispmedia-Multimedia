@@ -5,10 +5,16 @@
   </div>
 
   <div>
-    <label for="descricao">Letra da música:</label><br>
+    <label for="descricao">Descrição da música:</label><br>
     <textarea id="descricao" formControlName="descricao"></textarea>
   </div>
 
+  <label for="autor">Autor da musica: </label>
+  <select id="autor" formControlName="autor">
+    <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
+  </select>
+
+  <span>PARTICIPAÇÕES</span>
   <div formArrayName="items">
     <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
       <label for="item-{{i}}">Artista {{i + 1}}: </label>
@@ -53,12 +59,15 @@
 
   <div>
     <label for="musicFile">Ficheiro da musica</label>
-    <input id="musicFile" type="file" (change)="onFileChange($event, 1)">
+    <input id="musicFile" type="file" (change)="onFileChange($event, 1)" required>
+  </div>
+
+  <div>
+    <label for="musicImage">Imagem da música:</label>
+    <input id="musicImage" type="file" (change)="onFileChange($event, 2)" required>
   </div>
 
   <div *ngIf="musicForm.get('mostrarCampo')?.value">
-    <label for="musicImage">Imagem da música:</label>
-    <input id="musicImage" type="file" (change)="onFileChange($event, 2)">
     <div>
       <label for="dataLancamento">Data de lançamento do single: </label>
       <input id="dataLancamento" formControlName="dataLancamento" type="date">
@@ -67,10 +76,3 @@
 
   <button class="btn btn-outline-primary" type="submit">Upload de música</button>
 </form>
-
-<div *ngIf="submittedItems.length > 0">
-  <h3>Itens Submetidos:</h3>
-  <ul>
-    <li *ngFor="let item of musicArtists">{{item.titulo}}</li>
-  </ul>
-</div>

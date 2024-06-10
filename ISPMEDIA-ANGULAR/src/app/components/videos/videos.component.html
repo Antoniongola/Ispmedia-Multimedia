@@ -1,1 +1,29 @@
-<p>videos works!</p>
+<div class="row">
+  <section class="col">
+    <div class="row card" *ngFor="let video of videos">
+      <a [routerLink]="[''+video.id]">
+        <div class="card-img">
+          <img *ngIf="videoThumbs[video.id]" [src]="videoThumbs[video.id]" alt="{{video.titulo}}">
+        </div>
+        <div class="card-heade text-center">
+          <p>{{video.titulo}}</p>
+        </div>
+        <div class="card-body">
+          <p>{{video.descricao}}</p><br>
+          <button class="text-center btn btn-outline-primary" (click)="playVideo(video.id)">Play video</button>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Reprodutor do vídeo -->
+  <section class="col">
+    <div *ngIf="videoPlaying">
+      <h2>{{ videoPlaying.titulo }}</h2>
+      <video #videoPlayer controls>
+        <source [src]="videoSrcs[videoPlaying.id]" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+</div>

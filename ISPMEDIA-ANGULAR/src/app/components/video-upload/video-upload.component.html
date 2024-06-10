@@ -1,1 +1,25 @@
-<p>video-upload works!</p>
+<p>album-creation works!</p>
+<form [formGroup]="videoForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="nome">Nome do vídeo:</label><br>
+    <input id="nome" formControlName="nome" type="text">
+  </div>
+
+  <div>
+    <label for="descricao">Descricao do vídeo:</label><br>
+    <textarea id="descricao" formControlName="descricao"></textarea>
+  </div>
+
+  <div>
+    <label for="videoImage">Thumbnail do vídeo</label><br>
+    <input id="videoImage" type="file" (change)="onFileChange($event, 1)">
+  </div>
+
+  <div>
+    <label for="videoFile">video</label><br>
+    <input id="videoFile" type="file" (change)="onFileChange($event, 2)">
+  </div>
+
+  <br>
+  <button class="btn btn-outline-primary" type="submit">Adicionar novo vídeo</button>
+</form>

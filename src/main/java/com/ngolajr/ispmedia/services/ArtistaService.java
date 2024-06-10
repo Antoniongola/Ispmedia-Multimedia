@@ -41,11 +41,11 @@ public class ArtistaService {
     public ResponseEntity<Object> newArtista(Artista dto, MultipartFile artistImage){
         if(!repository.existsArtistaByTitulo(dto.getTitulo())){
             try {
-                System.out.println("genero id: "+dto.getGenero().getId());
                 Genero genero = generoRepository.findById(dto.getGenero().getId()).get();
                 dto.setGenero(genero);
                 fileManager.saveFile(artistImage, TipoFicheiro.IMAGEM);
                 dto.setThumbNailUri(artistImage.getOriginalFilename());
+                System.out.println("Nome do artista: "+dto.getTitulo());
                 repository.save(dto);
                 return ResponseEntity.ok(new Response("ARTISTA CRIADO COM SUCESSO!"));
             } catch (IOException e) {

@@ -5,15 +5,15 @@ import { Critica } from './Critica';
 import {Genero} from "./Genero";
 
 export class Album extends Conteudo {
-  musics: Musica[];
-  artista: Artista;
+  musics: Musica[]|null;
+  artista: Artista|null;
   criticas: Critica[];
   pontuacaoMedia: number;
   dataLancamento:string;
   streams : number;
 
   constructor(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero,editora:string,
-              musics: Musica[], artista: Artista, criticas: Critica[], pontuacaoMedia: number,
+              musics: Musica[]|null, artista: Artista|null, criticas: Critica[], pontuacaoMedia: number,
               dataLancamento:string, streams:number) {
     super(id, titulo, thumbNailUri, descricao, genero, editora);
     this.musics = musics;

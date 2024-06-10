@@ -16,6 +16,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Musica extends Conteudo{
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Artista artista;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Artista> artists;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class Video extends Conteudo{
-    private int duration;
+    private long duration;
     private String path;
     private int streams;
     public Video(){

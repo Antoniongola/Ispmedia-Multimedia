@@ -25,7 +25,7 @@ public class AdminConfig implements CommandLineRunner {
         admin.setUsername("ngolajr");
 
 
-        if(!repository.existsById(admin.getUsername())){
+        if(repository.findById(admin.getUsername()).isEmpty()){
             admin.setPassword(bcrypt.encode("123456"));
             admin.setRoles(Set.of(Roles.ADMIN, Roles.EDITOR, Roles.USER));
 

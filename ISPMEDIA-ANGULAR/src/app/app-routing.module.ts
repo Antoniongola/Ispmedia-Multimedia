@@ -16,6 +16,7 @@ import {ArtistComponent} from "./components/artist/artist.component";
 //import {ArtistsAlbumsComponent} from "./components/artists-albums/artists-albums.component";
 import {ArtistAlbumMusicsComponent} from "./components/artist-album-musics/artist-album-musics.component";
 import {ArtistAlbumsComponent} from "./components/artist-albums/artist-albums.component";
+import {VideoUploadComponent} from "./components/video-upload/video-upload.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -36,7 +37,7 @@ const routes: Routes = [
   {path:'musics/new', component: MusicUploadComponent},
   {path:'radios', component:RadiosComponent},
   {path:'videos', component:VideosComponent},
-  {path:'videos/new', component: MusicUploadComponent},
+  {path:'videos/new', component: VideoUploadComponent},
 ];
 
 @NgModule({

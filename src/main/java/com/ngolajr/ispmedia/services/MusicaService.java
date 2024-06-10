@@ -109,55 +109,66 @@ public class MusicaService {
             }
             Genero genero = generoOpt.get();
             dto.setGenero(genero);
-
             // Recupera e associa os artistas
             List<Artista> artistas = new ArrayList<>();
             for (Artista artista : dto.getArtists()) {
+                System.out.println("artista: "+artista.getTitulo());
+                System.out.println("index: "+dto.getArtists().indexOf(artista));
                 Optional<Artista> artistaOpt = artistaRepository.findById(artista.getId());
-                if (artistaOpt.isPresent()) {
+                if (artistaOpt.isPresent() && !artistas.contains(artistaOpt.get())) {
                     artistas.add(artistaOpt.get());
                 }
             }
             if (artistas.isEmpty()) {
+                System.out.println("ERRO NENHUM ARTISTA");
                 return ResponseEntity.badRequest().body(new Response("Nenhum artista válido encontrado"));
             }
             dto.setArtists(artistas);
 
-            Artista autor = artistas.get(0);
+            Artista autor = this.artistaRepository.findById(dto.getArtista().getId()).get();
 
             // Salva os arquivos
             fm.saveFile(musicFile, TipoFicheiro.MUSICA);
-            if (musicImage != null) {
-                fm.saveFile(musicImage, TipoFicheiro.IMAGEM);
-            }
-
             // Associa o álbum, se houver
             if (dto.getAlbum() != null) {
+                System.out.println("já entra aqui pelo menos, vamos ver se vai passar o id:");
+                System.out.println(dto.getAlbum().getId());
                 Optional<Album> albumOpt = albumRepository.findById(dto.getAlbum().getId());
-                if (!albumOpt.isPresent()) {
+                if (albumOpt.isEmpty()) {
+                    System.out.println("Erro aqui, não encontrou o album!");
                     return ResponseEntity.badRequest().body(new Response("Álbum não encontrado"));
                 }
-                Album album = albumOpt.get();
-                autor.getAlbums().remove(album);
 
+                Album album = albumOpt.get();
+                //autor.getAlbums().remove(album);
+                List<Musica> musics = new ArrayList<>();
                 for (Musica musica : this.selecionarTodasMusicas()) {
-                    if (musica.getAlbum().getId().equals(album.getId()) && !album.getMusics().contains(musica)) {
-                        album.getMusics().add(musica);
+                    if(musica.getAlbum()!=null){
+                        if (!album.getMusics().contains(musica)) {
+                            musics.add(musica);
+                        }
                     }
                 }
 
-                autor.getAlbums().add(album);
-                artistaRepository.save(autor);
+                album.setMusics(musics);
+                dto.setDataLancamento(album.getDataLancamento());
                 albumRepository.save(album);
+                dto.setAlbum(album);
+                autor.getAlbums().add(album);
+                System.out.println("salvando o autor");
+                artistaRepository.save(autor);
+            }else{
+                fm.saveFile(musicImage, TipoFicheiro.IMAGEM);
             }
 
             // Salva a música
             repository.save(dto);
-
             return ResponseEntity.ok().body(new Response("UPLOAD DE MUSICA FEITO COM SUCESSO"));
         } catch (IOException e) {
+            System.out.println("Entrou aqui e deu erro!");
             return ResponseEntity.badRequest().body(new Response("ERRO COM OS FICHEIROS ENVIADOS"));
         } catch (Exception e) {
+            System.out.println("erro aqui no último retorno: "+e.getMessage());
             return ResponseEntity.badRequest().body(new Response("Erro ao salvar a música: " + e.getMessage()));
         }
     }

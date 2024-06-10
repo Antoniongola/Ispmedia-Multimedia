@@ -11,8 +11,9 @@ export class Musica extends Conteudo {
   letra:string;
   dataLancamento:string;
   streams:number;
+  artista:Artista;
   constructor(id: string, titulo: string, thumbNailUri: string, descricao: string,
-              genero:Genero, editora:string, artists: Artista[],
+              genero:Genero, editora:string, autor:Artista,artists: Artista[],
               album: Album|null, duration: number, path: string,
               letra:string, dataLancamento:string, streams:number) {
     super(id, titulo, thumbNailUri, descricao, genero, editora);
@@ -23,5 +24,6 @@ export class Musica extends Conteudo {
     this.letra = letra;
     this.dataLancamento= dataLancamento;
     this.streams = streams;
+    this.artista=autor;
   }
 }
