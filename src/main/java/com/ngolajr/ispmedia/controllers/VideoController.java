@@ -6,11 +6,13 @@ import com.ngolajr.ispmedia.repositories.VideoRepository;
 import com.ngolajr.ispmedia.services.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,9 +42,16 @@ public class VideoController {
         return this.service.videoThumbnail(id);
     }
 
+    /*
     @GetMapping("/{id}/video")
     public ResponseEntity<Resource> verVideo(@PathVariable UUID id) throws FileNotFoundException {
         return this.service.verVideo(id);
+    }
+    */
+
+    @GetMapping("/{id}/video")
+    public ResponseEntity<Resource> albumVideo(@PathVariable UUID id, @RequestHeader HttpHeaders headers) throws IOException {
+        return this.service.getVideoChunk(id, headers);
     }
 
     @DeleteMapping("/{id}")

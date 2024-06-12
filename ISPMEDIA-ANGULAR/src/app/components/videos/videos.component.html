@@ -1,18 +1,16 @@
 <div class="row">
   <section class="col">
     <div class="row card" *ngFor="let video of videos">
-      <a [routerLink]="[''+video.id]">
-        <div class="card-img">
-          <img *ngIf="videoThumbs[video.id]" [src]="videoThumbs[video.id]" alt="{{video.titulo}}">
-        </div>
-        <div class="card-heade text-center">
-          <p>{{video.titulo}}</p>
-        </div>
-        <div class="card-body">
-          <p>{{video.descricao}}</p><br>
-          <button class="text-center btn btn-outline-primary" (click)="playVideo(video.id)">Play video</button>
-        </div>
-      </a>
+      <div class="card-img">
+        <img *ngIf="videoThumbs[video.id]" [src]="videoThumbs[video.id]" alt="{{video.titulo}}">
+      </div>
+      <div class="card-heade text-center">
+        <p>{{video.titulo}}</p>
+      </div>
+      <div class="card-body">
+        <p>{{video.descricao}}</p><br>
+        <button class="text-center btn btn-outline-primary" (click)="playVideo(video.id)">Play video</button>
+      </div>
     </div>
   </section>
 

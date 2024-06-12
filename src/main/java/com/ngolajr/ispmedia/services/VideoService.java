@@ -10,9 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,6 +61,34 @@ public class VideoService {
         return ResponseEntity.notFound().build();
     }
 
+    public ResponseEntity<Resource> getVideoChunk(UUID id, HttpHeaders headers) throws IOException {
+        Video video = this.repository.findById(id).orElseThrow(() -> new RuntimeException("Video not found"));
+        Path videoPath = Path.of(videoLocation+"\\").resolve(video.getPath()).normalize();
+        UrlResource videoResource = new UrlResource(videoPath.toUri());
+
+        long fileSize = Files.size(videoPath);
+        HttpRange range = headers.getRange().isEmpty() ? null : headers.getRange().get(0);
+
+        if (range != null) {
+            long start = range.getRangeStart(fileSize);
+            long end = range.getRangeEnd(fileSize);
+            long chunkSize = end - start + 1;
+
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("Content-Range", "bytes " + start + "-" + end + "/" + fileSize);
+            responseHeaders.add("Accept-Ranges", "bytes");
+
+            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+                    .headers(responseHeaders)
+                    .contentType(MediaTypeFactory.getMediaType(videoResource).orElse(MediaType.APPLICATION_OCTET_STREAM))
+                    .body(new InputStreamResource(Files.newInputStream(videoPath, StandardOpenOption.READ)));
+        } else {
+            return ResponseEntity.ok()
+                    .contentType(MediaTypeFactory.getMediaType(videoResource).orElse(MediaType.APPLICATION_OCTET_STREAM))
+                    .body(videoResource);
+        }
+    }
+/*
     public ResponseEntity<Resource> verVideo(UUID id) throws FileNotFoundException {
         Video video = this.repository.findById(id).orElseThrow();
         video.setStreams(video.getStreams()+1);
@@ -78,7 +107,7 @@ public class VideoService {
                 headers(headers).
                 body(resource);
     }
-
+*/
     public ResponseEntity<Resource> videoThumbnail(UUID id) throws FileNotFoundException {
         Video video = this.repository.findById(id).orElseThrow();
         File file = new File(imageLocation+"\\"+video.getThumbNailUri());
