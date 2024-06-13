@@ -63,6 +63,8 @@ public class VideoService {
 
     public ResponseEntity<Resource> getVideoChunk(UUID id, HttpHeaders headers) throws IOException {
         Video video = this.repository.findById(id).orElseThrow(() -> new RuntimeException("Video not found"));
+        video.setStreams(video.getStreams()+1);
+        this.repository.save(video);
         Path videoPath = Path.of(videoLocation+"\\").resolve(video.getPath()).normalize();
         UrlResource videoResource = new UrlResource(videoPath.toUri());
 

@@ -1,5 +1,5 @@
-<div class="row">
-  <section class="col">
+<div class="row-cols-2">
+  <section class="row">
     <div class="row card" *ngFor="let video of videos">
       <div class="card-img">
         <img *ngIf="videoThumbs[video.id]" [src]="videoThumbs[video.id]" alt="{{video.titulo}}">

@@ -1,14 +1,53 @@
-<div class="col">
-  <div class="row">
+<div class="row">
+  <h2>Músicas</h2>
+  <div class="col">
     <section>
-      <div>
-        <img>
+      <div *ngFor="let musica of album.musics">
+        <div class="row card">
+          <div class="col card-img">
+            <img [src]="albumImage" alt="{{musica.titulo}}">
+          </div>
+          <div class="col">
+            <span>{{musica.titulo}}</span>
+            <div class="row">
+              <span>{{musica.artista}} ft.</span>
+              <span *ngFor="let participante of musica.artists">{{participante.titulo}}, </span>
+            </div>
+          </div>
+          <div class="col">
+            <button class="btn btn-outline-success">Play/Pause</button><br>
+            <button class="btn btn-outline-danger">Delete</button>
+          </div>
+        </div>
       </div>
     </section>
   </div>
-  <div class="row">
+  <div class="col">
+    <h2>Criticas do abum</h2>
     <section>
-
+      <div class="row" *ngFor="let critica of album.criticas">
+        <div class="row">
+          <div class="col">
+            {{critica.nota}}
+          </div>
+          <div class="col">
+            {{critica.critica}}
+          </div>
+        </div>
+        <div class="row">
+          <span>{{critica.critico.nome}}</span>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <form [formGroup]="criticaForm" (submit)="onSubmit()">
+          <label for="nota">Nota:</label><br>
+          <input type="number" id="nota" formControlName="nota"><br>
+          <label for="critica">Descrição:</label><br>
+          <textarea id="critica" formControlName="critica"></textarea><br>
+          <button class="btn btn-outline-success" type="submit" (click)="onSubmit()">Fazer Crítica</button>
+        </form>
+      </div>
     </section>
   </div>
 </div>
