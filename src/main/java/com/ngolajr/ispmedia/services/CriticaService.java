@@ -24,6 +24,7 @@ public class CriticaService {
     public ResponseEntity<Critica> fazerCritica(Critica critica, UUID albumId){
         if(albumRepository.findById(albumId).isPresent()){
            Album album = albumRepository.findById(albumId).get();
+           critica.setCritico(this.userRepo.findById(critica.getCritico().getUsername()).get());
 
            if(album.getCriticas() != null) {
                album.getCriticas().add(critica);
@@ -32,10 +33,14 @@ public class CriticaService {
                album.getCriticas().add(critica);
            }
 
-
-           critica.setCritico(this.userRepo.findById(critica.getCritico().getUsername()).get());
+           int sum=0;
+           for(Critica critica1 : album.getCriticas()){
+                sum += critica1.getNota();
+           }
+           album.setPontuacaoMedia((double)sum/album.getCriticas().size());
+            repository.save(critica);
            albumRepository.save(album);
-           repository.save(critica);
+
            return ResponseEntity.ok(critica);
         }
 

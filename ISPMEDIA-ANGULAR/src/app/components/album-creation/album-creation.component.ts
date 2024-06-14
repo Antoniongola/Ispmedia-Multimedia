@@ -62,6 +62,7 @@ export class AlbumCreationComponent implements OnInit{
     if(this.albumImage){
       this.artistaService.getArtista(this.albumForm.get('artista')?.value).subscribe(response=>{
         this.sArtista = response;
+        console.log("grande artista: "+this.sArtista.titulo);
       }, error=>{
         console.log('erro no artista: '+error);
       });
@@ -72,6 +73,8 @@ export class AlbumCreationComponent implements OnInit{
         this.albumForm.get('nome')?.value, '',this.albumForm.get('descricao')?.value,
         genero, this.albumForm.get('editora')?.value,[], this.sArtista, [],0,
         this.albumForm.get('dataLancamento')?.value, 0);
+
+      album.artista = this.sArtista;
 
       this.albumService.addAlbum(album, this.albumImage).subscribe(response=>{
         alert("ALBUM "+album.titulo+" CRIADO COM SUCESSO")

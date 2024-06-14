@@ -9,10 +9,10 @@ public class Critica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private double nota;
+    private int nota;
     @Column(length = 2000)
     private String critica;
     //verificar
-    @OneToOne
+    @ManyToOne
     private Utilizador critico;
 }

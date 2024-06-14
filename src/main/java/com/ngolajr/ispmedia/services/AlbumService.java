@@ -55,16 +55,17 @@ public class AlbumService {
                dto.setArtista(artista);
                dto.setGenero(genero);
                this.fileManager.saveFile(albumImage, TipoFicheiro.IMAGEM);
+               this.repository.save(dto);
 
-               if(artista.getAlbums()==null){
-                    artista.setAlbums(new ArrayList<Album>());
+               if(artista.getAlbums()!=null){
                     for(Album album : this.repository.findAll())
                          artista.getAlbums().add(album);
                }else{
-                    artista.getAlbums().add(this.repository.findAll().get(this.repository.findAll().toArray().length-1));
+                    artista.setAlbums(new ArrayList<Album>());
+                    artista.getAlbums().add(dto);
                }
                artistaRepository.save(artista);
-               this.repository.save(dto);
+
                return ResponseEntity.ok(new Response("ALBUM CRIADO COM SUCESSO"));
           }catch(IOException e){
                System.out.println("erro aqui no ficheiro");
@@ -110,7 +111,12 @@ public class AlbumService {
      }
 
      public List<Album> selectAllAlbums(){
-          return repository.findAll();
+          List<Album> albums = new ArrayList<>();
+          for(Album album: this.repository.findAll())
+               albums.add(album);
+          //return repository.findAll();
+          System.out.println("Número de albums: "+albums.size());
+          return albums;
      }
 
      public boolean deleteAlbum(UUID id){

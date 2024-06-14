@@ -17,10 +17,11 @@ import java.util.UUID;
 public class Album extends Conteudo{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Musica> musics;
-    @ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
-    @JsonBackReference
+    //@ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    //@JsonBackReference
+    @ManyToOne
     private Artista artista;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Critica> criticas;
     private Date dataLancamento;
     private double pontuacaoMedia;

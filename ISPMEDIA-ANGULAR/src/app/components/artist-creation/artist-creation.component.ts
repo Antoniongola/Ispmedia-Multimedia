@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GeneroService} from "../../services/genero/genero.service";
 import {Genero} from "../../entities/Genero";
 import {Artista} from "../../entities/Artista";
@@ -29,7 +29,7 @@ export class ArtistCreationComponent implements OnInit{
     })
 
     this.artistForm = this.fb.group({
-      nome:[''],
+      titulo:['', Validators.required],
       editora:[''],
       descricao:[''],
       genero:[''],
@@ -50,12 +50,12 @@ export class ArtistCreationComponent implements OnInit{
     if(this.artistImage){
       const genero : Genero = new Genero();
       genero.id = this.artistForm.get('genero')?.value;
-      const formData : FormData = new FormData();
-      const artista : Artista = new Artista('', this.artistForm.get('nome')?.value,'', this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value,[],
+
+      const artista : Artista = new Artista('', this.artistForm.get('titulo')?.value,'', this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value,[],
         this.artistForm.get('anoInicioCarreira')?.value, this.artistForm.get('anoFimCarreira')?.value);
+      artista.titulo=this.artistForm.get('titulo')?.value;
 
-      //const artistImage :File = this.artistForm.get('artistImage')?.value;
-
+      console.log("enviando o nome: "+artista.titulo);
       this.artistaService.addArtista(artista, this.artistImage).subscribe(response=>{
         console.log('DEU CERTO PORRAAAAAAA: '+response);
         alert("NOVO ARTISTA ADICIONADO COM SUCESSO");

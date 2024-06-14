@@ -39,16 +39,18 @@ public class ArtistaService {
     String imageLocation;
 
     public ResponseEntity<Object> newArtista(Artista dto, MultipartFile artistImage){
-        if(!repository.existsArtistaByTitulo(dto.getTitulo())){
+        System.out.println("Nome do artista: "+dto.getTitulo());
+        if(!repository.existsArtistaByTitulo(dto.getTitulo()) && (!dto.getTitulo().equals("") && !dto.getTitulo().equals("0"))){
             try {
                 Genero genero = generoRepository.findById(dto.getGenero().getId()).get();
                 dto.setGenero(genero);
-                fileManager.saveFile(artistImage, TipoFicheiro.IMAGEM);
-                dto.setThumbNailUri(artistImage.getOriginalFilename());
-                System.out.println("Nome do artista: "+dto.getTitulo());
                 repository.save(dto);
+                dto.setThumbNailUri(artistImage.getOriginalFilename());
+                fileManager.saveFile(artistImage, TipoFicheiro.IMAGEM);
+                repository.save(dto);
+                System.out.println("Nome do artista: "+dto.getTitulo());
                 return ResponseEntity.ok(new Response("ARTISTA CRIADO COM SUCESSO!"));
-            } catch (IOException e) {
+            } catch (IOException e){
                 return ResponseEntity.badRequest().body(new Response("ERRO COM O FICHEIRO"));
             }
         }

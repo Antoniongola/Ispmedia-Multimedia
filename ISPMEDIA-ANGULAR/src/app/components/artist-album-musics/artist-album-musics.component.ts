@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Album} from "../../entities/Album";
 import {AlbumService} from "../../services/album/album.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Critica} from "../../entities/Critica";
 import {CriticaService} from "../../services/critica/critica.service";
@@ -21,7 +21,8 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   constructor(private albumService: AlbumService,
               private criticaService:CriticaService,
               private route:ActivatedRoute,
-              private fb:FormBuilder) {
+              private fb:FormBuilder,
+              private router:Router) {
   }
 
   ngOnInit(){
@@ -52,6 +53,7 @@ export class ArtistAlbumMusicsComponent implements OnInit{
 
       this.criticaService.fazerCritica(critica, this.albumId).subscribe(response=>{
         alert('DEU CERTO PORRA '+response.critica);
+        //this.router.navigate(['../']);
       }, error=>{
         alert('DEU ERRADO PIDIMO '+error);
       });
