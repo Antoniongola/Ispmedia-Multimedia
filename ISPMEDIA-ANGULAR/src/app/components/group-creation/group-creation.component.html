@@ -1,1 +1,28 @@
-<p>group-creation works!</p>
+<div class="row">
+  <div class="col">
+    <img src="assets/playlist.png">
+  </div>
+  <div class="card col align-content-center align-items-center justify-content-center">
+    <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="nome">Nome do grupo:</label>
+        <input id="nome" formControlName="nome" type="text">
+      </div>
+
+      <div formArrayName="items">
+        <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
+          <label for="item-{{i}}">Participante nº {{i + 1}}: </label>
+          <select id="item-{{i}}" formControlName="name">
+            <option *ngFor="let user of users" [value]="user.username">{{user.nome}}</option>
+          </select>
+          <button class="btn btn-outline-danger" type="button" (click)="removeItem(i)">Remover</button>
+        </div>
+      </div>
+      <button class="btn btn-outline-primary" type="button" (click)="addItem()">Adicionar mais participantes</button>
+
+      <br>
+      <br>
+      <button class="btn btn-outline-success" type="submit">Criar Grupo</button>
+    </form>
+  </div>
+</div>

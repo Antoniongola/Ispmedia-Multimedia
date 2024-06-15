@@ -17,6 +17,7 @@ import {Router} from "@angular/router";
   templateUrl: './music-upload.component.html',
   styleUrl: './music-upload.component.css'
 })
+
 export class MusicUploadComponent implements OnInit{
   musicForm!:FormGroup;
   selectedAlbum!:Album;

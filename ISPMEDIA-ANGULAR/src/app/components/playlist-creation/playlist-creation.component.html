@@ -1,1 +1,34 @@
-<p>playlist-creation works!</p>
+<div class="row">
+  <div class="col">
+    <img src="assets/playlist.png">
+  </div>
+  <div class="card col align-content-center align-items-center justify-content-center">
+      <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="nome">Nome do grupo: </label>
+          <input id="nome" formControlName="nome" type="text">
+        </div>
+
+        <label for="privacidade">Privacidade: </label>
+        <select id="privacidade" formControlName="privacidade">
+          <option>PUBLICO</option>
+          <option>PRIVADO</option>
+        </select>
+
+        <div formArrayName="items">
+          <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
+            <label for="item-{{i}}">Musica nº {{i + 1}}: </label>
+            <select id="item-{{i}}" formControlName="name">
+              <option *ngFor="let musica of musicas" [value]="musica.id">{{musica.titulo}}</option>
+            </select>
+            <button class="btn btn-outline-danger" type="button" (click)="removeItem(i)">Remover</button>
+          </div>
+        </div>
+        <button class="btn btn-outline-primary" type="button" (click)="addItem()">Adicionar mais músicas</button>
+
+        <br>
+        <br>
+        <button class="btn btn-outline-success" type="submit">Criar Playlist</button>
+      </form>
+    </div>
+</div>

@@ -24,7 +24,7 @@
       <button class="btn btn-outline-danger" type="button" (click)="removeItem(i)">Remover</button>
     </div>
   </div>
-  <button class="btn btn-outline-success" type="button" (click)="addItem()">Adicionar mais artistas</button>
+  <button class="btn btn-outline-primary" type="button" (click)="addItem()">Adicionar mais artistas</button>
 
   <div *ngIf="!musicForm.get('mostrarCampo')?.value">
     <label for="album">album da música:</label>
@@ -74,5 +74,5 @@
     </div>
   </div>
 
-  <button class="btn btn-outline-primary" type="submit">Upload de música</button>
+  <button class="btn btn-outline-success" type="submit">Upload de música</button>
 </form>
