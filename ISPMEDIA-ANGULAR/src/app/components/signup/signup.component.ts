@@ -16,7 +16,20 @@ export class SignupComponent implements OnInit{
   resultado !: SignupResponse;
   teste = "User criado com sucesso!";
 
-  constructor(private router:Router, private fb:FormBuilder, private service: SignupService) {
+  constructor(private router:Router, private fb:FormBuilder,
+              private service: SignupService, private loginService:LoginServiceService) {
+  }
+
+  ngOnInit(): void {
+    if(this.loginService.isLoggedIn()){
+      this.router.navigate(['/']);
+    }
+
+    this.signupForm = this.fb.group({
+      nome : ['', Validators.required],
+      username : ['', Validators.required],
+      password : ['', Validators.required]
+    })
   }
 
   onSubmit():void{
@@ -26,20 +39,9 @@ export class SignupComponent implements OnInit{
     const dto = new SignupDto(formValue.nome, formValue.username, formValue.password);
     this.service.cadastrar(dto).subscribe((response)=>{
       this.resultado = response;
-      console.log(response);
       if(this.resultado.response == this.teste)
-        this.router.navigate(['']);
-
-    },error => {
-      console.error('Upload failed', error);
+        this.router.navigate(['login']);
     });
   }
 
-  ngOnInit(): void {
-    this.signupForm = this.fb.group({
-      nome : ['', Validators.required],
-      username : ['', Validators.required],
-      password : ['', Validators.required]
-    })
-  }
 }

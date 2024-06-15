@@ -25,6 +25,32 @@ public class UserController {
         return ResponseEntity.status(500).body(new Response("Conta já existente"));
     }
 
+    @GetMapping("/{userId}/roles/admin")
+    public ResponseEntity<Boolean> isAdmin(@PathVariable String userId){
+        return this.service.isAdmin(userId);
+    }
+
+    @GetMapping("/{userId}/roles/editor")
+    public ResponseEntity<Boolean> isEditor(@PathVariable String userId){
+        return this.service.isEditor(userId);
+    }
+
+    @PostMapping("/{userId}/promote")
+    public ResponseEntity<Response> promoteUser(@PathVariable String userId){
+        if(this.service.promoverUserParaEditor(userId))
+            return ResponseEntity.ok(new Response("USER PROMOVIDO A EDITOR"));
+
+        return ResponseEntity.badRequest().body(new Response("NÃO FOI POSSÍVEL PROMOVER ESTE USER"));
+    }
+
+    @PostMapping("/{userId}/demote")
+    public ResponseEntity<Response> demoteUser(@PathVariable String userId){
+        if(this.service.promoverUserParaEditor(userId))
+            return ResponseEntity.ok(new Response("USER DEIXOU DE SER EDITOR"));
+
+        return ResponseEntity.badRequest().body(new Response("NÃO FOI DESPROMOVER ESTE USER"));
+    }
+
     @PutMapping("/user/{id}")
     public ResponseEntity<Utilizador>updateUser(@RequestBody Utilizador user, @PathVariable String id){
         if(service.atualizarUser(user, id)){
@@ -49,7 +75,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasAuthority('SCOPE_EDITOR')")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<List<Utilizador>> selecionarTodosUsers(){
         return ResponseEntity.ok(service.selecionarUsers());
     }

@@ -22,7 +22,7 @@ public class AdminConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Utilizador admin = new Utilizador();
         admin.setNome("António Domingos Lopes Ngola");
-        admin.setUsername("ngolajr");
+        admin.setUsername("A3SNT@isptec.co.ao");
 
 
         if(repository.findById(admin.getUsername()).isEmpty()){

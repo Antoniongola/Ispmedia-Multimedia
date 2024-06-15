@@ -1,9 +1,9 @@
-<div class="navbar">
+<div class="navbar" *ngIf="isLoggedIn()">
   <img src="assets/spotify.png" class="nav-item icone">
   <div class="nav-item">
     <a [routerLink]="['']">Pagina inicial</a>
   </div>
-  <div class="dropdown nav-item">
+  <div class="dropdown nav-item" *ngIf="isEditor">
     <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
       Albuns
     </span>
@@ -12,7 +12,7 @@
       <li><a [routerLink]="['albums']" class="dropdown-item cabecalho" >Ver todos albuns</a></li>
     </ul>
   </div>
-  <div class="dropdown nav-item">
+  <div class="dropdown nav-item" *ngIf="isEditor">
     <span class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
       Artistas
     </span>
@@ -21,7 +21,7 @@
       <li><a [routerLink]="['artists']" class="dropdown-item cabecalho" >Ver todos artistas</a></li>
     </ul>
   </div>
-  <div class="dropdown nav-item">
+  <div class="dropdown nav-item" *ngIf="isEditor">
       <span class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
         Musicas
       </span>
@@ -37,7 +37,7 @@
       </span>
     </a>
   </div>
-  <div class="dropdown nav-item">
+  <div *ngIf="isEditor" class="dropdown nav-item">
     <span class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
       Videos
     </span>
@@ -47,5 +47,5 @@
     </ul>
   </div>
   <!-- aqui metes mambo pra pesquisar -->
-  <button class="btn btn-outline-secondary">Sair da conta</button>
+  <button class="btn btn-outline-secondary" (click)="logOut()">Sair da conta</button>
 </div>

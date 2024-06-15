@@ -19,7 +19,7 @@
           <div>
             <label class="loginFormLabel" for="username">Username</label>
             <br>
-            <input id="username" placeholder="Insira o seu username" formControlName="username" type="text" class="custom-input">
+            <input id="username" placeholder="Insira o seu email" formControlName="username" type="email" class="custom-input">
           </div>
 
           <div>
@@ -28,7 +28,7 @@
             <input id="password" placeholder="Insira a sua senha" formControlName="password" type="password" class="custom-input">
           </div>
 
-          <button type="submit" class="text-center greenPrimary btn loginButton">Inicie Sessão</button>
+          <button type="submit" class="text-center greenPrimary btn loginButton">Criar Conta</button>
         </div>
         <div class="centraliza row">
           <button class="networkButons text-center">Continuar com o Google</button>
@@ -36,7 +36,7 @@
           <button class="networkButons text-center">Continuar com o Apple</button>
         </div>
         <div class="text-center loginSignupArea">
-          <span class="customPlaceholder">Já tem conta? <a href="../login"><span class="signupNow">Fazer login no SNT-Ispmedia</span></a></span>
+          <span class="customPlaceholder">Já tem conta? <a [routerLink]="['../login']"><span class="signupNow">Fazer login no SNT-Ispmedia</span></a></span>
         </div>
       </form>
     </div>

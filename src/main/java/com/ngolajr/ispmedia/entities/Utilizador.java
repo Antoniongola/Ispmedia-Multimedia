@@ -25,5 +25,7 @@ public class Utilizador {
     @Column(updatable = false)
     private LocalDateTime createdDate;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Playlist> playlists;
+    private List<Playlist> playlists=new ArrayList<>();
+    @ManyToMany
+    private List<Grupo> grupos = new ArrayList<>();
 }

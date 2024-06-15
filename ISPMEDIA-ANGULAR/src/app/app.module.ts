@@ -25,6 +25,8 @@ import { AlbumCreationComponent } from './components/album-creation/album-creati
 import { ArtistComponent } from './components/artist/artist.component';
 import { ArtistAlbumMusicsComponent } from './components/artist-album-musics/artist-album-musics.component';
 import { ArtistAlbumsComponent } from './components/artist-albums/artist-albums.component';
+import { GroupCreationComponent } from './components/group-creation/group-creation.component';
+import { PlaylistCreationComponent } from './components/playlist-creation/playlist-creation.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { ArtistAlbumsComponent } from './components/artist-albums/artist-albums.
     AlbumCreationComponent,
     ArtistComponent,
     ArtistAlbumMusicsComponent,
-    ArtistAlbumsComponent
+    ArtistAlbumsComponent,
+    GroupCreationComponent,
+    PlaylistCreationComponent
   ],
   imports: [
     BrowserModule,

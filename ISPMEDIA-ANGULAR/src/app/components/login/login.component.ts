@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit{
   constructor(private router:Router, private fb:FormBuilder, private service: LoginServiceService) {
   }
   ngOnInit(): void {
+    if(this.service.isLoggedIn())
+      this.router.navigate(['/']);
+
     this.loginForm = this.fb.group({
       username : ['', Validators.required],
       password : ['', Validators.required]
@@ -32,6 +35,7 @@ export class LoginComponent implements OnInit{
     this.service.login(dto).subscribe(response =>{
       this.loginResponse = response;
       this.service.saveToken(this.loginResponse.accessToken);
+      this.service.saveUsername(dto.username);
       this.router.navigate(['']);
       console.log(this.loginResponse.accessToken);
     },error => {

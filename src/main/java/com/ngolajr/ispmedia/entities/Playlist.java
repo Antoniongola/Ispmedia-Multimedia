@@ -13,9 +13,9 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String titulo;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Musica> musicas;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Utilizador owner;
     private Privacidade privacidade;
 }

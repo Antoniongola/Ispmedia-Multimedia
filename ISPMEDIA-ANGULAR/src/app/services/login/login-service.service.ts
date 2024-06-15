@@ -3,24 +3,45 @@ import {LoginDto} from "../../dtos/LoginDto";
 import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LoginResponse} from "../../dtos/LoginResponse";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginServiceService {
   private apiUrl:string = "http://localhost:8080/api/login";
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router:Router) { }
 
   login(loginDto: LoginDto): Observable<LoginResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<LoginResponse>(this.apiUrl, loginDto);
   }
 
-  /*
-  login(loginDto: LoginDto): Observable<string> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.apiUrl, loginDto, { headers, responseType: 'text' });
-  }*/
+  saveUsername(username:string):void{
+    localStorage.setItem('username', username);
+  }
+
+  getUsername():string|null{
+      return localStorage.getItem('username');
+  }
+
+  isLoggedIn():boolean{
+    if(localStorage.getItem('username'))
+      return true;
+
+    return false;
+  }
+
+  loginRedirect(){
+    this.router.navigate(['/login'])
+  }
+
+
+  logOut(){
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 
   saveToken(token: string): void {
     localStorage.setItem('jwtToken', token);

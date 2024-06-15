@@ -5,6 +5,8 @@ import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.enums.Roles;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +26,35 @@ public class UserService {
         }
 
         Utilizador user = new Utilizador();
+        user.setNome(dto.nome());
         user.setUsername(dto.username());
         user.setPassword(encoder.encode(dto.password()));
         user.setRoles(Set.of(Roles.USER));
         repository.save(user);
 
         return true;
+    }
+
+    public boolean promoverUserParaEditor(String username){
+        if(this.repository.existsById(username)){
+            Utilizador user = this.repository.findById(username).get();
+            user.setRoles(Set.of(Roles.USER, Roles.EDITOR));
+            this.repository.save(user);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean despromoverUser(String username){
+        if(this.repository.existsById(username)){
+            Utilizador user = this.repository.findById(username).get();
+            user.setRoles(Set.of(Roles.USER));
+            this.repository.save(user);
+            return true;
+        }
+
+        return false;
     }
 
     public boolean atualizarUser(Utilizador user, String username){
@@ -60,6 +85,30 @@ public class UserService {
 
     public List<Utilizador> selecionarUsers(){
         return repository.findAll();
+    }
+
+    public ResponseEntity<Boolean> isAdmin(String username){
+        if(this.repository.existsById(username)){
+            Utilizador user = this.repository.findById(username).get();
+            if(user.getRoles().contains(Roles.ADMIN))
+                return ResponseEntity.ok(true);
+
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(false);
+        }
+
+        return ResponseEntity.ok(false);
+    }
+
+    public ResponseEntity<Boolean> isEditor(String username){
+        if(this.repository.existsById(username)){
+            Utilizador user = this.repository.findById(username).get();
+            if(user.getRoles().contains(Roles.EDITOR))
+                return ResponseEntity.ok(true);
+
+            return ResponseEntity.status(401).body(false);
+        }
+
+        return ResponseEntity.status(401).body(false);
     }
 
 }
