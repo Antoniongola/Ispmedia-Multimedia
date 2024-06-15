@@ -19,6 +19,7 @@ import {ArtistAlbumsComponent} from "./components/artist-albums/artist-albums.co
 import {VideoUploadComponent} from "./components/video-upload/video-upload.component";
 import {GroupCreationComponent} from "./components/group-creation/group-creation.component";
 import {PlaylistCreationComponent} from "./components/playlist-creation/playlist-creation.component";
+import {NotificacoesComponent} from "./components/notificacoes/notificacoes.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path:'signup', component:SignupComponent},
   {path:'search', component:SearchComponent},
   {path:'albums', component: AlbumsComponent},
+  {path:'news', component:NotificacoesComponent},
   {path:'albums/new', component: AlbumCreationComponent},
   {path:'artist/:idArtista', component: ArtistComponent, children:[
       {path:'', component: ArtistAlbumsComponent},
