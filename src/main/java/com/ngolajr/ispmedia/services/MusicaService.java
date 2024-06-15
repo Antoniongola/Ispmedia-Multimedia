@@ -127,8 +127,6 @@ public class MusicaService {
 
             Artista autor = this.artistaRepository.findById(dto.getArtista().getId()).get();
 
-            // Salva os arquivos
-            fm.saveFile(musicFile, TipoFicheiro.MUSICA);
             // Associa o álbum, se houver
             if (dto.getAlbum() != null) {
                 System.out.println("já entra aqui pelo menos, vamos ver se vai passar o id:");
@@ -152,17 +150,18 @@ public class MusicaService {
 
                 album.setMusics(musics);
                 dto.setDataLancamento(album.getDataLancamento());
-                albumRepository.save(album);
+                //albumRepository.save(album);
                 dto.setAlbum(album);
                 autor.getAlbums().add(album);
                 System.out.println("salvando o autor");
-                artistaRepository.save(autor);
+                //artistaRepository.save(autor);
             }else{
                 fm.saveFile(musicImage, TipoFicheiro.IMAGEM);
             }
 
             // Salva a música
             repository.save(dto);
+            fm.saveFile(musicFile, TipoFicheiro.MUSICA);
             return ResponseEntity.ok().body(new Response("UPLOAD DE MUSICA FEITO COM SUCESSO"));
         } catch (IOException e) {
             System.out.println("Entrou aqui e deu erro!");

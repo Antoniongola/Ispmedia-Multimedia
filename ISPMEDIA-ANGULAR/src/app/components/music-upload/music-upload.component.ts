@@ -104,11 +104,14 @@ export class MusicUploadComponent implements OnInit{
       this.submittedItems.map(id=>{
         this.artistaService.getArtista(id.name).subscribe(response=>{
           this.musicArtists.push(response);
+          console.log("adicionado o "+response.titulo+ " a lista");
         }, error=>{
           console.log('NÃO FOI POSSÍVEL ENCONTRAR O ARTISTA: '+error);
         })
       });
 
+      console.log("tamanho da lista: "+this.musicArtists.length);
+      console.log("tamanho da lista do form: "+this.submittedItems.length);
       this.artistaService.getArtista(this.musicForm.get('autor')?.value).subscribe(response=>{
         this.autor = response;
       });
@@ -122,6 +125,7 @@ export class MusicUploadComponent implements OnInit{
         this.musicForm.get('descricao')?.value, genero, this.musicForm.get('editora')?.value, this.autor,this.musicArtists, this.selectedAlbum,
         0, '', this.musicForm.get('letra')?.value, this.musicForm.get('dataLancamento')?.value, 0);
 
+      /*
       this.musicaService.addMusica(musica, this.musicFile, this.musicImage).subscribe(response=>{
         alert('UPLOAD DE MÚSICA FEITO COM SUCESSO! Album: '+musica.album?.titulo);
         this.musicArtists = [];
@@ -130,7 +134,7 @@ export class MusicUploadComponent implements OnInit{
         const response:Response = error;
         alert('ERRO NO UPLOAD DE MÚSICA! '+response);
         //this.onSubmit();
-      });
+      });*/
     }else{
       alert('PREENCHA BEM O FORMULÁRIO!');
     }

@@ -6,6 +6,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Critica} from "../../entities/Critica";
 import {CriticaService} from "../../services/critica/critica.service";
 import {User} from "../../entities/User";
+import {LoginServiceService} from "../../services/login/login-service.service";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-artist-album-musics',
@@ -17,15 +19,25 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   album!:Album;
   albumId:any='';
   albumImage:{[key:string] : any} = {};
+  criticoUsername:any="";
+  critico!:User;
 
   constructor(private albumService: AlbumService,
               private criticaService:CriticaService,
               private route:ActivatedRoute,
               private fb:FormBuilder,
-              private router:Router) {
+              private loginService:LoginServiceService,
+              private userService:UserService) {
   }
 
   ngOnInit(){
+    this.criticoUsername=this.loginService.getUsername();
+    this.userService.selecionarUser(this.criticoUsername).subscribe(response=>{
+      this.critico = response;
+      console.log("CRITICO CARREGADO COM SUCESSO!")
+    }, error=>{
+      console.log("NÃO FOI POSSÍVEL CARREGAR O CRÍTICO.");
+    });
     this.criticaForm = this.fb.group({
       nota:['', Validators.required],
       critica:['', Validators.required]
@@ -42,8 +54,7 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   }
 
   onSubmit(){
-    const user:User=new User();
-    user.username='ngolajr';
+    const user:User=this.critico;
 
     const critica:Critica=new Critica(0,
       this.criticaForm.get('nota')?.value,

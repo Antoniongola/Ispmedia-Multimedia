@@ -17,7 +17,7 @@ import java.util.UUID;
 @ToString
 public class Artista extends Conteudo {
     //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    //@JsonManagedReference
+    @JsonManagedReference(value = "artista-album")
     @OneToMany
     private List<Album> albums;
     private int anoInicioCarreira;

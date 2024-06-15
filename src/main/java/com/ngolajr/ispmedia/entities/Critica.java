@@ -10,7 +10,7 @@ public class Critica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private int nota;
-    @Column(length = 2000)
+    @Column(length = 300)
     private String critica;
     //verificar
     @ManyToOne

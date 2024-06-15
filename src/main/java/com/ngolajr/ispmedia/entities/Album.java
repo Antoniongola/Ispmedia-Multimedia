@@ -18,7 +18,7 @@ public class Album extends Conteudo{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Musica> musics;
     //@ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference(value = "artista-album")
     @ManyToOne
     private Artista artista;
     @OneToMany

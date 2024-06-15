@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Critica} from "../../entities/Critica";
 import {Observable} from "rxjs";
 
@@ -14,6 +14,7 @@ export class CriticaService {
   }
 
   fazerCritica(critica: Critica, albumId: string):Observable<Critica>{
-    return this.http.post<Critica>(`${this.apiUrl}/${albumId}`, critica);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<Critica>(`${this.apiUrl}/${albumId}`, critica, {headers});
   }
 }

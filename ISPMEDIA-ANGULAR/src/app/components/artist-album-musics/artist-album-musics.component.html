@@ -28,14 +28,16 @@
       <div class="row" *ngFor="let critica of album.criticas">
         <div class="row">
           <div class="col">
-            {{critica.nota}}
+            <img class="icone" src="assets/user.png">
           </div>
           <div class="col">
-            {{critica.critica}}
+            <span>Nota:{{critica.nota}}</span>
+            <br>
+            <span>Autor: {{critica.critico.nome}}</span>
+            <br>
+            <span>Critica:{{critica.critica}}</span>
+
           </div>
-        </div>
-        <div class="row">
-          <span>{{critica.critico.nome}}</span>
         </div>
       </div>
       <br>
