@@ -9,6 +9,9 @@ import {AlbumService} from "../../services/album/album.service";
 import {MusicaService} from "../../services/musica/musica.service";
 import {Musica} from "../../entities/Musica";
 import {Router} from "@angular/router";
+import {LoginServiceService} from "../../services/login/login-service.service";
+import {UserService} from "../../services/user/user.service";
+import {User} from "../../entities/User";
 
 @Component({
   selector: 'app-music-upload',
@@ -25,13 +28,17 @@ export class MusicUploadComponent implements OnInit{
   submittedItems:any[] = [];
   musicArtists:Artista[] = [];
   albums!:Album[];
+  user:User=new User();
+  username:any;
 
   constructor(private fb: FormBuilder,
               private musicaService: MusicaService,
               private generoService: GeneroService,
               private artistaService: ArtistaService,
               private albumService : AlbumService,
-              private route:Router) {}
+              private route:Router,
+              private loginService:LoginServiceService,
+              private userService:UserService) {}
 
   ngOnInit(): void {
     this.musicForm = this.fb.group({
@@ -45,6 +52,12 @@ export class MusicUploadComponent implements OnInit{
       letra:['', Validators.required],
       items: this.fb.array([this.createItem()]),
       mostrarCampo: [false]
+    });
+
+    this.username = this.loginService.getUsername();
+    this.userService.selecionarUser(this.username).subscribe(response=>{
+      this.user = response;
+      console.log("User carregado com sucesso!");
     });
 
     this.generoService.todosGeneros().subscribe(response=>{
@@ -98,7 +111,7 @@ export class MusicUploadComponent implements OnInit{
 
       this.submittedItems.map(id=>{
         let artista:Artista=new Artista(id.name, '', '', '',
-          new Genero(), '', [], 0,0);
+          new Genero(), '', new User(),[], 0,0);
         console.log("ID: "+id.name);
         artista.id=id.name;
         this.musicArtists.push(artista);
@@ -107,16 +120,16 @@ export class MusicUploadComponent implements OnInit{
       console.log("tamanho da lista: "+this.musicArtists.length);
 
       const autor:Artista=new Artista(this.musicForm.get('autor')?.value, '', '',
-        '', new Genero(), '', [], 0, 0);
+        '', new Genero(), '', new User(),[], 0, 0);
 
       const album:Album = new Album(this.musicForm.get('album')?.value,'', '', '',new Genero(), '',
-        [], null, [], 0, '', 0);
+        new User(), [], null, [], 0, '', 0);
 
       const genero :Genero= new Genero();
       genero.id = this.musicForm.get('generoMusica')?.value;
 
       const musica : Musica = new Musica('', this.musicForm.get('tituloMusica')?.value, '',
-        this.musicForm.get('descricao')?.value, genero, this.musicForm.get('editora')?.value, autor,this.musicArtists, album,
+        this.musicForm.get('descricao')?.value, genero, this.musicForm.get('editora')?.value, this.user,autor,this.musicArtists, album,
         0, '', this.musicForm.get('letra')?.value, this.musicForm.get('dataLancamento')?.value, 0);
 
       this.musicaService.addMusica(musica, this.musicFile, this.musicImage).subscribe(response => {

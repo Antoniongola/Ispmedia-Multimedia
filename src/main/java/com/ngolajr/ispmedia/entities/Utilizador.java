@@ -28,4 +28,5 @@ public class Utilizador {
     private List<Playlist> playlists=new ArrayList<>();
     @ManyToMany
     private List<Grupo> grupos = new ArrayList<>();
+    private boolean isOnline=false;
 }

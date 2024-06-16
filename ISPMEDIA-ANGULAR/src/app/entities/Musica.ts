@@ -2,6 +2,7 @@ import { Conteudo } from './Conteudo';
 import { Artista } from './Artista';
 import { Album } from './Album';
 import {Genero} from "./Genero";
+import {User} from "./User";
 
 export class Musica extends Conteudo {
   artists: Artista[];
@@ -13,10 +14,10 @@ export class Musica extends Conteudo {
   streams:number;
   artista:Artista;
   constructor(id: string, titulo: string, thumbNailUri: string, descricao: string,
-              genero:Genero, editora:string, autor:Artista,artists: Artista[],
+              genero:Genero, editora:string, user:User, autor:Artista,artists: Artista[],
               album: Album|null, duration: number, path: string,
               letra:string, dataLancamento:string, streams:number) {
-    super(id, titulo, thumbNailUri, descricao, genero, editora);
+    super(id, titulo, thumbNailUri, descricao, genero, editora, user);
     this.artists = artists;
     this.album = album;
     this.duration = duration;

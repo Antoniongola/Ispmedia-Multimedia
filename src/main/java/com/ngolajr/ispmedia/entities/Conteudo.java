@@ -21,4 +21,6 @@ public class Conteudo implements Serializable {
     @ManyToOne
     protected Genero genero;
     protected String editora;
+    @ManyToOne
+    private Utilizador criadorConteudo;
 }

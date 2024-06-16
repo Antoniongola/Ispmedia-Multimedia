@@ -7,6 +7,9 @@ import {ArtistaService} from "../../services/artista/artista.service";
 import {GeneroService} from "../../services/genero/genero.service";
 import {Album} from "../../entities/Album";
 import {Router} from "@angular/router";
+import {User} from "../../entities/User";
+import {LoginServiceService} from "../../services/login/login-service.service";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-album-creation',
@@ -19,12 +22,15 @@ export class AlbumCreationComponent implements OnInit{
   generos!:Genero[];
   artistas!:Artista[];
   sArtista!:Artista;
+  user:User = new User();
+  username:any;
 
   constructor(private albumService:AlbumService,
               private artistaService:ArtistaService,
               private generoService:GeneroService,
               private fb:FormBuilder,
-              private router:Router) {
+              private loginService:LoginServiceService,
+              private userService:UserService) {
     this.albumForm = this.fb.group({
       nome:[''],
       descricao:[''],
@@ -36,6 +42,12 @@ export class AlbumCreationComponent implements OnInit{
   }
 
   ngOnInit() {
+    this.username = this.loginService.getUsername();
+    this.userService.selecionarUser(this.username).subscribe(response=>{
+      this.user = response;
+      console.log("User carregado com sucesso!");
+    });
+
     this.generoService.todosGeneros().subscribe(response=>{
       this.generos = response;
     }, error=>{
@@ -66,12 +78,13 @@ export class AlbumCreationComponent implements OnInit{
       }, error=>{
         console.log('erro no artista: '+error);
       });
+
       const genero :Genero = new Genero();
       genero.id=this.albumForm.get('genero')?.value;
 
       const album : Album = new Album('',
         this.albumForm.get('nome')?.value, '',this.albumForm.get('descricao')?.value,
-        genero, this.albumForm.get('editora')?.value,[], this.sArtista, [],0,
+        genero, this.albumForm.get('editora')?.value, this.user,[], this.sArtista, [],0,
         this.albumForm.get('dataLancamento')?.value, 0);
 
       album.artista = this.sArtista;

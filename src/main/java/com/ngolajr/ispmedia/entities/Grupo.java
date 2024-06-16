@@ -2,6 +2,7 @@ package com.ngolajr.ispmedia.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import java.util.Date;
@@ -22,4 +23,6 @@ public class Grupo {
     private List<Utilizador> editores;
     @ManyToMany
     private List<Utilizador> participantes;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Conteudo> conteudoGrupo;
 }

@@ -5,6 +5,9 @@ import {Genero} from "../../entities/Genero";
 import {Artista} from "../../entities/Artista";
 import {ArtistaService} from "../../services/artista/artista.service";
 import {Router} from "@angular/router";
+import {LoginServiceService} from "../../services/login/login-service.service";
+import {User} from "../../entities/User";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-artist-creation',
@@ -15,13 +18,23 @@ export class ArtistCreationComponent implements OnInit{
   artistForm !: FormGroup;
   generos!:Genero[];
   artistImage!:File;
+  username:any;
+  user:User= new User();
 
   constructor(private generoService:GeneroService,
               private artistaService:ArtistaService,
               private fb:FormBuilder,
-              private router:Router){}
+              private router:Router,
+              private userService:UserService,
+              private loginService:LoginServiceService){}
 
   ngOnInit():void{
+    this.username = this.loginService.getUsername();
+    this.userService.selecionarUser(this.username).subscribe(response=>{
+      this.user = response;
+      console.log("User carregado com sucesso!");
+    });
+
     this.generoService.todosGeneros().subscribe(response=>{
       this.generos = response;
     }, error => {
@@ -51,13 +64,13 @@ export class ArtistCreationComponent implements OnInit{
       const genero : Genero = new Genero();
       genero.id = this.artistForm.get('genero')?.value;
 
-      const artista : Artista = new Artista('', this.artistForm.get('titulo')?.value,'', this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value,[],
+      const artista : Artista = new Artista('', this.artistForm.get('titulo')?.value,'',
+        this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value, this.user,[],
         this.artistForm.get('anoInicioCarreira')?.value, this.artistForm.get('anoFimCarreira')?.value);
       artista.titulo=this.artistForm.get('titulo')?.value;
 
       console.log("enviando o nome: "+artista.titulo);
       this.artistaService.addArtista(artista, this.artistImage).subscribe(response=>{
-        console.log('DEU CERTO PORRAAAAAAA: '+response);
         alert("NOVO ARTISTA ADICIONADO COM SUCESSO");
         this.router.navigate(['/']);
 

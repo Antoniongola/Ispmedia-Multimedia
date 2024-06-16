@@ -2,12 +2,13 @@ import {Playlist} from "./Playlist";
 import {Role} from "./Role";
 
 export class User{
-  nome!:string;
-  username!:string;
-  password!:string;
+  nome:string='';
+  username:string='';
+  password:string='';
   roles:Role[]=[];
-  createdDate!:string;
+  createdDate:string='';
   playlists:Playlist[]=[];
+  isOnline:boolean=false;
 
   constructor() {
   }

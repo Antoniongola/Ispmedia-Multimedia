@@ -1,5 +1,6 @@
 import {Genero} from "./Genero";
 import {Artista} from "./Artista";
+import {User} from "./User";
 
 export class Conteudo {
   id: string; // UUID
@@ -8,15 +9,17 @@ export class Conteudo {
   descricao: string;
   genero:Genero;
   editora:string;
+  criadorConteudo:User;
 
   constructor(id: string, titulo: string, thumbNailUri: string,
               descricao: string, genero:Genero,
-              editora:string) {
+              editora:string, criadorConteudo:User) {
     this.id = id;
     this.titulo = titulo;
     this.thumbNailUri = thumbNailUri;
     this.descricao = descricao;
     this.genero = genero;
     this.editora = editora;
+    this.criadorConteudo = criadorConteudo;
   }
 }

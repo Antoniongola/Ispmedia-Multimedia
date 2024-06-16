@@ -14,7 +14,7 @@ public class Playlist {
     private long id;
     private String titulo;
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Musica> musicas;
+    private List<Conteudo> conteudos;
     @ManyToOne(fetch = FetchType.EAGER)
     private Utilizador owner;
     private Privacidade privacidade;
