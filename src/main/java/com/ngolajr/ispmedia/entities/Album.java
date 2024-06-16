@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -16,13 +17,13 @@ import java.util.UUID;
 @Setter
 public class Album extends Conteudo{
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Musica> musics;
+    private List<Musica> musics=new ArrayList<>();
     //@ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
     @JsonBackReference(value = "artista-album")
     @ManyToOne
     private Artista artista;
     @OneToMany
-    private List<Critica> criticas;
+    private List<Critica> criticas = new ArrayList<>();
     private Date dataLancamento;
     private double pontuacaoMedia;
     private int streams;

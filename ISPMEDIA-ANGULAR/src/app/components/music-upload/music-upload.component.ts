@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UploadService} from "../../services/upload.service";
-import {HttpClient} from "@angular/common/http";
 import {Genero} from "../../entities/Genero";
 import {GeneroService} from "../../services/genero/genero.service";
 import {ArtistaService} from "../../services/artista/artista.service";
@@ -20,14 +18,12 @@ import {Router} from "@angular/router";
 
 export class MusicUploadComponent implements OnInit{
   musicForm!:FormGroup;
-  selectedAlbum!:Album;
   generos!:Genero[];
   artistas!:Artista[];
   musicFile!:File;
   musicImage:File|string = '';
   submittedItems:any[] = [];
   musicArtists:Artista[] = [];
-  autor!:Artista;
   albums!:Album[];
 
   constructor(private fb: FormBuilder,
@@ -68,7 +64,6 @@ export class MusicUploadComponent implements OnInit{
     }, error=>{
       console.log('erro ao carregar os albuns: '+error);
     });
-
   }
 
   createItem(): FormGroup {
@@ -97,44 +92,41 @@ export class MusicUploadComponent implements OnInit{
     }
   }
 
-  onSubmit() {
+   onSubmit() {
     if (this.musicForm.valid) {
       this.submittedItems = this.musicForm.value.items;
 
       this.submittedItems.map(id=>{
-        this.artistaService.getArtista(id.name).subscribe(response=>{
-          this.musicArtists.push(response);
-          console.log("adicionado o "+response.titulo+ " a lista");
-        }, error=>{
-          console.log('NÃO FOI POSSÍVEL ENCONTRAR O ARTISTA: '+error);
-        })
+        let artista:Artista=new Artista(id.name, '', '', '',
+          new Genero(), '', [], 0,0);
+        console.log("ID: "+id.name);
+        artista.id=id.name;
+        this.musicArtists.push(artista);
       });
 
       console.log("tamanho da lista: "+this.musicArtists.length);
-      console.log("tamanho da lista do form: "+this.submittedItems.length);
-      this.artistaService.getArtista(this.musicForm.get('autor')?.value).subscribe(response=>{
-        this.autor = response;
-      });
-      const genero :Genero= new Genero();
 
-      this.albumService.getAlbum(this.musicForm.get('album')?.value).subscribe(response=>{
-        this.selectedAlbum = response;
-      });
+      const autor:Artista=new Artista(this.musicForm.get('autor')?.value, '', '',
+        '', new Genero(), '', [], 0, 0);
+
+      const album:Album = new Album(this.musicForm.get('album')?.value,'', '', '',new Genero(), '',
+        [], null, [], 0, '', 0);
+
+      const genero :Genero= new Genero();
       genero.id = this.musicForm.get('generoMusica')?.value;
+
       const musica : Musica = new Musica('', this.musicForm.get('tituloMusica')?.value, '',
-        this.musicForm.get('descricao')?.value, genero, this.musicForm.get('editora')?.value, this.autor,this.musicArtists, this.selectedAlbum,
+        this.musicForm.get('descricao')?.value, genero, this.musicForm.get('editora')?.value, autor,this.musicArtists, album,
         0, '', this.musicForm.get('letra')?.value, this.musicForm.get('dataLancamento')?.value, 0);
 
-      /*
-      this.musicaService.addMusica(musica, this.musicFile, this.musicImage).subscribe(response=>{
-        alert('UPLOAD DE MÚSICA FEITO COM SUCESSO! Album: '+musica.album?.titulo);
+      this.musicaService.addMusica(musica, this.musicFile, this.musicImage).subscribe(response => {
+        alert('UPLOAD DE MÚSICA FEITO COM SUCESSO! Album: ' + musica.album?.titulo);
         this.musicArtists = [];
         this.route.navigate(['/']);
-      }, error=>{
-        const response:Response = error;
-        alert('ERRO NO UPLOAD DE MÚSICA! '+response);
-        //this.onSubmit();
-      });*/
+      }, error => {
+        alert('ERRO NO UPLOAD DE MÚSICA! ' + error);
+        this.musicArtists = [];
+      });
     }else{
       alert('PREENCHA BEM O FORMULÁRIO!');
     }

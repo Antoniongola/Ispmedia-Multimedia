@@ -7,6 +7,7 @@ import com.ngolajr.ispmedia.entities.Video;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.VideoRepository;
 import lombok.RequiredArgsConstructor;
+import org.jcodec.api.SequenceEncoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -35,7 +36,7 @@ public class VideoService {
     @Value("${upload.imagem}")
     private String imageLocation;
 
-    public ResponseEntity<Object> uploadVideo(Video video, MultipartFile videoFile,MultipartFile videoCover){
+    public ResponseEntity<Object> uploadVideo(Video video, MultipartFile videoFile, MultipartFile videoCover) {
         try {
             video.setPath(videoFile.getOriginalFilename());
             video.setThumbNailUri(videoCover.getOriginalFilename());
@@ -49,13 +50,13 @@ public class VideoService {
             this.fm.saveFile(videoFile, TipoFicheiro.VIDEO);
             return ResponseEntity.ok(new Response("UPLOAD FEITO COM SUCESSO"));
         } catch (IOException e) {
-            System.out.println("ERRO: "+e.getMessage());
+            System.out.println("ERRO: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("ERRO NO UPLOAD"));
         }
     }
 
-    public ResponseEntity<Video> selectVideoInfos(UUID id){
-        if(this.repository.existsById(id))
+    public ResponseEntity<Video> selectVideoInfos(UUID id) {
+        if (this.repository.existsById(id))
             return ResponseEntity.ok(this.repository.findById(id).get());
 
         return ResponseEntity.notFound().build();
@@ -63,9 +64,9 @@ public class VideoService {
 
     public ResponseEntity<Resource> getVideoChunk(UUID id, HttpHeaders headers) throws IOException {
         Video video = this.repository.findById(id).orElseThrow(() -> new RuntimeException("Video not found"));
-        video.setStreams(video.getStreams()+1);
+        video.setStreams(video.getStreams() + 1);
         this.repository.save(video);
-        Path videoPath = Path.of(videoLocation+"\\").resolve(video.getPath()).normalize();
+        Path videoPath = Path.of(videoLocation + "\\").resolve(video.getPath()).normalize();
         UrlResource videoResource = new UrlResource(videoPath.toUri());
 
         long fileSize = Files.size(videoPath);
@@ -90,32 +91,33 @@ public class VideoService {
                     .body(videoResource);
         }
     }
-/*
-    public ResponseEntity<Resource> verVideo(UUID id) throws FileNotFoundException {
-        Video video = this.repository.findById(id).orElseThrow();
-        video.setStreams(video.getStreams()+1);
-        this.repository.save(video);
 
-        File file = new File(videoLocation+"\\"+video.getPath());
-        HttpHeaders headers = new HttpHeaders();
-        try {
-            headers.add("Content-Disposition", "attachment; filename="+video.getThumbNailUri());
-            headers.add("Content-Type", Files.probeContentType(file.toPath()));
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    /*
+        public ResponseEntity<Resource> verVideo(UUID id) throws FileNotFoundException {
+            Video video = this.repository.findById(id).orElseThrow();
+            video.setStreams(video.getStreams()+1);
+            this.repository.save(video);
+
+            File file = new File(videoLocation+"\\"+video.getPath());
+            HttpHeaders headers = new HttpHeaders();
+            try {
+                headers.add("Content-Disposition", "attachment; filename="+video.getThumbNailUri());
+                headers.add("Content-Type", Files.probeContentType(file.toPath()));
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+            return ResponseEntity.ok().
+                    headers(headers).
+                    body(resource);
         }
-        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-        return ResponseEntity.ok().
-                headers(headers).
-                body(resource);
-    }
-*/
+    */
     public ResponseEntity<Resource> videoThumbnail(UUID id) throws FileNotFoundException {
         Video video = this.repository.findById(id).orElseThrow();
-        File file = new File(imageLocation+"\\"+video.getThumbNailUri());
+        File file = new File(imageLocation + "\\" + video.getThumbNailUri());
         HttpHeaders headers = new HttpHeaders();
         try {
-            headers.add("Content-Disposition", "attachment; filename="+video.getThumbNailUri());
+            headers.add("Content-Disposition", "attachment; filename=" + video.getThumbNailUri());
             headers.add("Content-Type", Files.probeContentType(file.toPath()));
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -126,12 +128,12 @@ public class VideoService {
                 body(resource);
     }
 
-    public ResponseEntity<List<Video>> allVideos(){
+    public ResponseEntity<List<Video>> allVideos() {
         return ResponseEntity.ok(this.repository.findAll());
     }
 
-    public ResponseEntity<Response> apagarVideo(UUID id){
-        if(this.repository.findById(id).isPresent()){
+    public ResponseEntity<Response> apagarVideo(UUID id) {
+        if (this.repository.findById(id).isPresent()) {
             this.repository.deleteById(id);
             return ResponseEntity.ok(new Response("VÍDEO APAGADO COM SUCESSO!"));
         }
