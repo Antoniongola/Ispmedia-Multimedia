@@ -1,5 +1,5 @@
 import {Playlist} from "./Playlist";
-import {Role} from "./Role";
+import {Role} from "./enums/Role";
 
 export class User{
   nome:string='';

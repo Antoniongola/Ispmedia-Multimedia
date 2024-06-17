@@ -7,7 +7,6 @@ import com.ngolajr.ispmedia.entities.Video;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.VideoRepository;
 import lombok.RequiredArgsConstructor;
-import org.jcodec.api.SequenceEncoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;

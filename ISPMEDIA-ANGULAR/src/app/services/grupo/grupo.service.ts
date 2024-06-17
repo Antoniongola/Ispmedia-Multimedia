@@ -15,17 +15,21 @@ export class GrupoService {
     return this.http.post<Grupo>(this.baseUrl, grupo);
   }
 
-  addParticipante(grupoId: number, userId: string): Observable<Response> {
-    const url = `${this.baseUrl}/${grupoId}/participante/${userId}`;
+  addParticipante(grupoId: number, userId: string, emissorConvite:string): Observable<Response> {
+    const url = `${this.baseUrl}/${grupoId}/${emissorConvite}/participante/${userId}`;
     return this.http.post<Response>(url, {});
   }
 
-  addEditor(grupoId: number, userId: string): Observable<Response> {
-    const url = `${this.baseUrl}/${grupoId}/editor/${userId}`;
+  addEditor(grupoId: number, userId: string, promotor:string): Observable<Response> {
+    const url = `${this.baseUrl}/${grupoId}/${promotor}/editor/${userId}`;
     return this.http.post<Response>(url, {});
   }
 
   todosGrupos(): Observable<Grupo[]> {
     return this.http.get<Grupo[]>(this.baseUrl);
+  }
+
+  todosGruposDoUser(userId: string): Observable<Grupo[]> {
+    return this.http.get<Grupo[]>(`${this.baseUrl}/user/${userId}`);
   }
 }

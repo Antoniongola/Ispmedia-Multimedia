@@ -1,8 +1,10 @@
 package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.SignUpDto;
+import com.ngolajr.ispmedia.entities.Grupo;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.enums.Roles;
+import com.ngolajr.ispmedia.repositories.GrupoRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserService {
     private final UtilizadorRepository repository;
+    private final GrupoRepository grupoRepo;
     private final PasswordEncoder encoder;
 
 
@@ -109,6 +112,19 @@ public class UserService {
         }
 
         return ResponseEntity.status(401).body(false);
+    }
+
+    public ResponseEntity<Boolean> isEditorGrupo(String username, long grupoId){
+        if(grupoRepo.findById(grupoId).isPresent()){
+            Grupo grupo = grupoRepo.findById(grupoId).get();
+            if(repository.findById(username).isEmpty())
+                return ResponseEntity.status(400).body(false);
+
+            Utilizador user = repository.findById(username).get();
+            return ResponseEntity.ok(grupo.getEditores().contains(user));
+        }
+
+        return ResponseEntity.status(400).body(false);
     }
 
 }

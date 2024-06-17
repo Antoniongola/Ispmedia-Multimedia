@@ -19,7 +19,7 @@ public class Grupo {
     private Date dataCriacao;
     @ManyToOne
     private Utilizador criador;
-    @OneToMany
+    @ManyToMany
     private List<Utilizador> editores;
     @ManyToMany
     private List<Utilizador> participantes;

@@ -21,17 +21,17 @@ public class GrupoController {
         return ResponseEntity.ok(this.service.criarGrupo(grupo));
     }
 
-    @PostMapping("/{grupo}/participante/{user}")
-    public ResponseEntity<Response> addParticipante(@PathVariable long grupo, @PathVariable String user){
-        if(service.addParticipante(grupo, user))
+    @PostMapping("/{grupo}/{emissorConvite}/participante/{user}")
+    public ResponseEntity<Response> addParticipante(@PathVariable long grupo, @PathVariable String user, @PathVariable String emissorConvite){
+        if(service.addParticipante(grupo, user, emissorConvite))
             return ResponseEntity.ok(new Response(user+" ADICIONADO COM SUCESSO AO GRUPO"));
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(user+" NÃO FOI ADICIONADO"));
     }
 
-    @PostMapping("/{grupo}/editor/{user}")
-    public ResponseEntity<Response> addEditor(@PathVariable long grupo, @PathVariable String user){
-        if(service.addEditor(grupo, user))
+    @PostMapping("/{grupo}/{promotor}/editor/{user}")
+    public ResponseEntity<Response> addEditor(@PathVariable long grupo, @PathVariable String user, @PathVariable String promotor){
+        if(service.addEditor(grupo, user, promotor))
             return ResponseEntity.ok(new Response(user+" TORNOU-SE UM EDITOR"));
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response(user+" NÃO TORNOU-SE EDITOR"));
@@ -41,4 +41,10 @@ public class GrupoController {
     public ResponseEntity<List<Grupo>> todosGrupos(){
         return ResponseEntity.ok(this.service.allGroups());
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Grupo>> todosGruposDoUser(@PathVariable String userId){
+        return ResponseEntity.ok(this.service.gruposDoUser(userId));
+    }
+
 }

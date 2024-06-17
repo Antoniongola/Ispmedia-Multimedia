@@ -13,17 +13,15 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
+@RequiredArgsConstructor
 public class AdminConfig implements CommandLineRunner {
-    @Autowired
-    private PasswordEncoder bcrypt;
-    @Autowired
-    private UtilizadorRepository repository;
+    private final PasswordEncoder bcrypt;
+    private final UtilizadorRepository repository;
     @Override
     public void run(String... args) throws Exception {
         Utilizador admin = new Utilizador();
         admin.setNome("António Domingos Lopes Ngola");
         admin.setUsername("A3SNT@isptec.co.ao");
-
 
         if(repository.findById(admin.getUsername()).isEmpty()){
             admin.setPassword(bcrypt.encode("123456"));

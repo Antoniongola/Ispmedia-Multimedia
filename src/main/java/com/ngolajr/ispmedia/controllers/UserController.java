@@ -25,6 +25,11 @@ public class UserController {
         return ResponseEntity.status(500).body(new Response("Conta já existente"));
     }
 
+    @GetMapping("/{username}/grupo/{idGrupo}")
+    public ResponseEntity<Boolean> isGroupEditor(@PathVariable String username, @PathVariable long idGrupo){
+        return this.service.isEditorGrupo(username, idGrupo);
+    }
+
     @GetMapping("/{userId}/roles/admin")
     public ResponseEntity<Boolean> isAdmin(@PathVariable String userId){
         return this.service.isAdmin(userId);

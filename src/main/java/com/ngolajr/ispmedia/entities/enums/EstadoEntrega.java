@@ -1,9 +1,10 @@
 package com.ngolajr.ispmedia.entities.enums;
 
-public enum Estado {
+public enum EstadoEntrega {
     ENTREGUE(1),
-    LIDO(2);
-    Estado(int valor){
+    LIDO(2),
+    PENDENTE(0);
+    EstadoEntrega(int valor){
         int value;
         value = valor;
     }

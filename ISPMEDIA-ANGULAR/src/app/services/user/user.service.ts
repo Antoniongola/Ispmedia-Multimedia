@@ -21,6 +21,10 @@ export class UserService {
     return this.http.get<boolean>(`${this.apiUrl}/${userId}/roles/editor`);
   }
 
+  idGroupEditor(userId:string|null, groupId:number):Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/${userId}/grupo/${groupId}`);
+  }
+
   signUp(dto: SignupDto): Observable<Response> {
     return this.http.post<Response>(`${this.apiUrl}/signup`, dto)
       .pipe(
