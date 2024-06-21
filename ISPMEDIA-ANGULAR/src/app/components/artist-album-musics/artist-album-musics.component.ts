@@ -8,6 +8,8 @@ import {CriticaService} from "../../services/critica/critica.service";
 import {User} from "../../entities/User";
 import {LoginServiceService} from "../../services/login/login-service.service";
 import {UserService} from "../../services/user/user.service";
+import {Musica} from "../../entities/Musica";
+import {MusicaService} from "../../services/musica/musica.service";
 
 @Component({
   selector: 'app-artist-album-musics',
@@ -18,16 +20,22 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   criticaForm!:FormGroup;
   album!:Album;
   albumId:any='';
+  musicId:string='';
   albumImage:{[key:string] : any} = {};
   criticoUsername:any="";
   critico!:User;
+  musicas:Musica[] | null=[];
+  url:any=''
+  musica!:any;
+  musicasSrc:{[key:string]:any}={}
 
   constructor(private albumService: AlbumService,
               private criticaService:CriticaService,
               private route:ActivatedRoute,
               private fb:FormBuilder,
               private loginService:LoginServiceService,
-              private userService:UserService) {
+              private userService:UserService,
+              private musicaService:MusicaService) {
   }
 
   ngOnInit(){
@@ -50,20 +58,31 @@ export class ArtistAlbumMusicsComponent implements OnInit{
     this.albumService.getAlbum(this.albumId).subscribe(response=>{
       this.album = response;
       this.albumService.loadImage(this.album, this.albumImage);
+      this.musicas = this.album.musics;
+      this.musicaService.loadMusicas(this.musicas, this.musicasSrc);
+    });
+  }
+
+  playMusic(filename: string): void {
+    this.musicaService.getMusicById(filename).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      this.url = url;
+      console.log('teste: '+url);
+      audio.play();
+    }, error => {
+      console.error('Error fetching music file:', error);
     });
   }
 
   onSubmit(){
-    const user:User=this.critico;
-
     const critica:Critica=new Critica(0,
       this.criticaForm.get('nota')?.value,
-      this.criticaForm.get('critica')?.value);
-
-    critica.critico=user;
+      this.criticaForm.get('critica')?.value,
+      this.critico, this.album);
 
       this.criticaService.fazerCritica(critica, this.albumId).subscribe(response=>{
-        alert('DEU CERTO PORRA '+response.critica);
+        alert('CRITICA ADICIONADA COM SUCESSO AO ALBUM. '+response.critica);
         //this.router.navigate(['../']);
       }, error=>{
         alert('DEU ERRADO PIDIMO '+error);

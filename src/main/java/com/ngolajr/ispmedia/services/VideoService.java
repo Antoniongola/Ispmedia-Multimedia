@@ -3,8 +3,10 @@ package com.ngolajr.ispmedia.services;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.FileManager;
 import com.ngolajr.ispmedia.entities.Musica;
+import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.Video;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
+import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import com.ngolajr.ispmedia.repositories.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,14 +31,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class VideoService {
     private final VideoRepository repository;
+    private final UtilizadorRepository userRepo;
     private final FileManager fm;
     @Value("${upload.video}")
     private String videoLocation;
+    @Value("${upload.video.compressed}")
+    private String videoLocationCompressed;
     @Value("${upload.imagem}")
     private String imageLocation;
 
     public ResponseEntity<Object> uploadVideo(Video video, MultipartFile videoFile, MultipartFile videoCover) {
         try {
+            Utilizador criador = userRepo.findById(video.getCriadorConteudo().getUsername()).get();
+            video.setCriadorConteudo(criador);
             video.setPath(videoFile.getOriginalFilename());
             video.setThumbNailUri(videoCover.getOriginalFilename());
             video.setGenero(null);
@@ -44,13 +51,19 @@ public class VideoService {
             video.setStreams(0);
             video.setPath(videoFile.getOriginalFilename());
             video.setThumbNailUri(videoCover.getOriginalFilename());
+            System.out.println("TESTE, VENDO SE CHEGA AQUI");
+            File videoFicheiro = this.compressVideo(videoFile);
             this.repository.save(video);
             this.fm.saveFile(videoCover, TipoFicheiro.IMAGEM);
-            this.fm.saveFile(videoFile, TipoFicheiro.VIDEO);
+            System.out.println("ERRO DEPOIS DE SAALVAR CAPA DO VÍDEO.");
+            this.fm.saveFile((MultipartFile) videoFicheiro, TipoFicheiro.VIDEO);
             return ResponseEntity.ok(new Response("UPLOAD FEITO COM SUCESSO"));
         } catch (IOException e) {
             System.out.println("ERRO: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("ERRO NO UPLOAD"));
+        } catch (InterruptedException e) {
+            System.out.println("ERRO, NÃO COMPRIMIU!");
+            throw new RuntimeException(e);
         }
     }
 
@@ -138,5 +151,50 @@ public class VideoService {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    /*
+    public File compressVideo(File originalFile) {
+        System.out.println("ENTROU NA COMPRESSÃO");
+        try {
+            File compressedVideoFile = new File(this.videoLocation+"\\compressed_" + originalFile.getName());
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "ffmpeg", "-i", this.videoLocation+"\\compressed_" + originalFile.getName(),
+                    "-vcodec", "libx264", "-crf", "28", this.videoLocation+"\\compressed_" + originalFile.getName());
+            Process process = processBuilder.start();
+            process.waitFor();
+            return compressedVideoFile;
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return originalFile;
+        }
+    }*/
+
+    private File compressVideo(MultipartFile multipartFile) throws IOException, InterruptedException {
+        // Criar diretório uploads se não existir
+        File uploadDir = new File(this.videoLocation);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        // Salvar o arquivo recebido no diretório personalizado
+        File originalFile = new File(uploadDir, multipartFile.getOriginalFilename());
+        multipartFile.transferTo(originalFile);
+
+        // Criar o arquivo de saída para o vídeo comprimido
+        String compressedFileName = "compressed_" + originalFile.getName();
+        File compressedVideoFile = new File(uploadDir, compressedFileName);
+
+        // Construir e iniciar o processo do FFmpeg
+        ProcessBuilder processBuilder = new ProcessBuilder(
+                "ffmpeg", "-i", originalFile.getAbsolutePath(),
+                "-vcodec", "libx264", "-crf", "28", compressedVideoFile.getAbsolutePath());
+        Process process = processBuilder.start();
+
+        // Esperar pelo término do processo
+        process.waitFor();
+
+        // Retornar o arquivo comprimido
+        return compressedVideoFile;
     }
 }

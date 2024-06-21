@@ -8,7 +8,8 @@
         <p>{{video.titulo}}</p>
       </div>
       <div class="card-body">
-        <p>{{video.descricao}}</p><br>
+        <p>{{video.descricao}}</p>
+        <p>Criado por:{{video.criadorConteudo.nome}}</p>
         <button class="text-center btn btn-outline-primary" (click)="playVideo(video.id)">Play video</button>
       </div>
     </div>

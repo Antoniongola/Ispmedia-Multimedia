@@ -2,14 +2,12 @@ package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.ArtistaDto;
 import com.ngolajr.ispmedia.dtos.Response;
-import com.ngolajr.ispmedia.entities.Artista;
-import com.ngolajr.ispmedia.entities.Conteudo;
-import com.ngolajr.ispmedia.entities.FileManager;
-import com.ngolajr.ispmedia.entities.Genero;
+import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.ArtistaRepository;
 import com.ngolajr.ispmedia.repositories.ConteudoRepository;
 import com.ngolajr.ispmedia.repositories.GeneroRepository;
+import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +33,7 @@ public class ArtistaService {
     private final ArtistaRepository repository;
     private final GeneroRepository generoRepository;
     private final FileManager fileManager;
+    private final UtilizadorRepository userRepo;
     @Value("${upload.imagem}")
     String imageLocation;
 
@@ -42,13 +41,14 @@ public class ArtistaService {
         System.out.println("Nome do artista: "+dto.getTitulo());
         if(!repository.existsArtistaByTitulo(dto.getTitulo()) && (!dto.getTitulo().equals("") && !dto.getTitulo().equals("0"))){
             try {
+                Utilizador criador = userRepo.findById(dto.getCriadorConteudo().getUsername()).get();
                 Genero genero = generoRepository.findById(dto.getGenero().getId()).get();
+                dto.setCriadorConteudo(criador);
                 dto.setGenero(genero);
                 repository.save(dto);
                 dto.setThumbNailUri(artistImage.getOriginalFilename());
                 fileManager.saveFile(artistImage, TipoFicheiro.IMAGEM);
                 repository.save(dto);
-                System.out.println("Nome do artista: "+dto.getTitulo());
                 return ResponseEntity.ok(new Response("ARTISTA CRIADO COM SUCESSO!"));
             } catch (IOException e){
                 return ResponseEntity.badRequest().body(new Response("ERRO COM O FICHEIRO"));

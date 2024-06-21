@@ -30,11 +30,12 @@ export class MusicsComponent implements OnInit{
   }
 
   playMusic(filename: string) {
-  /* this.musicaService.getMusicById(filename).subscribe(response => {
-      this.musica = response;
-      const url = window.URL.createObjectURL(this.musica.path);
-      const audio = new Audio(url);
-      audio.play();
+  /*
+    this.musicaService.getMusicById(filename).subscribe(response => {
+    this.musica = response;
+    const url = window.URL.createObjectURL(this.musica.path);
+    const audio = new Audio(url);
+    audio.play();
 
     });*/
   }

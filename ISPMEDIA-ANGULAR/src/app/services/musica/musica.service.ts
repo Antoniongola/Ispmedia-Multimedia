@@ -37,6 +37,17 @@ export class MusicaService {
     });
   }
 
+  loadMusicas(musicas:Musica[]|null, musicaSrcs: { [key: string]: any }) {
+    if(musicas instanceof Musica){
+      musicas.forEach(musica => {
+        this.getMusicById(musica.id).subscribe(response => {
+          const objectURL = URL.createObjectURL(response);
+          musicaSrcs[musica.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        });
+      });
+    }
+  }
+
   getImage(id: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/${id}/imagem`, { responseType: 'blob' });
   }

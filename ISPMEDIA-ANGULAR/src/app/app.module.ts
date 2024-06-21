@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { MusicsComponent } from './components/musics/musics.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {LoginServiceService} from "./services/login/login-service.service";
 import { AlbumsComponent } from './components/albums/albums.component';
 import { ArtistsComponent } from './components/artists/artists.component';
@@ -29,6 +29,7 @@ import { GroupCreationComponent } from './components/group-creation/group-creati
 import { PlaylistCreationComponent } from './components/playlist-creation/playlist-creation.component';
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
 import { ConteudoPartilhadoComponent } from './components/conteudo-partilhado/conteudo-partilhado.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ConteudoPartilhadoComponent } from './components/conteudo-partilhado/co
     GroupCreationComponent,
     PlaylistCreationComponent,
     NotificacoesComponent,
-    ConteudoPartilhadoComponent
+    ConteudoPartilhadoComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

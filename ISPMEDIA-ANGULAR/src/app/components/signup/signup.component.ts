@@ -39,8 +39,12 @@ export class SignupComponent implements OnInit{
     const dto = new SignupDto(formValue.nome, formValue.username, formValue.password);
     this.service.cadastrar(dto).subscribe((response)=>{
       this.resultado = response;
-      if(this.resultado.response == this.teste)
+      if(this.resultado.response == this.teste) {
+        alert('CONTA CRIADA COM SUCESSO, FAÇA O LOGIN USANDO AS SUAS CREDENCIAIS.');
         this.router.navigate(['login']);
+      }
+    }, error=>{
+      alert('NÃO FOI POSSÍVEL CRIAR A SUA CONTA: '+error);
     });
   }
 

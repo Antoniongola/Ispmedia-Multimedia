@@ -15,6 +15,7 @@ export class GroupCreationComponent {
   groupForm!:FormGroup;
   users!:User[];
   owner:string|null='';
+  submittedItems!:any[];
 
   constructor(private userService:UserService,
               private loginService:LoginServiceService,
@@ -55,7 +56,15 @@ export class GroupCreationComponent {
   }
 
   onSubmit(){
+    /*
+    this.submittedItems = this.musicForm.value.items;
 
+    this.submittedItems.map(id=>{
+      let user:User=new User();
+      user.id=id.name;
+      this.participantes.push(user);
+    });
+    */
   }
 
 }

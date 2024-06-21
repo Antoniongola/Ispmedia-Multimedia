@@ -4,10 +4,7 @@ import com.ngolajr.ispmedia.dtos.MusicaDto;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
-import com.ngolajr.ispmedia.repositories.AlbumRepository;
-import com.ngolajr.ispmedia.repositories.ArtistaRepository;
-import com.ngolajr.ispmedia.repositories.GeneroRepository;
-import com.ngolajr.ispmedia.repositories.MusicaRepository;
+import com.ngolajr.ispmedia.repositories.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +31,7 @@ import java.util.UUID;
 @Data
 public class MusicaService {
     private final FileManager fm;
+    private final UtilizadorRepository userRepo;
     private final MusicaRepository repository;
     private final ArtistaRepository artistaRepository;
     private final GeneroRepository generoRepository;
@@ -47,13 +45,15 @@ public class MusicaService {
         try {
             // Define os caminhos dos arquivos
             System.out.println("Nome do album : "+dto.getAlbum().getTitulo());
+            Utilizador criador= userRepo.findById(dto.getCriadorConteudo().getUsername()).get();
             dto.setPath(musicFile.getOriginalFilename());
+            dto.setCriadorConteudo(criador);
             if (musicImage != null)
                 dto.setThumbNailUri(musicImage.getOriginalFilename());
 
             // Recupera o gênero e associa ao DTO
             Optional<Genero> generoOpt = generoRepository.findById(dto.getGenero().getId());
-            if (!generoOpt.isPresent()) {
+            if (generoOpt.isEmpty()) {
                 return ResponseEntity.badRequest().body(new Response("Gênero não encontrado"));
             }
             Genero genero = generoOpt.get();

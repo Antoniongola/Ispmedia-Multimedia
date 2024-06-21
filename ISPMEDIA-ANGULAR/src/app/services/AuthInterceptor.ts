@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
       console.log("vamos ver, token: "+token);
       return next.handle(cloned);
     } else {
-      console.log("erradoooooo");
+      console.log("erradoooooo, não foi possível ver a sua autoridade.");
       return next.handle(req);
     }
   }

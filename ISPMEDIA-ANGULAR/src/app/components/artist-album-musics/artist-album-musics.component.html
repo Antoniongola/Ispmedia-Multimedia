@@ -1,55 +1,70 @@
 <div class="row">
   <h2>Músicas</h2>
-  <div class="col">
+  <div class="row">
     <section>
       <div *ngFor="let musica of album.musics">
         <div class="row card">
           <div class="col card-img">
-            <img [src]="albumImage" alt="{{musica.titulo}}">
+            <img [src]="albumImage[album.id]" alt="{{musica.titulo}}">
           </div>
           <div class="col">
             <span>{{musica.titulo}}</span>
-            <div class="row">
-              <span>{{musica.artista}} ft.</span>
-              <span *ngFor="let participante of musica.artists">{{participante.titulo}}, </span>
+            <div class="row"><br>
+              <span>{{musica.artista.titulo}} ,</span>
+              <span *ngFor="let participante of musica.artists">{{participante.titulo}}</span>
             </div>
           </div>
           <div class="col">
-            <button class="btn btn-outline-success">Play/Pause</button><br>
-            <button class="btn btn-outline-danger">Delete</button>
+            <div class="row">
+              <button class="btn btn-outline-success col" (click)="playMusic(musica.id)">Play/Pause</button><br>
+              <button class="btn btn-outline-danger col">Delete</button>
+            </div>
+            <div class="row">
+              <audio controls>
+                <source [src]="url">
+                Your browser does not support the video tag.
+              </audio>
+            </div>
           </div>
         </div>
       </div>
     </section>
   </div>
-  <div class="col">
-    <h2>Criticas do abum</h2>
-    <section>
-      <div class="row" *ngFor="let critica of album.criticas">
-        <div class="row">
-          <div class="col">
-            <img class="icone" src="assets/user.png">
-          </div>
-          <div class="col">
-            <span>Nota:{{critica.nota}}</span>
-            <br>
-            <span>Autor: {{critica.critico.nome}}</span>
-            <br>
-            <span>Critica:{{critica.critica}}</span>
-
+  <div class="row">
+    <div class="row card">
+      <h2>Criticas do abum</h2>
+      <section>
+        <div class="row" *ngFor="let critica of album.criticas">
+          <div class="row">
+            <div class="col">
+              <img class="icone" src="assets/user.png">
+            </div>
+            <div class="col">
+              <span>Nota:{{critica.nota}}</span>
+              <br>
+              <span>Autor: {{critica.critico.nome}}</span>
+              <br>
+              <span>Critica:{{critica.critica}}</span>
+            </div>
           </div>
         </div>
-      </div>
-      <br>
-      <div class="row">
-        <form [formGroup]="criticaForm" (submit)="onSubmit()">
-          <label for="nota">Nota:</label><br>
-          <input type="number" id="nota" formControlName="nota"><br>
-          <label for="critica">Descrição:</label><br>
-          <textarea id="critica" formControlName="critica"></textarea><br>
-          <button class="btn btn-outline-success" type="submit">Fazer Crítica</button>
-        </form>
-      </div>
-    </section>
+        <br>
+        <div class="row">
+          <form [formGroup]="criticaForm" (submit)="onSubmit()">
+            <label for="nota">Nota:</label><br>
+            <select id="nota" formControlName="nota">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select><br>
+            <label for="critica">Descrição:</label><br>
+            <textarea id="critica" formControlName="critica"></textarea><br>
+            <button class="btn btn-outline-success" type="submit">Fazer Crítica</button>
+          </form>
+        </div>
+      </section>
+    </div>
   </div>
 </div>

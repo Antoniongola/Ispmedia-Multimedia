@@ -12,7 +12,6 @@ export class NavbarComponent implements OnInit{
   isEditor:boolean=false;
   constructor(private loginService:LoginServiceService,
               private userService:UserService) {
-
   }
 
   ngOnInit() {

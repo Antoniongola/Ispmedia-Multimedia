@@ -4,6 +4,7 @@ import {LoginServiceService} from "../../services/login/login-service.service";
 import {LoginDto} from "../../dtos/LoginDto";
 import {LoginResponse} from "../../dtos/LoginResponse";
 import {Router} from "@angular/router";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit{
   loginForm!:FormGroup;
   loginResponse !: LoginResponse;
 
-  constructor(private router:Router, private fb:FormBuilder, private service: LoginServiceService) {
+  constructor(private router:Router, private fb:FormBuilder,
+              private service: LoginServiceService, private userService:UserService) {
   }
   ngOnInit(): void {
     if(this.service.isLoggedIn())
@@ -36,11 +38,15 @@ export class LoginComponent implements OnInit{
       this.loginResponse = response;
       this.service.saveToken(this.loginResponse.accessToken);
       this.service.saveUsername(dto.username);
+      this.userService.selecionarUser(dto.username).subscribe(response=>{
+        const user = response;
+        user.isOnline = true;
+        this.userService.updateUser(user, user.username);
+      })
+      alert('LOGIN FEITO COM SUCESSO, SEJA BEM-VINDO AO SNT-ISPMEDIA!');
       this.router.navigate(['']);
-      console.log(this.loginResponse.accessToken);
     },error => {
-      console.error('Upload failed', error);
+      alert('ERRO, CREDENCIAIS INVÁLIDAS!!');
     });
   }
-
 }

@@ -15,4 +15,6 @@ public class Critica {
     //verificar
     @ManyToOne
     private Utilizador critico;
+    @ManyToOne
+    private Album album;
 }

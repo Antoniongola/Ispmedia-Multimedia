@@ -4,14 +4,19 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LoginResponse} from "../../dtos/LoginResponse";
 import {Router} from "@angular/router";
+import {User} from "../../entities/User";
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginServiceService {
   private apiUrl:string = "http://localhost:8080/api/login";
+  user!:User;
+  username:any ='';
   constructor(private http: HttpClient,
-              private router:Router) { }
+              private router:Router) {
+  }
 
   login(loginDto: LoginDto): Observable<LoginResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -37,8 +42,8 @@ export class LoginServiceService {
     this.router.navigate(['/login'])
   }
 
-
   logOut(){
+    //this.userService.updateUser(this.user, this.user.username);
     localStorage.clear();
     this.router.navigate(['/login']);
   }

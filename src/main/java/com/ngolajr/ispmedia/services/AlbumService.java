@@ -2,14 +2,12 @@ package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.AlbumDto;
 import com.ngolajr.ispmedia.dtos.Response;
-import com.ngolajr.ispmedia.entities.Album;
-import com.ngolajr.ispmedia.entities.Artista;
-import com.ngolajr.ispmedia.entities.FileManager;
-import com.ngolajr.ispmedia.entities.Genero;
+import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.AlbumRepository;
 import com.ngolajr.ispmedia.repositories.ArtistaRepository;
 import com.ngolajr.ispmedia.repositories.GeneroRepository;
+import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
@@ -35,6 +33,7 @@ public class AlbumService {
      private final AlbumRepository repository;
      private final GeneroRepository generoRepository;
      private final FileManager fileManager;
+     private final UtilizadorRepository userRepo;
      @Value("${upload.imagem}")
      String imageLocation;
 
@@ -52,8 +51,10 @@ public class AlbumService {
                }
                Artista artista = this.artistaRepository.findById(dto.getArtista().getId()).get();
                Genero genero = generoRepository.findById(dto.getGenero().getId()).get();
+               Utilizador criador = userRepo.findById(dto.getCriadorConteudo().getUsername()).get();
                dto.setArtista(artista);
                dto.setGenero(genero);
+               dto.setCriadorConteudo(criador);
                this.fileManager.saveFile(albumImage, TipoFicheiro.IMAGEM);
                this.repository.save(dto);
 

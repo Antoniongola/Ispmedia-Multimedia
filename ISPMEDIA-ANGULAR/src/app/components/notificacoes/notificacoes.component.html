@@ -1,3 +1,4 @@
-<div>
+<div *ngFor="let notificacao of notificacoes">
   <h2>Convites: </h2>
+  <p *ngIf="notificacao.tipoNotificacao == TipoNotificacao.CONVITENOVOGRUPO">{{notificacao.descricao}}</p>
 </div>

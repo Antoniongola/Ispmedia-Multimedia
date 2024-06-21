@@ -38,7 +38,8 @@ public class CriticaService {
                 sum += critica1.getNota();
            }
            album.setPontuacaoMedia((double)sum/album.getCriticas().size());
-            repository.save(critica);
+           critica.setAlbum(album);
+           repository.save(critica);
            albumRepository.save(album);
 
            return ResponseEntity.ok(critica);

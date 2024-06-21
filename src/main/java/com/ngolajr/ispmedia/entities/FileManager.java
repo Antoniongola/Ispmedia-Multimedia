@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,5 +35,18 @@ public class FileManager {
         file.transferTo(filePath.toFile());
     }
 
-
+    public File compressVideo(File originalFile) {
+        try {
+            File compressedVideoFile = new File("uploads/compressed_" + originalFile.getName());
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    "ffmpeg", "-i", originalFile.getAbsolutePath(),
+                    "-vcodec", "libx264", "-crf", "28", compressedVideoFile.getAbsolutePath());
+            Process process = processBuilder.start();
+            process.waitFor();
+            return compressedVideoFile;
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return originalFile;
+        }
+    }
 }

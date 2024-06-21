@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import {User} from "../../entities/User";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, of} from "rxjs";
 import {SignupDto} from "../../dtos/SignupDto";
+import {LoginServiceService} from "../login/login-service.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private apiUrl = 'http://localhost:8080/api';  // Altere para a URL correta do seu backend
+  token:any='';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loginService:LoginServiceService) {
+    this.token = this.loginService.getToken();
   }
 
   isAdmin(userId: string|null): Observable<boolean> {
@@ -47,6 +50,9 @@ export class UserService {
   }
 
   updateUser(user: User, id: string): Observable<User> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
     return this.http.put<User>(`${this.apiUrl}/user/${id}`, user)
       .pipe(
         catchError(this.handleError<User>('updateUser'))
@@ -54,6 +60,9 @@ export class UserService {
   }
 
   deleteUser(id: string): Observable<string> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
     return this.http.delete<string>(`${this.apiUrl}/user/${id}`)
       .pipe(
         catchError(this.handleError<string>('deleteUser'))
@@ -61,6 +70,9 @@ export class UserService {
   }
 
   selecionarUser(id: string): Observable<User> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
     return this.http.get<User>(`${this.apiUrl}/user/${id}`)
       .pipe(
         catchError(this.handleError<User>('selecionarUser'))
@@ -68,7 +80,10 @@ export class UserService {
   }
 
   selecionarTodosUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/user`)
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<User[]>(`${this.apiUrl}/user`, {headers})
       .pipe(
         catchError(this.handleError<User[]>('selecionarTodosUsers'))
       );
