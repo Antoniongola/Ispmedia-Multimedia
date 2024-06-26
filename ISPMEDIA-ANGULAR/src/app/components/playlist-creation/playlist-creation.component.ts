@@ -120,10 +120,11 @@ export class PlaylistCreationComponent implements OnInit{
     playlist.conteudos = this.conteudoFinal;
 
     this.playlistService.newPlaylist(playlist).subscribe(response=>{
-      alert('Playlist '+response.titulo+' criada com sucesso!');
+      alert('Playlist '+playlist.titulo+' criada com sucesso!');
       this.router.navigate(['/']);
     },error=>{
       this.conteudoFinal = [];
+      alert('Erro na criação da playlist!');
     });
   }
 

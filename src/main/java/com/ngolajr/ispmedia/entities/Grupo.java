@@ -17,6 +17,8 @@ public class Grupo {
     private String nome;
     @CurrentTimestamp //criando o grupo com a data atual do sistema.
     private Date dataCriacao;
+    @ManyToOne
+    private Utilizador owner;
     @ManyToMany
     private List<Participante> participantes;
     @ManyToMany(fetch = FetchType.EAGER)

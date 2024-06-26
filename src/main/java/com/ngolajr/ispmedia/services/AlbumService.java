@@ -111,12 +111,7 @@ public class AlbumService {
      }
 
      public List<Album> selectAllAlbums(){
-          List<Album> albums = new ArrayList<>();
-          for(Album album: this.repository.findAll())
-               albums.add(album);
-          //return repository.findAll();
-          System.out.println("Número de albums: "+albums.size());
-          return albums;
+          return this.repository.findAll();
      }
 
      public boolean deleteAlbum(UUID id){

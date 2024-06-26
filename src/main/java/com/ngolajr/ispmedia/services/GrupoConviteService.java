@@ -54,9 +54,9 @@ public class GrupoConviteService {
             notificacao.setDestinatario(grupoConvite.getAnfitriao());
             if(resposta == 1) {
                 Participante participante = new Participante();
-                participante.setGrupo(grupo);
                 participante.setUser(user);
                 participante.setTipo(TipoParticipante.PARTICIPANTE);
+                //participante.setGrupo(grupo);
                 grupo.getParticipantes().add(participante);
                 grupoConvite.setEstadoConvite(EstadoConvite.ACEITE);
                 notificacao.setTipoNotificacao(TipoNotificacao.ACEITOUSERADICIONADONOGRUPO);
