@@ -1,18 +1,27 @@
-
 <div class="row">
   <!-- coluna da esquerda-->
-  <div class="col-sm-3">
-    <h4 class="text-center">MINHAS PLAYLISTS</h4>
-    <div>
+  <div class="col-sm-3 card">
+    <h4 class="text-center">PLAYLISTS</h4>
+    <div class="">
       <button class="btn btn-outline-primary" (click)="goToCriarPlaylistForm()">Criar Playlist</button>
+      <div class="row" *ngFor="let playlist of playlists">
+        <a [routerLink]="['playlist/'+playlist.id]">
+          <div class="col">
+            <img class="icone" src="assets/playlist.png">
+          </div>
+          <div class="col">
+            <span>Nome: {{playlist.titulo}}</span><br>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 
   <!-- coluna do meio -->
-  <div class="col">
+  <div class="col card">
     <h4>Albuns</h4>
     <div class="row">
-      <app-albums></app-albums>
+      <!--<app-albums></app-albums>-->
     </div>
 
     <h4>Artistas</h4>
@@ -22,17 +31,26 @@
   </div>
 
   <!-- coluna do lado direito-->
-  <div class="col-sm-3">
+  <div class="col-sm-3 card">
     <h4 class="text-center">GRUPOS</h4>
     <div>
       <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">Criar Grupo</button>
+      <div class="row" *ngFor="let grupo of grupos">
+        <div class="col">
+          <img class="icone" src="assets/playlist.png">
+        </div>
+        <div claas="col">
+          <p>Nome: {{grupo.nome}}</p>
+          <!--<p>Nº de membros: {{grupo.conteudos.length}}</p>-->
+          <p>Criada por: {{grupo.criador.nome}}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 <!--
 <div class="fundo">
 <div class="row">
-
 
   <div class="col-3 ">
     <div class="row seccao">

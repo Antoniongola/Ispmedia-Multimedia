@@ -5,14 +5,14 @@
   <div class="card col align-content-center align-items-center justify-content-center">
       <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()">
         <div>
-          <label for="nome">Nome do grupo: </label>
+          <label for="nome">Nome da playlist: </label>
           <input id="nome" formControlName="nome" type="text">
         </div>
 
         <label for="privacidade">Privacidade: </label>
         <select id="privacidade" formControlName="privacidade">
-          <option>PUBLICO</option>
-          <option>PRIVADO</option>
+          <option [value]="1">PUBLICO</option>
+          <option [value]="0">PRIVADO</option>
         </select>
 
         <div formArrayName="items">
@@ -25,6 +25,17 @@
           </div>
         </div>
         <button class="btn btn-outline-primary" type="button" (click)="addItem()">Adicionar mais músicas</button>
+
+        <div formArrayName="videos">
+          <div *ngFor="let videoF of videos.controls; let i=index" [formGroupName]="i">
+            <label for="video-{{i}}">Video nº {{i + 1}}: </label>
+            <select id="video-{{i}}" formControlName="name">
+              <option *ngFor="let video of videosList" [value]="video.id">{{video.titulo}}, {{video.id}}</option>
+            </select>
+            <button class="btn btn-outline-danger" type="button" (click)="removeVideo(i)">Remover</button>
+          </div>
+        </div>
+        <button class="btn btn-outline-primary" type="button" (click)="addVideo()">Adicionar mais vídeos</button>
 
         <br>
         <br>

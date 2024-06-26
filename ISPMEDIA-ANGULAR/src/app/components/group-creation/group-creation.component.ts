@@ -1,35 +1,39 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Musica} from "../../entities/Musica";
 import {MusicaService} from "../../services/musica/musica.service";
 import {User} from "../../entities/User";
 import {UserService} from "../../services/user/user.service";
 import {LoginServiceService} from "../../services/login/login-service.service";
+import {Artista} from "../../entities/Artista";
+import {Genero} from "../../entities/Genero";
+import {GrupoService} from "../../services/grupo/grupo.service";
 
 @Component({
   selector: 'app-group-creation',
   templateUrl: './group-creation.component.html',
   styleUrl: './group-creation.component.css'
 })
-export class GroupCreationComponent {
+export class GroupCreationComponent implements OnInit{
   groupForm!:FormGroup;
   users!:User[];
-  owner:string|null='';
-  submittedItems!:any[];
+  participantes:User[]=[]
+  owner:any='';
+  submittedItems:any[]=[];
 
   constructor(private userService:UserService,
               private loginService:LoginServiceService,
+              private grupoService:GrupoService,
               private fb:FormBuilder) {  }
 
   ngOnInit() {
     this.owner = this.loginService.getUsername();
-
     this.groupForm = this.fb.group({
       nome:['', Validators.required],
       items: this.fb.array([this.createItem()]),
     });
 
-    this.userService.selecionarTodosUsers().subscribe(response=>{
+    this.userService.selecionarTodosUsersExcepto(this.owner).subscribe(response=>{
       this.users = response;
       console.log("USERS CARREGADOS COM SUCESSO!");
     }, error=>{
@@ -56,15 +60,12 @@ export class GroupCreationComponent {
   }
 
   onSubmit(){
-    /*
-    this.submittedItems = this.musicForm.value.items;
-
+    this.submittedItems = this.groupForm.value.items;
     this.submittedItems.map(id=>{
       let user:User=new User();
-      user.id=id.name;
+      user.username = id.name;
       this.participantes.push(user);
     });
-    */
   }
 
 }

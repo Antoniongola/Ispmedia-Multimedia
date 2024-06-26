@@ -10,22 +10,31 @@ import {LoginServiceService} from "../login/login-service.service";
 })
 export class UserService {
   private apiUrl = 'http://localhost:8080/api';  // Altere para a URL correta do seu backend
-  token:any='';
+  token:any;
 
   constructor(private http: HttpClient, private loginService:LoginServiceService) {
     this.token = this.loginService.getToken();
   }
 
   isAdmin(userId: string|null): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/${userId}/roles/admin`);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<boolean>(`${this.apiUrl}/${userId}/roles/admin`, {headers});
   }
 
   isEditor(userId: string|null): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/${userId}/roles/editor`);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<boolean>(`${this.apiUrl}/${userId}/roles/editor`, {headers});
   }
 
   idGroupEditor(userId:string|null, groupId:number):Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/${userId}/grupo/${groupId}`);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<boolean>(`${this.apiUrl}/${userId}/grupo/${groupId}`, {headers});
   }
 
   signUp(dto: SignupDto): Observable<Response> {
@@ -36,14 +45,20 @@ export class UserService {
   }
 
   promoteUser(userId: string): Observable<Response> {
-    return this.http.post<Response>(`${this.apiUrl}/${userId}/promote`, {})
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<Response>(`${this.apiUrl}/${userId}/promote`, {headers})
       .pipe(
         catchError(this.handleError<Response>('promoteUser'))
       );
   }
 
   demoteUser(userId: string): Observable<Response> {
-    return this.http.post<Response>(`${this.apiUrl}/${userId}/demote`, {})
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<Response>(`${this.apiUrl}/${userId}/demote`, {headers})
       .pipe(
         catchError(this.handleError<Response>('demoteUser'))
       );
@@ -53,7 +68,7 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.put<User>(`${this.apiUrl}/user/${id}`, user)
+    return this.http.put<User>(`${this.apiUrl}/user/${id}`, user, {headers})
       .pipe(
         catchError(this.handleError<User>('updateUser'))
       );
@@ -63,7 +78,7 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.delete<string>(`${this.apiUrl}/user/${id}`)
+    return this.http.delete<string>(`${this.apiUrl}/user/${id}`, {headers})
       .pipe(
         catchError(this.handleError<string>('deleteUser'))
       );
@@ -73,7 +88,7 @@ export class UserService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.get<User>(`${this.apiUrl}/user/${id}`)
+    return this.http.get<User>(`${this.apiUrl}/user/${id}`,{headers})
       .pipe(
         catchError(this.handleError<User>('selecionarUser'))
       );
@@ -86,6 +101,16 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/user`, {headers})
       .pipe(
         catchError(this.handleError<User[]>('selecionarTodosUsers'))
+      );
+  }
+
+  selecionarTodosUsersExcepto(username:string): Observable<User[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<User[]>(`${this.apiUrl}/user/allexcept/${username}`, {headers})
+      .pipe(
+        catchError(this.handleError<User[]>('selecionarTodosUsersExepto'))
       );
   }
 

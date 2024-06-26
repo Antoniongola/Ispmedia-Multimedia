@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Grupo} from "../../entities/Grupo";
 import {Observable} from "rxjs";
 
@@ -8,28 +8,44 @@ import {Observable} from "rxjs";
 })
 export class GrupoService {
   private baseUrl = 'http://localhost:8080/api/grupo';
+  token=localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient) { }
 
   criarGrupo(grupo: Grupo): Observable<Grupo> {
-    return this.http.post<Grupo>(this.baseUrl, grupo);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<Grupo>(this.baseUrl, grupo, {headers});
   }
 
   addParticipante(grupoId: number, userId: string, emissorConvite:string): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
     const url = `${this.baseUrl}/${grupoId}/${emissorConvite}/participante/${userId}`;
-    return this.http.post<Response>(url, {});
+    return this.http.post<Response>(url, {headers});
   }
 
   addEditor(grupoId: number, userId: string, promotor:string): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
     const url = `${this.baseUrl}/${grupoId}/${promotor}/editor/${userId}`;
-    return this.http.post<Response>(url, {});
+    return this.http.post<Response>(url, {headers});
   }
 
   todosGrupos(): Observable<Grupo[]> {
-    return this.http.get<Grupo[]>(this.baseUrl);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Grupo[]>(this.baseUrl, {headers});
   }
 
   todosGruposDoUser(userId: string): Observable<Grupo[]> {
-    return this.http.get<Grupo[]>(`${this.baseUrl}/user/${userId}`);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Grupo[]>(`${this.baseUrl}/user/${userId}`, {headers});
   }
 }

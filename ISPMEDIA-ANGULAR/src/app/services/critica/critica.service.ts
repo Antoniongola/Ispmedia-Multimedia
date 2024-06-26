@@ -7,14 +7,14 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class CriticaService {
-
-  apiUrl='http://localhost:8080/api/critica'
-  constructor(private http:HttpClient) {
-
-  }
+  apiUrl='http://localhost:8080/api/critica';
+  token=localStorage.getItem('jwtToken');
+  constructor(private http:HttpClient) {  }
 
   fazerCritica(critica: Critica, albumId: string):Observable<Critica>{
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
     return this.http.post<Critica>(`${this.apiUrl}/${albumId}`, critica, {headers});
   }
 }

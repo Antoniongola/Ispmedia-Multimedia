@@ -38,17 +38,26 @@ export class ArtistaService {
   }
 
   getArtistas():Observable<Artista[]> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.get<Artista[]>(this.apiUrl);
+    //const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Artista[]>(this.apiUrl, {headers});
   }
 
 
   getArtista(id: string): Observable<Artista> {
-    return this.http.get<Artista>(`${this.apiUrl}/${id}`);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Artista>(`${this.apiUrl}/${id}`, {headers});
   }
 
   getTodosArtistas(): Observable<Artista[]> {
-    return this.http.get<Artista[]>(this.apiUrl);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Artista[]>(this.apiUrl, {headers});
   }
 
   addArtista(artista: Artista, artistaImage:File): Observable<any> {
@@ -56,16 +65,24 @@ export class ArtistaService {
     console.log("nome: "+artista.titulo);
     formData.append('artista', new Blob([JSON.stringify(artista)], {type:'application/json'}));
     formData.append('artistImage', artistaImage);
-
-    return this.http.post<any>(this.apiUrl, formData);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<any>(this.apiUrl, formData, {headers});
   }
 
   updateArtista(id: string, artista: Artista): Observable<Artista> {
-    return this.http.put<Artista>(`${this.apiUrl}/${id}`, artista);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.put<Artista>(`${this.apiUrl}/${id}`, artista, {headers});
   }
 
   deleteArtista(id: string): Observable<string> {
-    return this.http.delete<string>(`${this.apiUrl}/${id}`);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.delete<string>(`${this.apiUrl}/${id}`, {headers});
   }
 
 }

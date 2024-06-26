@@ -32,10 +32,7 @@ export class LoginServiceService {
   }
 
   isLoggedIn():boolean{
-    if(localStorage.getItem('username'))
-      return true;
-
-    return false;
+    return localStorage.getItem('username') != null;
   }
 
   loginRedirect(){

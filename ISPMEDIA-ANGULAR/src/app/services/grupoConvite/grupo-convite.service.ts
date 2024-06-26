@@ -9,24 +9,22 @@ import {Observable} from "rxjs";
 })
 export class GrupoConviteService {
   private apiUrl = 'http://localhost:8080/api/convite';  // Base URL for the API
-
+  token=localStorage.getItem('jwtToken');
   constructor(private http: HttpClient) { }
 
   // Method to create a new convite
   criarConvite(convite: GrupoConvite): Observable<Response> {
-    return this.http.post<Response>(`${this.apiUrl}`, convite, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
     });
+    return this.http.post<Response>(`${this.apiUrl}`, convite, {headers});
   }
 
   // Method to respond to a convite
   responderConvite(conviteId: number, resposta: number): Observable<Response> {
-    return this.http.put<Response>(`${this.apiUrl}/${conviteId}/${resposta}`, null, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
     });
+    return this.http.put<Response>(`${this.apiUrl}/${conviteId}/${resposta}`, {headers});
   }
 }

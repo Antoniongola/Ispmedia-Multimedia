@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Genero} from "../../entities/Genero";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {Observable} from "rxjs";
@@ -9,9 +9,13 @@ import {Observable} from "rxjs";
 })
 export class GeneroService {
   url:string="http://localhost:8080/api/genero";
+  token=localStorage.getItem('jwtToken');
   constructor(private http: HttpClient) { }
 
   todosGeneros():Observable<Genero[]>{
-    return this.http.get<Genero[]>(this.url);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Genero[]>(this.url, {headers});
   }
 }
