@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,5 +17,6 @@ public class Critica {
     @ManyToOne
     private Utilizador critico;
     @ManyToOne
+    @JsonBackReference(value = "album-critica")
     private Album album;
 }

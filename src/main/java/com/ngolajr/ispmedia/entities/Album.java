@@ -1,6 +1,7 @@
 package com.ngolajr.ispmedia.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Album extends Conteudo{
     @JsonBackReference(value = "artista-album")
     @ManyToOne
     private Artista artista;
+    @JsonManagedReference(value = "album-critica")
     @OneToMany
     private List<Critica> criticas = new ArrayList<>();
     private Date dataLancamento;

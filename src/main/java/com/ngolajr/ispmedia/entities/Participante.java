@@ -12,10 +12,6 @@ public class Participante {
     private long id;
     @ManyToOne
     private Utilizador user;
-    /*
-    @ManyToOne
-    private Grupo grupo;
-    */
     private TipoParticipante tipo;
 
 }

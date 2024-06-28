@@ -20,6 +20,7 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   criticaForm!:FormGroup;
   album!:Album;
   albumId:any='';
+  audio:any;
   musicId:string='';
   albumImage:{[key:string] : any} = {};
   criticoUsername:any="";
@@ -66,10 +67,11 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   playMusic(filename: string): void {
     this.musicaService.getMusicById(filename).subscribe(blob => {
       const url = window.URL.createObjectURL(blob);
-      const audio = new Audio(url);
+      this.audio = new Audio(url);
+      const teste = new Audio(url);
       this.url = url;
       console.log('teste: '+url);
-      audio.play();
+      teste.play();
     }, error => {
       console.error('Error fetching music file:', error);
     });

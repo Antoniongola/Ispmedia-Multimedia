@@ -10,7 +10,7 @@ import java.util.UUID;
 @Entity
 @Data
 @ToString
-public class Conteudo implements Serializable {
+public class Conteudo {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     protected UUID id;

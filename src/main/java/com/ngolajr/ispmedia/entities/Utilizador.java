@@ -1,5 +1,7 @@
 package com.ngolajr.ispmedia.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ngolajr.ispmedia.entities.enums.Roles;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -24,7 +26,9 @@ public class Utilizador {
     @CurrentTimestamp
     @Column(updatable = false)
     private LocalDateTime createdDate;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "utilizador-playlist")
     private List<Playlist> playlists=new ArrayList<>();
     @ManyToMany
     private List<Grupo> grupos = new ArrayList<>();
