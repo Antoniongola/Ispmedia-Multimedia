@@ -1,34 +1,42 @@
 
-<div class="row">
+<main class="Conteiner-Home">
   <!-- coluna da esquerda-->
-  <div class="col-sm-3">
+  <section class="col-sm-3 Playlist">
     <h4 class="text-center">MINHAS PLAYLISTS</h4>
     <div>
       <button class="btn btn-outline-primary" (click)="goToCriarPlaylistForm()">Criar Playlist</button>
     </div>
-  </div>
+  </section>
 
   <!-- coluna do meio -->
-  <div class="col">
+  <section class="conteirner-Albuns-Artistas">
+    <article class="Albuns">
     <h4>Albuns</h4>
     <div class="row">
       <app-albums></app-albums>
     </div>
+    </article>
+    <article class="Artistas">
+        <h4>Artistas</h4>
+        <div class="row">
+          <app-artists></app-artists>
+        </div>
+    </article>
+  </section>
 
-    <h4>Artistas</h4>
-    <div class="row">
-      <app-artists></app-artists>
-    </div>
-  </div>
 
   <!-- coluna do lado direito-->
-  <div class="col-sm-3">
+  <section class="conteiner-Grupos">
     <h4 class="text-center">GRUPOS</h4>
     <div>
       <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">Criar Grupo</button>
     </div>
-  </div>
-</div>
+  </section>
+</main>
+
+
+
+
 <!--
 <div class="fundo">
 <div class="row">
