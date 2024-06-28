@@ -59,8 +59,7 @@ public class AlbumService {
                this.repository.save(dto);
 
                if(artista.getAlbums()!=null){
-                    for(Album album : this.repository.findAll())
-                         artista.getAlbums().add(album);
+                    artista.getAlbums().add(dto);
                }else{
                     artista.setAlbums(new ArrayList<Album>());
                     artista.getAlbums().add(dto);
@@ -112,12 +111,7 @@ public class AlbumService {
      }
 
      public List<Album> selectAllAlbums(){
-          List<Album> albums = new ArrayList<>();
-          for(Album album: this.repository.findAll())
-               albums.add(album);
-          //return repository.findAll();
-          System.out.println("Número de albums: "+albums.size());
-          return albums;
+          return this.repository.findAll();
      }
 
      public boolean deleteAlbum(UUID id){

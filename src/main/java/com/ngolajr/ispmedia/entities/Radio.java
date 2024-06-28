@@ -8,11 +8,7 @@ import lombok.Data;
 
 import java.util.UUID;
 
-@Entity
-@Data
 public class Radio {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
     private long id;
     private String pais;
     private String nome;

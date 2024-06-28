@@ -2,8 +2,10 @@ package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.SignUpDto;
 import com.ngolajr.ispmedia.entities.Grupo;
+import com.ngolajr.ispmedia.entities.Participante;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.enums.Roles;
+import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import com.ngolajr.ispmedia.repositories.GrupoRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.RequiredArgsConstructor;
@@ -121,10 +123,16 @@ public class UserService {
                 return ResponseEntity.status(400).body(false);
 
             Utilizador user = repository.findById(username).get();
-            return ResponseEntity.ok(grupo.getEditores().contains(user));
+            for(Participante participante:grupo.getParticipantes()){
+                if(participante.getUser().equals(user) && participante.getTipo()== TipoParticipante.EDITOR)
+                    return ResponseEntity.ok(true);
+            }
         }
 
         return ResponseEntity.status(400).body(false);
     }
-
+    
+    public ResponseEntity<List<Utilizador>> allUsersExcept(String username){
+        return ResponseEntity.ok(this.repository.findAllByUsernameIsNot(username));
+    }
 }

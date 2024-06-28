@@ -3,27 +3,19 @@
   <div class="row">
     <section>
       <div *ngFor="let musica of album.musics">
-        <div class="row card">
-          <div class="col card-img">
-            <img [src]="albumImage[album.id]" alt="{{musica.titulo}}">
+        <div class="col card">
+          <div class="col">
+            <img class="" [src]="albumImage[album.id]" alt="{{musica.titulo}}">
           </div>
           <div class="col">
-            <span>{{musica.titulo}}</span>
-            <div class="row"><br>
-              <span>{{musica.artista.titulo}} ,</span>
-              <span *ngFor="let participante of musica.artists">{{participante.titulo}}</span>
-            </div>
+            <span class="card-header text-center">{{musica.titulo}}</span>
+            <br>
+              <span>{{musica.artista.titulo}}</span>
           </div>
           <div class="col">
             <div class="row">
               <button class="btn btn-outline-success col" (click)="playMusic(musica.id)">Play/Pause</button><br>
               <button class="btn btn-outline-danger col">Delete</button>
-            </div>
-            <div class="row">
-              <audio controls>
-                <source [src]="url">
-                Your browser does not support the video tag.
-              </audio>
             </div>
           </div>
         </div>
@@ -31,9 +23,9 @@
     </section>
   </div>
   <div class="row">
-    <div class="row card">
+    <div class="row">
       <h2>Criticas do abum</h2>
-      <section>
+      <section class="card">
         <div class="row" *ngFor="let critica of album.criticas">
           <div class="row">
             <div class="col">

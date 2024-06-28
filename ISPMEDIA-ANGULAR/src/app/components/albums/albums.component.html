@@ -1,16 +1,19 @@
-<div class="col" *ngFor="let album of albums">
-  <a [routerLink]="['album/'+album.id]">
-    <div class="card">
-      <div class="card-img align-items-center">
-        <img *ngIf="albumImages[album.id]" [src]="albumImages[album.id]" alt="{{album.titulo}}" class="imagem-card">
+<div class="row">
+  <div class="col mb-2" *ngFor="let album of albums">
+    <a [routerLink]="['album/'+album.id]">
+      <div class="card">
+        <div class="card-img align-items-center">
+          <img *ngIf="albumImages[album.id]" [src]="albumImages[album.id]" alt="{{album.titulo}}" class="imagem-card">
+        </div>
+        <div class="card-header text-center">
+          <span>{{album.titulo}}</span>
+        </div>
+        <div class="card-body">
+          <span>{{album.descricao}}</span>
+          <br>
+          <span>Criado por: {{album.criadorConteudo.nome}}</span>
+        </div>
       </div>
-      <div class="card-header text-center">
-        <p>{{album.titulo}}</p>
-      </div>
-      <div class="card-body">
-        <p>{{album.descricao}}</p>
-        <p>Criado por:{{album.criadorConteudo.nome}}</p>
-      </div>
-    </div>
-  </a>
+    </a>
+  </div>
 </div>

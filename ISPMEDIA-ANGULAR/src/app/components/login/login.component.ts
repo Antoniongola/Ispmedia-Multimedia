@@ -38,12 +38,7 @@ export class LoginComponent implements OnInit{
       this.loginResponse = response;
       this.service.saveToken(this.loginResponse.accessToken);
       this.service.saveUsername(dto.username);
-      this.userService.selecionarUser(dto.username).subscribe(response=>{
-        const user = response;
-        user.isOnline = true;
-        this.userService.updateUser(user, user.username);
-      })
-      alert('LOGIN FEITO COM SUCESSO, SEJA BEM-VINDO AO SNT-ISPMEDIA!');
+      alert('LOGIN FEITO COM SUCESSO, SEJA BEM-VINDO AO SNT-ISPMEDIA!\n'+this.loginResponse.accessToken);
       this.router.navigate(['']);
     },error => {
       alert('ERRO, CREDENCIAIS INVÁLIDAS!!');

@@ -1,13 +1,11 @@
 package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.Response;
-import com.ngolajr.ispmedia.entities.Grupo;
-import com.ngolajr.ispmedia.entities.GrupoConvite;
-import com.ngolajr.ispmedia.entities.Notificacao;
-import com.ngolajr.ispmedia.entities.Utilizador;
+import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.EstadoConvite;
 import com.ngolajr.ispmedia.entities.enums.EstadoEntrega;
 import com.ngolajr.ispmedia.entities.enums.TipoNotificacao;
+import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import com.ngolajr.ispmedia.repositories.GrupoConviteRepository;
 import com.ngolajr.ispmedia.repositories.GrupoRepository;
 import com.ngolajr.ispmedia.repositories.NotificacaoRepository;
@@ -55,7 +53,11 @@ public class GrupoConviteService {
             notificacao.setEmissor(grupoConvite.getConvidado());
             notificacao.setDestinatario(grupoConvite.getAnfitriao());
             if(resposta == 1) {
-                grupo.getParticipantes().add(user);
+                Participante participante = new Participante();
+                participante.setUser(user);
+                participante.setTipo(TipoParticipante.PARTICIPANTE);
+                //participante.setGrupo(grupo);
+                grupo.getParticipantes().add(participante);
                 grupoConvite.setEstadoConvite(EstadoConvite.ACEITE);
                 notificacao.setTipoNotificacao(TipoNotificacao.ACEITOUSERADICIONADONOGRUPO);
                 notificacao.setDescricao(grupoConvite.getConvidado().getNome()+" aceitou o seu convite para ser adiconado ao grupo!");

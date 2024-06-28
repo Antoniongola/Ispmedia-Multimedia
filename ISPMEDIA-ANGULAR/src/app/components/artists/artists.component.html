@@ -1,16 +1,18 @@
-<div class="col" *ngFor="let artist of artistas">
-  <a [routerLink]="['artist/'+artist.id]">
-    <div class="card">
-      <div class="card-img align-items-center">
-        <img *ngIf="artistImages[artist.id]" [src]="artistImages[artist.id]" alt="{{artist.titulo}}" class="imagem-card">
+<div class="row">
+  <div class="col mb-2" *ngFor="let artist of artistas">
+    <a [routerLink]="['artist/'+artist.id]">
+      <div class="card">
+        <div class="card-img align-items-center">
+          <img class="imagem-card" *ngIf="artistImages[artist.id]" [src]="artistImages[artist.id]" alt="{{artist.titulo}}">
+        </div>
+        <div class="card-header text-center">
+          <p>{{artist.titulo}}</p>
+        </div>
+        <div class="card-body">
+          <p>{{artist.descricao}}</p>
+          <p>Criado por: {{artist.criadorConteudo.nome}}</p>
+        </div>
       </div>
-      <div class="card-header text-center">
-        <p>{{artist.titulo}}</p>
-      </div>
-      <div class="card-body">
-        <p>{{artist.descricao}}</p>
-        <p>Criado por: {{artist.criadorConteudo.nome}}</p>
-      </div>
-    </div>
-  </a>
+    </a>
+  </div>
 </div>

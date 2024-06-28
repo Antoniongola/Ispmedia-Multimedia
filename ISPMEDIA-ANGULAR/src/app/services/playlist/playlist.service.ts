@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Playlist} from "../../entities/Playlist";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -8,14 +8,28 @@ import {Observable} from "rxjs";
 })
 export class PlaylistService {
   private baseUrl = 'http://localhost:8080/api/playlist';
+  token = localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient) { }
 
   newPlaylist(playlist: Playlist): Observable<Playlist> {
-    return this.http.post<Playlist>(this.baseUrl, playlist);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<Playlist>(this.baseUrl, playlist, {headers});
   }
 
   allPlaylist(): Observable<Playlist[]> {
-    return this.http.get<Playlist[]>(this.baseUrl);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Playlist[]>(this.baseUrl, {headers});
+  }
+
+  allPlaylistPublicas(username:string): Observable<Playlist[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Playlist[]>(this.baseUrl+`/${username}/publicas`, {headers});
   }
 }

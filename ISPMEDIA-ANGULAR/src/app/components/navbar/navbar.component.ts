@@ -10,14 +10,11 @@ import {UserService} from "../../services/user/user.service";
 })
 export class NavbarComponent implements OnInit{
   isEditor:boolean=false;
-  constructor(private loginService:LoginServiceService,
-              private userService:UserService) {
+  constructor(private loginService:LoginServiceService) {
   }
 
   ngOnInit() {
-    this.userService.isEditor(this.loginService.getUsername()).subscribe(response=>{
-      this.isEditor = response;
-    });
+
   }
 
   logOut(){
@@ -28,7 +25,4 @@ export class NavbarComponent implements OnInit{
   isLoggedIn():boolean{
       return this.loginService.isLoggedIn();
   }
-
-
-
 }

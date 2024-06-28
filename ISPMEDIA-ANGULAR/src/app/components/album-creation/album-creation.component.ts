@@ -20,12 +20,13 @@ export class AlbumCreationComponent implements OnInit{
   albumForm!:FormGroup;
   albumImage!:File;
   generos!:Genero[];
-  artistas!:Artista[];
-  sArtista!:Artista;
+  artistas:Artista[]=[];
   user:User = new User();
+  sArtista:Artista=new Artista('','','','', new Genero(),'',this.user, [],0, 0);
   username:any;
 
   constructor(private albumService:AlbumService,
+              private router:Router,
               private artistaService:ArtistaService,
               private generoService:GeneroService,
               private fb:FormBuilder,
@@ -72,13 +73,7 @@ export class AlbumCreationComponent implements OnInit{
 
   onSubmit(){
     if(this.albumImage){
-      this.artistaService.getArtista(this.albumForm.get('artista')?.value).subscribe(response=>{
-        this.sArtista = response;
-        console.log("grande artista: "+this.sArtista.titulo);
-      }, error=>{
-        console.log('erro no artista: '+error);
-      });
-
+      this.sArtista.id=this.albumForm.get('artista')?.value;
       const genero :Genero = new Genero();
       genero.id=this.albumForm.get('genero')?.value;
 
@@ -90,7 +85,8 @@ export class AlbumCreationComponent implements OnInit{
       album.artista = this.sArtista;
 
       this.albumService.addAlbum(album, this.albumImage).subscribe(response=>{
-        alert("ALBUM "+album.titulo+" CRIADO COM SUCESSO")
+        alert("ALBUM "+album.titulo+" CRIADO COM SUCESSO");
+        this.router.navigate(['/']);
       }, error=>{
         alert("NAO FOI POSSIVEL CRIAR O ALBUM");
         console.log("DEU ERRO: "+error)

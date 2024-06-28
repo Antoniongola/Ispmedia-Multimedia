@@ -44,7 +44,7 @@ public class VideoService {
         try {
             Utilizador criador = userRepo.findById(video.getCriadorConteudo().getUsername()).get();
             video.setCriadorConteudo(criador);
-            video.setPath(videoFile.getOriginalFilename());
+            video.setPath("compressed_"+videoFile.getOriginalFilename());
             video.setThumbNailUri(videoCover.getOriginalFilename());
             video.setGenero(null);
             video.setDuration(videoFile.getResource().contentLength());
@@ -56,7 +56,7 @@ public class VideoService {
             this.repository.save(video);
             this.fm.saveFile(videoCover, TipoFicheiro.IMAGEM);
             System.out.println("ERRO DEPOIS DE SAALVAR CAPA DO VÍDEO.");
-            this.fm.saveFile((MultipartFile) videoFicheiro, TipoFicheiro.VIDEO);
+            //this.fm.saveFile((MultipartFile) videoFicheiro, TipoFicheiro.VIDEO);
             return ResponseEntity.ok(new Response("UPLOAD FEITO COM SUCESSO"));
         } catch (IOException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -153,23 +153,6 @@ public class VideoService {
         return ResponseEntity.notFound().build();
     }
 
-    /*
-    public File compressVideo(File originalFile) {
-        System.out.println("ENTROU NA COMPRESSÃO");
-        try {
-            File compressedVideoFile = new File(this.videoLocation+"\\compressed_" + originalFile.getName());
-            ProcessBuilder processBuilder = new ProcessBuilder(
-                    "ffmpeg", "-i", this.videoLocation+"\\compressed_" + originalFile.getName(),
-                    "-vcodec", "libx264", "-crf", "28", this.videoLocation+"\\compressed_" + originalFile.getName());
-            Process process = processBuilder.start();
-            process.waitFor();
-            return compressedVideoFile;
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            return originalFile;
-        }
-    }*/
-
     private File compressVideo(MultipartFile multipartFile) throws IOException, InterruptedException {
         // Criar diretório uploads se não existir
         File uploadDir = new File(this.videoLocation);
@@ -185,10 +168,14 @@ public class VideoService {
         String compressedFileName = "compressed_" + originalFile.getName();
         File compressedVideoFile = new File(uploadDir, compressedFileName);
 
+        String ffmpegLocation = "C:\\FFmpeg\\bin\\ffmpeg.exe";
         // Construir e iniciar o processo do FFmpeg
+
         ProcessBuilder processBuilder = new ProcessBuilder(
-                "ffmpeg", "-i", originalFile.getAbsolutePath(),
-                "-vcodec", "libx264", "-crf", "28", compressedVideoFile.getAbsolutePath());
+                ffmpegLocation, "-i", originalFile.getAbsolutePath(),
+                "-vcodec", "libx264", "-crf", "32", compressedVideoFile.getAbsolutePath());
+
+        System.out.println("COMEÇANDO O PROCESSO!");
         Process process = processBuilder.start();
 
         // Esperar pelo término do processo

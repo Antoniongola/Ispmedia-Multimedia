@@ -9,6 +9,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 export class VideoService {
   private apiUrl = `http://localhost:8080/api/video`;
+  token:any=localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient,
               private sanitizer:DomSanitizer) { }
@@ -19,7 +20,10 @@ export class VideoService {
     formData.append('videoFile', videoFile);
     formData.append('videoImage', videoImage);
 
-    return this.http.post<any>(this.apiUrl, formData);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<any>(this.apiUrl, formData, {headers});
   }
 
   loadImages(videos:Video[], videoImages: { [key: string]: any }) {
@@ -41,18 +45,30 @@ export class VideoService {
   }
 
   selectVideo(id:string):Observable<Video>{
-    return this.http.get<Video>(`${this.apiUrl}/${id}`);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Video>(`${this.apiUrl}/${id}`, {headers});
   }
 
   allVideos(): Observable<Video[]> {
-    return this.http.get<Video[]>(this.apiUrl);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Video[]>(this.apiUrl, {headers});
   }
 
   videoImage(id: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/${id}/imagem`, { responseType: 'blob' });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get(`${this.apiUrl}/${id}/imagem`, {headers, responseType: 'blob' });
   }
 
   videoStream(id: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/${id}/video`, { responseType: 'blob' });
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get(`${this.apiUrl}/${id}/video`, {headers, responseType: 'blob' });
   }
 }

@@ -1,4 +1,4 @@
 export enum Privacidade{
-  PRIVADO='privado',
-  PUBLICO='publico'
+  PRIVADO=0,
+  PUBLICO=1
 }

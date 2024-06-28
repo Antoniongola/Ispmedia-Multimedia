@@ -3,12 +3,14 @@
 import {User} from "./User";
 import {Privacidade} from "./enums/Privacidade";
 import {Musica} from "./Musica";
+import {Conteudo} from "./Conteudo";
 
 export class Playlist {
   id!: number;
   titulo!: string;
-  musicas!: Musica[];
+  conteudos!: Conteudo[];
   owner!: User;
   privacidade!: Privacidade;
+
 
 }

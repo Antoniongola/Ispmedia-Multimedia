@@ -1,12 +1,11 @@
 package com.ngolajr.ispmedia.services;
 
-import com.ngolajr.ispmedia.entities.Grupo;
-import com.ngolajr.ispmedia.entities.GrupoConvite;
-import com.ngolajr.ispmedia.entities.Notificacao;
-import com.ngolajr.ispmedia.entities.Utilizador;
+import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.EstadoConvite;
+import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import com.ngolajr.ispmedia.repositories.GrupoRepository;
 import com.ngolajr.ispmedia.repositories.NotificacaoRepository;
+import com.ngolajr.ispmedia.repositories.ParticipanteRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,27 +21,34 @@ public class GrupoService {
     private final GrupoConviteService grupoConviteService;
     private final NotificacaoRepository notificacaoRepo;
     private final GrupoConviteService conviteService;
+    private final ParticipanteRepository participanteRepo;
 
     public Grupo criarGrupo(Grupo grupo){
-        List<Utilizador> convidados = grupo.getParticipantes();
-        convidados.remove(grupo.getCriador());
-
-        //salvando o grupo na bd
-        List<Utilizador> editores = new ArrayList<>();
-        List<Utilizador> participantes = new ArrayList<>();
-        participantes.add(grupo.getCriador());
-        editores.add(grupo.getCriador());
+        List<Participante> convidados = new ArrayList<>();
+        List<Participante> participantes = new ArrayList<>();
+        Participante owner = new Participante();
+        Utilizador userOwner = this.userRepo.findById(grupo.getOwner().getUsername()).get();
+        grupo.setOwner(userOwner);
+        owner.setUser(userOwner);
+        owner.setTipo(TipoParticipante.OWNER);
+        participantes.add(owner);
+        for(Participante participante: grupo.getParticipantes()){
+            if(participante.getTipo() != TipoParticipante.OWNER)
+                convidados.add(participante);
+        }
         grupo.setParticipantes(participantes);
-        grupo.setEditores(editores);
+        participanteRepo.save(owner);
         repository.save(grupo);
+        //owner.setGrupo(grupo);
+        //participanteRepo.save(owner);
 
         //convidando todos para entrar no grupo (excepto o criador do grupo)
-        for(Utilizador user : convidados){
+        for(Participante participante : convidados){
             GrupoConvite convite = new GrupoConvite();
             convite.setEstadoConvite(EstadoConvite.PENDENTE);
-            convite.setConvidado(user);
+            convite.setConvidado(participante.getUser());
             convite.setGrupo(grupo);
-            convite.setAnfitriao(grupo.getCriador());
+            convite.setAnfitriao(grupo.getOwner());
             grupoConviteService.criarConvite(convite);
         }
 
@@ -50,9 +56,18 @@ public class GrupoService {
     }
 
     public List<Grupo> gruposDoUser(String username){
+        List<Grupo> grupos = new ArrayList<>();
         if(userRepo.findById(username).isPresent()){
             Utilizador user = userRepo.findById(username).get();
-            return repository.findByCriador(user);
+            for(Grupo grupo: repository.findAll())
+                for(Participante participante:grupo.getParticipantes()){
+                    if(participante.getUser().getUsername().equals(username)) {
+                        grupos.add(grupo);
+                        break;
+                    }
+                }
+
+            return grupos;
         }
         return null;
     }
@@ -64,8 +79,11 @@ public class GrupoService {
     public boolean addParticipante(long idGrupo, String username, String emissorConvite){
         if(repository.existsById(idGrupo) && userRepo.existsById(username)){
             Grupo grupo = repository.findById(idGrupo).get();
+            Participante participante = new Participante();
             Utilizador user = userRepo.findByUsername(username).get();
-            if(!grupo.getParticipantes().contains(user) && grupo.getParticipantes().size()<3){
+            participante.setUser(user);
+            participante.setTipo(TipoParticipante.PARTICIPANTE);
+            if(!grupo.getParticipantes().contains(participante) && grupo.getParticipantes().size()<3){
                 GrupoConvite convite = new GrupoConvite();
                 convite.setGrupo(grupo);
                 convite.setConvidado(user);
@@ -85,21 +103,29 @@ public class GrupoService {
 
     public boolean addEditor(long idGrupo, String username, String promotor){
         if(repository.existsById(idGrupo) && userRepo.existsById(username)){
+            boolean exists=false;
+            int index=0;
             Grupo grupo = repository.findById(idGrupo).get();
-            Utilizador user = userRepo.findByUsername(username).get();
-            Utilizador userPromovendo = userRepo.findByUsername(promotor).get();
-            if(!grupo.getEditores().contains(user)) {
+            for(Participante participante:grupo.getParticipantes()){
+                if(participante.getUser().getUsername().equals(username)) {
+                    exists =true;
+                    index = grupo.getParticipantes().indexOf(participante);
+                }
+            }
+
+            if(exists){
+                Utilizador user = userRepo.findByUsername(username).get();
+                Utilizador userPromovendo = userRepo.findByUsername(promotor).get();
                 Notificacao notificacao = new Notificacao();
                 notificacao.setDescricao(userPromovendo.getNome()+" deu-lhe o privilégio de editor do grupo.\nJá pode editar conteúdos no grupo <"+grupo.getNome()+">.");
-                notificacao.setEmissor(grupo.getCriador());
+                notificacao.setEmissor(userRepo.findById(promotor).get());
                 notificacao.setDestinatario(user);
                 notificacaoRepo.save(notificacao);
-                grupo.getEditores().add(user);
-            }else
-                return false;
-
-            if(!grupo.getParticipantes().contains(user))
-                grupo.getParticipantes().add(user);
+                Participante participante = grupo.getParticipantes().get(index);
+                grupo.getParticipantes().remove(index);
+                participante.setTipo(TipoParticipante.EDITOR);
+                grupo.getParticipantes().add(participante);
+            }
 
             repository.save(grupo);
             return true;

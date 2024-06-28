@@ -26,4 +26,9 @@ public class PlaylistController {
     public ResponseEntity<List<Playlist>> allPlaylist(){
         return ResponseEntity.ok(service.allPlaylist());
     }
+
+    @GetMapping("/{username}/publicas")
+    public ResponseEntity<List<Playlist>> allPlaylistsPublicas(@PathVariable String username){
+        return ResponseEntity.ok(service.listasPublicas(username));
+    }
 }

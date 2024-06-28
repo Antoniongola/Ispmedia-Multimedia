@@ -84,5 +84,10 @@ public class UserController {
     public ResponseEntity<List<Utilizador>> selecionarTodosUsers(){
         return ResponseEntity.ok(service.selecionarUsers());
     }
+
+    @GetMapping("/user/allexcept/{username}")
+    public ResponseEntity<List<Utilizador>> allUsersExcept(@PathVariable String username){
+        return service.allUsersExcept(username);
+    }
     
 }

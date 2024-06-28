@@ -1,10 +1,10 @@
 package com.ngolajr.ispmedia.entities.enums;
 
 public enum Privacidade {
-    PUBLICA("publica"),
-    PRIVADA("privada");
-    Privacidade(String valor){
-        String value;
+    PUBLICA(1),
+    PRIVADA(0);
+    Privacidade(int valor){
+        int value;
         value = valor;
     }
 }
