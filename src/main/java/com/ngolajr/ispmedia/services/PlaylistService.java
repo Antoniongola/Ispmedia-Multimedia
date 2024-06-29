@@ -9,6 +9,7 @@ import com.ngolajr.ispmedia.repositories.PlaylistRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,6 +39,10 @@ public class PlaylistService {
         playlist.setOwner(user);
         repository.save(playlist);
         return playlist;
+    }
+
+    public ResponseEntity<Playlist> findPlaylistByuId(long id){
+        return ResponseEntity.ok(repository.findById(id).get());
     }
 
     public List<Playlist> allPlaylist(){

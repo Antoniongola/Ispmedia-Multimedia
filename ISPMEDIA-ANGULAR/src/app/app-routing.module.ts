@@ -20,6 +20,8 @@ import {VideoUploadComponent} from "./components/video-upload/video-upload.compo
 import {GroupCreationComponent} from "./components/group-creation/group-creation.component";
 import {PlaylistCreationComponent} from "./components/playlist-creation/playlist-creation.component";
 import {NotificacoesComponent} from "./components/notificacoes/notificacoes.component";
+import {PlaylistContentComponent} from "./components/playlist-content/playlist-content.component";
+import {GroupContentComponent} from "./components/group-content/group-content.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -38,9 +40,11 @@ const routes: Routes = [
   },
   {path:'artists/new', component:ArtistCreationComponent},
   {path:'group/new', component:GroupCreationComponent},
+  {path:'group/:groupId', component:GroupContentComponent},
   {path:'musics', component: MusicsComponent},
   {path:'musics/new', component: MusicUploadComponent},
   {path:'playlist/new', component: PlaylistCreationComponent},
+  {path:'playlist/:playlistId', component: PlaylistContentComponent},
   {path:'radios', component:RadiosComponent},
   {path:'videos', component:VideosComponent},
   {path:'videos/new', component: VideoUploadComponent},

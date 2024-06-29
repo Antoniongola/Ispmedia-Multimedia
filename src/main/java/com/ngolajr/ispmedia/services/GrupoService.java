@@ -8,6 +8,7 @@ import com.ngolajr.ispmedia.repositories.NotificacaoRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -48,6 +49,10 @@ public class GrupoService {
         }
 
         return grupo;
+    }
+
+    public ResponseEntity<Grupo> findGrupoById(long grupoId){
+        return ResponseEntity.ok(repository.findById(grupoId).get());
     }
 
     public List<Grupo> gruposDoUser(String username){
