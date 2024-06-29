@@ -1,24 +1,32 @@
-<h2>Albuns</h2>
-<div class="row">
-  <div class="col" *ngFor="let album of artista.albums">
-    <a [routerLink]="['album/'+album.id]">
-      <div class="card">
-        <div class="card-img align-items-center">
-          <img *ngIf="albumImages[album.id]" [src]="albumImages[album.id]" alt="{{album.titulo}}" class="imagem-card">
-        </div>
-        <div class="card-header text-center">
-          <p>{{album.titulo}}</p>
-        </div>
-        <div class="card-body">
-      <span>
-        Genero: {{album.genero.nome}}<br><br>
-        Pontuação média: {{album.pontuacaoMedia}}<br><br>
-        Data de lançamento: {{album.dataLancamento}}<br><br>
-        Descrição: {{album.descricao}}
-        <br>
-      </span>
-        </div>
-      </div>
-    </a>
-  </div>
+
+<div class="col">
+  <div class="title-Albums"><h2>Albums</h2></div>
+
+  <section class="col" *ngFor="let album of artista.albums">
+
+      <section class="albuns-Artistas">
+
+        <section class="albuns-ArtistasCard">
+          <article class="Imagem">
+            <img *ngIf="albumImages[album.id]" [src]="albumImages[album.id]" alt="{{album.titulo}}" class="imagem-card albuns-ArtistasImagens">
+          </article>
+
+          <article class="Card-details">
+            <p class="title">{{album.titulo}}</p>
+            <article class="details-AlbumArtista">
+              <p><span>Genero:</span> {{album.genero.nome}}</p>
+              <p><span>Pontuação média:</span> {{album.pontuacaoMedia}}</p>
+              <p><span>Data de lançamento:</span> {{album.dataLancamento}}</p>
+              <p><span>Descrição:</span> {{album.descricao}}</p>
+            </article>
+
+            <a [routerLink]="['album/'+album.id]">
+              <button class="btnCritica"><p class="Critica">Fazer Critica</p></button>
+
+            </a>
+          </article>
+        </section>
+      </section>
+
+  </section>
 </div>

@@ -1,4 +1,115 @@
-.icone{
-  width:50px;
-  height: 50px;
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.Reviews-Conteiner{
+  max-width: 100%;
+  display: grid;
+  margin: 5px;
+  grid-template-columns: 4fr 4fr;
+  justify-content: center;
+  align-items: start;
+  padding: 15px;
+  gap: 10px;
+}
+.Reviews{
+  max-width: 100%;
+  overflow-y:scroll ;
+}
+
+.Reviews h2{
+  text-align: center;
+  background-color: #242424;
+  padding: 10px;
+  text-transform: uppercase;
+  font-size: 18pt;
+}
+
+.display-Reviews{
+ max-width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 20px;
+  padding: 5px;
+  gap: 20px;
+}
+.Photo-Review{
+  width:70px;
+  height:70px;
+}
+.userPhoto-Review{
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  object-fit: cover;
+}
+.review-detailsOfSUser{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.review-detailsOfSUser p{
+  text-align: justify;
+  font-weight: lighter;
+}
+.review-detailsOfSUser p:nth-child(1){
+  font-size: 13pt;
+  font-weight: bold;
+}
+/*Avaliation Reviews*/
+.AvaliationForm-Reviews{
+  width: 100%;
+}
+form {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #333;
+  border-radius: 10px;
+}
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+
+}
+
+form select {
+  width: 100%;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #444;
+
+}
+
+form textarea {
+  width: 100%;
+  color: #fff;
+  height: 100px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #444;
+
+}
+
+form .btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #28a745;
+  background-color: transparent;
+  color: #28a745;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form .btn:hover {
+  background-color: #28a745;
+  color: #fff;
 }

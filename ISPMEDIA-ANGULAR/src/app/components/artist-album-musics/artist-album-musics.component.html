@@ -1,9 +1,9 @@
-<div class="row">
+<div class="col">
   <h2>Músicas</h2>
-  <div class="row">
+  <Section class="col">
     <section>
-      <div *ngFor="let musica of album.musics">
-        <div class="col card">
+      <section *ngFor="let musica of album.musics">
+        <article class="col card">
           <div class="col">
             <img class="" [src]="albumImage[album.id]" alt="{{musica.titulo}}">
           </div>
@@ -18,45 +18,47 @@
               <button class="btn btn-outline-danger col">Delete</button>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <div class="row">
-    <div class="row">
-      <h2>Criticas do abum</h2>
-      <section class="card">
-        <div class="row" *ngFor="let critica of album.criticas">
-          <div class="row">
-            <div class="col">
-              <img class="icone" src="assets/user.png">
-            </div>
-            <div class="col">
-              <span>Nota:{{critica.nota}}</span>
-              <br>
-              <span>Autor: {{critica.critico.nome}}</span>
-              <br>
-              <span>Critica:{{critica.critica}}</span>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <form [formGroup]="criticaForm" (submit)="onSubmit()">
-            <label for="nota">Nota:</label><br>
-            <select id="nota" formControlName="nota">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select><br>
-            <label for="critica">Descrição:</label><br>
-            <textarea id="critica" formControlName="critica"></textarea><br>
-            <button class="btn btn-outline-success" type="submit">Fazer Crítica</button>
-          </form>
-        </div>
+        </article>
       </section>
+    </section>
+  </Section>
+
+  <main class="col">
+    <div class="col Reviews-Conteiner">
+
+      <section class="Reviews">
+        <h2>Críticas do Album</h2>
+        <section class="col" *ngFor="let critica of album.criticas">
+          <article class="display-Reviews">
+            <div class="Photo-Review">
+              <img class="userPhoto-Review" src="assets/userPhoto.jpg">
+            </div>
+
+            <div class="review-detailsOfSUser">
+              <p>Autor: {{critica.critico.nome}}</p>
+              <p>Nota: {{critica.nota}}</p>
+              <p>Descrição: {{critica.critica}}</p>
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <section class="col AvaliationForm-Reviews">
+        <form [formGroup]="criticaForm" (submit)="onSubmit()">
+          <label for="nota">Nota:</label><br>
+          <select id="nota" formControlName="nota">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select><br>
+          <label for="critica">Descrição:</label><br>
+          <textarea id="critica" formControlName="critica"></textarea><br>
+          <button class="btn btn-outline-success" type="submit">Fazer Crítica</button>
+        </form>
+      </section>
+
     </div>
-  </div>
+  </main>
 </div>

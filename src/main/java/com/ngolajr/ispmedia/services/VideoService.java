@@ -153,7 +153,7 @@ public class VideoService {
         return ResponseEntity.notFound().build();
     }
 
-    private File compressVideo(MultipartFile multipartFile) throws IOException, InterruptedException {
+    public File compressVideo(MultipartFile multipartFile) throws IOException, InterruptedException {
         // Criar diretório uploads se não existir
         File uploadDir = new File(this.videoLocation);
         if (!uploadDir.exists()) {
@@ -173,7 +173,10 @@ public class VideoService {
 
         ProcessBuilder processBuilder = new ProcessBuilder(
                 ffmpegLocation, "-i", originalFile.getAbsolutePath(),
-                "-vcodec", "libx264", "-crf", "32", compressedVideoFile.getAbsolutePath());
+                "-vcodec", "libx264", "-crf", "32",
+                "-preset", "fast", // Preset de compressão
+                "-threads", "4", // Utilizar 4 threads
+                compressedVideoFile.getAbsolutePath());
 
         System.out.println("COMEÇANDO O PROCESSO!");
         Process process = processBuilder.start();

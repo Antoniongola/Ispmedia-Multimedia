@@ -1,54 +1,54 @@
-<div class="navbar pb-2" *ngIf="isLoggedIn()">
-  <img src="assets/spotify.png" class="nav-item icone">
+<div class="navbar  navBarCss" *ngIf="isLoggedIn()">
+  <img src="assets/spotifyW.png" class="nav-item icone">
   <div class="nav-item">
-    <a [routerLink]="['']">Pagina inicial</a>
+    <a [routerLink]="['']" class="dropdown-List">Pagina inicial</a>
   </div>
-  <div class="nav-item">
-    <a [routerLink]="['news']">Notificações</a>
+  <div class="nav-item  ">
+    <a [routerLink]="['news']" class="dropdown-List">Notificações</a>
   </div>
   <div class="dropdown nav-item">
-    <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="dropdown-toggle dropdown-List" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
       Albuns
     </span>
-    <ul class="dropdown-menu cabecalho" aria-labelledby="dropdownMenuButton">
+    <ul class="dropdown-menu cabecalho dropdown-List-itens" aria-labelledby="dropdownMenuButton">
       <li><a [routerLink]="['albums/new']" class="dropdown-item cabecalho" >Adicionar um novo album</a></li>
       <li><a [routerLink]="['albums']" class="dropdown-item cabecalho" >Ver todos albuns</a></li>
     </ul>
   </div>
   <div class="dropdown nav-item">
-    <span class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="dropdown-toggle dropdown-List"  data-bs-toggle="dropdown" aria-expanded="false">
       Artistas
     </span>
-    <ul class="dropdown-menu cabecalho" aria-labelledby="dropdownMenuButton">
+    <ul class="dropdown-menu cabecalho dropdown-List-itens" aria-labelledby="dropdownMenuButton">
       <li><a [routerLink]="['artists/new']" class="dropdown-item cabecalho" >Adicionar um novo artista</a></li>
       <li><a [routerLink]="['artists']" class="dropdown-item cabecalho" >Ver todos artistas</a></li>
     </ul>
   </div>
   <div class="dropdown nav-item">
-      <span class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
+      <span class="dropdown-toggle dropdown-List"  data-bs-toggle="dropdown" aria-expanded="false">
         Musicas
       </span>
-    <ul class="dropdown-menu cabecalho" aria-labelledby="dropdownMenuButton">
+    <ul class="dropdown-menu cabecalho dropdown-List-itens" aria-labelledby="dropdownMenuButton">
       <li><a [routerLink]="['musics/new']" class="dropdown-item cabecalho" >Adicionar um novo single</a></li>
       <li><a [routerLink]="['musics']" class="dropdown-item cabecalho" >Ver todas musicas</a></li>
     </ul>
   </div>
   <div class="nav-item">
     <a [routerLink]="['radios']">
-      <span>
+      <span  class="dropdown-List">
         Radios
       </span>
     </a>
   </div>
   <div class="dropdown nav-item">
-    <span class="dropdown-toggle"  data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="dropdown-toggle  dropdown-List"  data-bs-toggle="dropdown" aria-expanded="false">
       Videos
     </span>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <ul class="dropdown-menu dropdown-List-itens" aria-labelledby="dropdownMenuButton">
       <li><a [routerLink]="['videos/new']" class="dropdown-item " >Adicionar novo video</a></li>
       <li><a [routerLink]="['videos']" class="dropdown-item" >Ver todos videos</a></li>
     </ul>
   </div>
   <!-- aqui metes mambo pra pesquisar -->
-  <button class="btn btn-outline-secondary" (click)="logOut()">Sair da conta</button>
+  <button class="btn btn-outline-secondary btnSair" (click)="logOut()">Sair da conta</button>
 </div>

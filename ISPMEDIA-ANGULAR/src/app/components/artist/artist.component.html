@@ -1,19 +1,23 @@
-<div class="row">
+<div class="col">
   <section class="col">
-    <h2>O ARTISTA</h2>
-    <div class="card">
-      <div class="card-img align-items-center">
-        <img *ngIf="imgSrc[artist.id]" [src]="imgSrc[artist.id]" alt="{{artist.titulo}}" class="imagem-card">
-      </div>
-      <div class="card-header text-center">
-        <p>{{artist.titulo}}</p>
-      </div>
-      <div class="card-body">
-        <span>
-          {{artist.descricao}}
-        </span>
-      </div>
-    </div>
+    <section class=".CardARTISTADescription">
+      <article class="CardConteiner-Artista">
+      <article class="ArtistaImagem">
+        <div class="CardConteiner-Imagem-Artista">
+          <img *ngIf="imgSrc[artist.id]" [src]="imgSrc[artist.id]" alt="{{artist.titulo}}" class="imagem-card">
+        </div>
+      </article>
+        <article class="card-bodyArtistaAlbums">
+          <article class="artistaAlbums-Textos">
+            <p class="artistaAlbums-titulo">{{artist.titulo}}</p>
+          </article>
+          <h4>ARTISTA</h4>
+          <p class="artistaAlbums-descricao">
+            {{artist.descricao}}
+          </p>
+        </article>
+      </article>
+    </section>
   </section>
 
   <section class="col">
