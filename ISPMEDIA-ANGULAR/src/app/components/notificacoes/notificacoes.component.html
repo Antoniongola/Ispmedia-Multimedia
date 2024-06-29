@@ -1,5 +1,27 @@
 <div *ngFor="let notificacao of notificacoes">
-  <span>
-    {{notificacao.descricao}}<br>
-  </span>
+  <div class="card">
+    <div class="row">
+      <div class="col justify-content-center align-items-center align-content-center">
+        {{notificacao.descricao}}
+      </div>
+      <div class="col-sm-2 card-header">
+        <button class="btn btn-outline-success m-2">Aceitar</button>
+        <button class="btn btn-outline-danger">Rejeitar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngFor="let convite of convites">
+  <div class="card">
+    <div class="row">
+      <div class="col justify-content-center align-items-center align-content-center">
+        {{convite.anfitriao.nome}} convidou você para o grupo: {{convite.grupo.nome}}
+      </div>
+      <div class="col-sm-2 card-header">
+        <button class="btn btn-outline-success m-2">Aceitar</button>
+        <button class="btn btn-outline-danger">Rejeitar</button>
+      </div>
+    </div>
+  </div>
 </div>

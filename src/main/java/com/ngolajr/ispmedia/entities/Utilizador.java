@@ -28,11 +28,11 @@ public class Utilizador {
     @CurrentTimestamp
     @Column(updatable = false)
     private LocalDateTime createdDate;
-
+    /*
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference(value = "utilizador-playlist")
     private List<Playlist> playlists=new ArrayList<>();
-    /*
+
     @ManyToMany
     @JoinTable(
             name = "user_grupos",

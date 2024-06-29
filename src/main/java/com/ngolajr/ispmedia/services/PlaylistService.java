@@ -24,17 +24,11 @@ public class PlaylistService {
     @Transactional
     public Playlist newPlaylist(Playlist playlist) {
         boolean existente = false;
-        List<Playlist> playlists = repository.findAll();
         List<Conteudo> conteudos = new ArrayList<>();
         Utilizador user = userRepo.findById(playlist.getOwner().getUsername()).get();
-
-        for (Playlist list : playlists)
-            if (playlist.getTitulo().equalsIgnoreCase(list.getTitulo()) && playlist.getOwner().equals(list.getOwner()))
-                existente = true;
-
         for(Conteudo content :playlist.getConteudos()){
             Conteudo conteudo = new Conteudo();
-            if(conteudoRepo.findById(content.getId()).isPresent() && !conteudos.contains(conteudo)) {
+            if(conteudoRepo.findById(content.getId()).isPresent()) {
                 conteudo = conteudoRepo.findById(content.getId()).get();
                 conteudos.add(conteudo);
             }
@@ -42,15 +36,7 @@ public class PlaylistService {
 
         playlist.setConteudos(conteudos);
         playlist.setOwner(user);
-        user.getPlaylists().add(playlist);
-
-        if(existente) {
-            System.out.println("lista existente");
-            return null;
-        }
-
         repository.save(playlist);
-        userRepo.save(user);
         return playlist;
     }
 

@@ -17,16 +17,14 @@ public class Grupo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
-
     @CurrentTimestamp //creating the group with the current system date.
     private Date dataCriacao;
-
+    /*
     @ManyToOne
     private Utilizador owner;
-
+    */
     @OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Participante> participantes;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Conteudo> conteudoGrupo;
 }

@@ -27,17 +27,11 @@ public class GrupoService {
         List<Participante> convidados = new ArrayList<>();
         List<Participante> participantes = new ArrayList<>();
 
-        Utilizador userOwner = this.userRepo.findById(grupo.getOwner().getUsername()).get();
-        Participante owner = new Participante(userOwner);
-        grupo.setOwner(userOwner);
-        owner.setUser(userOwner);
-        owner.setTipo(TipoParticipante.OWNER);
-        owner.setGrupo(grupo);
-        participantes.add(owner);
-
         for(Participante participante: grupo.getParticipantes()){
             if(participante.getTipo() != TipoParticipante.OWNER)
                 convidados.add(participante);
+            else
+                participantes.add(participante);
         }
 
         grupo.setParticipantes(participantes);
@@ -49,7 +43,7 @@ public class GrupoService {
             convite.setEstadoConvite(EstadoConvite.PENDENTE);
             convite.setConvidado(participante.getUser());
             convite.setGrupo(grupo);
-            convite.setAnfitriao(grupo.getOwner());
+            convite.setAnfitriao(grupo.getParticipantes().get(0).getUser());
             grupoConviteService.criarConvite(convite);
         }
 

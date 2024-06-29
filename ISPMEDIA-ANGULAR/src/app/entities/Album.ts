@@ -6,12 +6,12 @@ import {Genero} from "./Genero";
 import {User} from "./User";
 
 export class Album extends Conteudo {
-  musics: Musica[]|null;
-  artista: Artista|null;
-  criticas: Critica[];
-  pontuacaoMedia: number;
-  dataLancamento:string;
-  streams : number;
+  musics: Musica[]|null=null;
+  artista: Artista|null=null;
+  criticas: Critica[]=[];
+  pontuacaoMedia: number=0;
+  dataLancamento:string="";
+  streams : number=0;
 
   constructor(id: string, titulo: string, thumbNailUri: string, descricao: string, genero:Genero,editora:string,
               criador:User, musics: Musica[]|null, artista: Artista|null, criticas: Critica[], pontuacaoMedia: number,

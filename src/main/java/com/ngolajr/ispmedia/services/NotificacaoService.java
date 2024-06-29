@@ -2,6 +2,7 @@ package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.entities.Notificacao;
 import com.ngolajr.ispmedia.entities.Utilizador;
+import com.ngolajr.ispmedia.entities.enums.Roles;
 import com.ngolajr.ispmedia.repositories.NotificacaoRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,9 @@ public class NotificacaoService {
 
     public ResponseEntity<List<Notificacao>> userNotifications(String username){
         Utilizador destinatario = this.userRepo.findByUsername(username).get();
+        if(destinatario.getRoles().contains(Roles.ADMIN))
+            return ResponseEntity.ok(repository.findAll());
+
         return ResponseEntity.ok(repository.findByDestinatario(destinatario));
     }
 

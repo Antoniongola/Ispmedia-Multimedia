@@ -8,18 +8,19 @@ import {Artista} from "../../entities/Artista";
   styleUrl: './artists.component.css'
 })
 export class ArtistsComponent implements OnInit{
-  artistas !: Artista[];
+  artistas : Artista[] = [];
   artistImages: { [key: string]: any } = {};
 
   constructor(private artistService: ArtistaService) {
-  }
-
-  ngOnInit(){
     this.artistService.getTodosArtistas().subscribe(response=>{
       this.artistas = response;
       this.artistService.loadImages(this.artistas, this.artistImages);
     }, error => {
       console.log('erro nos artistas: '+error);
     });
+  }
+
+  ngOnInit(){
+
   }
 }

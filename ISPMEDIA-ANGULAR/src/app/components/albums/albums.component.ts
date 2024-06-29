@@ -8,19 +8,18 @@ import {Album} from "../../entities/Album";
   styleUrl: './albums.component.css'
 })
 export class AlbumsComponent implements OnInit{
-  albums !: Album[];
+  albums : Album[] = [];
   albumImages: { [key: string]: any } = {};
 
   constructor(private albumService : AlbumService){
-
-  }
-
-  ngOnInit(){
     this.albumService.getAlbums().subscribe(response=>{
       this.albums = response;
       this.albumService.loadImages(this.albums, this.albumImages);
     }, error=>{
       console.log('Erro nos albuns: '+error);
     })
+  }
+  ngOnInit(){
+
   }
 }

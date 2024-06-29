@@ -4,6 +4,9 @@ import {LoginServiceService} from "../../services/login/login-service.service";
 import {Notificacao} from "../../entities/Notificacao";
 import {TipoNotificacao} from "../../entities/enums/TipoNotificacao";
 import {UserService} from "../../services/user/user.service";
+import {EstadoEntrega} from "../../entities/enums/EstadoEntrega";
+import {GrupoConvite} from "../../entities/GrupoConvite";
+import {GrupoConviteService} from "../../services/grupoConvite/grupo-convite.service";
 
 @Component({
   selector: 'app-notificacoes',
@@ -13,25 +16,29 @@ import {UserService} from "../../services/user/user.service";
 export class NotificacoesComponent implements OnInit{
   username:any='';
   notificacoes:Notificacao[]=[];
-  isAdmin:boolean=false;
+  estadoPendente:EstadoEntrega=EstadoEntrega.PENDENTE;
+  convites:GrupoConvite[]=[];
   constructor(private notificacaoService:NotificacaoService,
               private loginService:LoginServiceService,
-              private userService:UserService){ }
+              private userService:UserService,
+              private grupoConvite:GrupoConviteService){
+    this.username = this.loginService.getUsername();
+  }
 
   ngOnInit() {
-    this.username = this.loginService.getUsername();
-    this.userService.isAdmin(this.username).subscribe(response=>{
-      this.isAdmin = response;
+    this.notificacaoService.getUserNotifications(this.username).subscribe(response => {
+      this.notificacoes = response;
+      console.log('pegou ya?');
+    }, error=>{
+      console.log('error ya!')
     });
-    if(this.isAdmin){
-      this.notificacaoService.getAllNotifications().subscribe(response=>{
-        this.notificacoes = response;
-      });
-    }else{
-      this.notificacaoService.getUserNotifications(this.username).subscribe(response => {
-        this.notificacoes = response;
-      });
-    }
+
+    this.grupoConvite.userConvite(this.username).subscribe(response=>{
+      this.convites = response;
+      console.log('Deu certo nos grupos convites')
+    }, error=>{
+      console.log('Erro no convite!');
+    })
   }
 
   protected readonly TipoNotificacao = TipoNotificacao;
