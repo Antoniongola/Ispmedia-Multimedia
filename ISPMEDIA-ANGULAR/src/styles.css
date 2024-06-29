@@ -3,7 +3,10 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  background-color:#fff;
+}
+body{
+  background-color: #1d1d1d;
+  color:#fff;
 }
 
 .icone{
@@ -20,11 +23,14 @@ a{
   text-decoration: none;
   color: black;
 }
-
-.imagem-card{
-  width:250px;
-  height:250px;
+.card-img{
+  width: 400px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 
 .card-item{
   div{
