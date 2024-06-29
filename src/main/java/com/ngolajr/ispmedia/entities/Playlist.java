@@ -19,7 +19,7 @@ public class Playlist {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Conteudo> conteudos;
     @ManyToOne
-    @JsonBackReference(value = "utilizador-playlist")
+    //@JsonBackReference(value = "utilizador-playlist")
     private Utilizador owner;
     private Privacidade privacidade;
 }

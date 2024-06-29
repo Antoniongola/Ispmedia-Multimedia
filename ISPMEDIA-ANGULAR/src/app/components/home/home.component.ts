@@ -18,23 +18,35 @@ export class HomeComponent implements OnInit{
   constructor(private apiService: LoginServiceService,
               private grupoService:GrupoService,
               private playlistService:PlaylistService,
-              private router:Router){ }
-
-  ngOnInit(): void {
+              private router:Router){
     if(!this.apiService.isLoggedIn())
       this.goToLogin();
 
     this.username=this.apiService.getUsername();
-    this.grupoService.todosGrupos().subscribe(rresponse=>{
-      this.grupos=rresponse;
-    });
-
     this.playlistService.allPlaylistPublicas(this.username).subscribe(response=>{
       this.playlists = response;
       console.log('LISTAS CRIADAS!');
     }, error=>{
-      console.log('ERRO, '+error);
+      console.log('ERRO NAS PLAYLISTS, '+error);
     });
+
+    this.grupoService.todosGrupos().subscribe(rresponse=>{
+      this.grupos=rresponse;
+      console.log('grupos carregados!');
+    }, error=>{
+      console.log('erro nos grupos');
+    });
+  }
+
+  ngOnInit(): void {
+
+    /*
+
+
+
+    */
+
+
   }
 
   goToLogin(){

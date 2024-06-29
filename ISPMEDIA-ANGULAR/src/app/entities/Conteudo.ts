@@ -3,13 +3,13 @@ import {Artista} from "./Artista";
 import {User} from "./User";
 
 export class Conteudo {
-  id: string; // UUID
-  titulo: string;
-  thumbNailUri: string;
-  descricao: string;
-  genero:Genero;
-  editora:string;
-  criadorConteudo:User;
+  id: string=""; // UUID
+  titulo: string="";
+  thumbNailUri: string="";
+  descricao: string="";
+  genero:Genero=new Genero();
+  editora:string="";
+  criadorConteudo:User=new User();
 
   constructor(id: string, titulo: string, thumbNailUri: string,
               descricao: string, genero:Genero,

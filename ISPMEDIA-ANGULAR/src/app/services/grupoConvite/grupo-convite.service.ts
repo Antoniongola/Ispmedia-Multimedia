@@ -20,6 +20,13 @@ export class GrupoConviteService {
     return this.http.post<Response>(`${this.apiUrl}`, convite, {headers});
   }
 
+  userConvite(username: string): Observable<GrupoConvite[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<GrupoConvite[]>(`${this.apiUrl}/${username}`, {headers});
+  }
+
   // Method to respond to a convite
   responderConvite(conviteId: number, resposta: number): Observable<Response> {
     const headers = new HttpHeaders({
