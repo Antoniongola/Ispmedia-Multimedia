@@ -19,6 +19,14 @@ export class GrupoService {
     return this.http.post<Grupo>(this.baseUrl, grupo, {headers});
   }
 
+  getGrupo(grupoId: number, userId: string, emissorConvite:string): Observable<Grupo> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    const url = `${this.baseUrl}/${grupoId}`;
+    return this.http.get<Grupo>(url, {headers});
+  }
+
   addParticipante(grupoId: number, userId: string, emissorConvite:string): Observable<Response> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`

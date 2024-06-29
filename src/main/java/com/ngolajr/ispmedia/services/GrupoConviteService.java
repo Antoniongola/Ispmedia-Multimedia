@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GrupoConviteService {
@@ -78,5 +80,9 @@ public class GrupoConviteService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("GRUPO NÃO ENCONTRADO!"));
+    }
+
+    public ResponseEntity<List<GrupoConvite>> userConvites(String username){
+        return ResponseEntity.ok(repository.findAllByConvidado_Username(username));
     }
 }

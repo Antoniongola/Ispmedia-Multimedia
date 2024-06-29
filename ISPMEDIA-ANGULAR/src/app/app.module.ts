@@ -30,6 +30,8 @@ import { PlaylistCreationComponent } from './components/playlist-creation/playli
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
 import { ConteudoPartilhadoComponent } from './components/conteudo-partilhado/conteudo-partilhado.component';
 import { UsersComponent } from './components/users/users.component';
+import { PlaylistContentComponent } from './components/playlist-content/playlist-content.component';
+import { GroupContentComponent } from './components/group-content/group-content.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { UsersComponent } from './components/users/users.component';
     PlaylistCreationComponent,
     NotificacoesComponent,
     ConteudoPartilhadoComponent,
-    UsersComponent
+    UsersComponent,
+    PlaylistContentComponent,
+    GroupContentComponent
   ],
   imports: [
     BrowserModule,

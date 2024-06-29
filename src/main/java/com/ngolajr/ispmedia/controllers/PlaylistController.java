@@ -22,6 +22,11 @@ public class PlaylistController {
         return ResponseEntity.ok(null);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Playlist> findById(@PathVariable long id){
+        return this.service.findPlaylistByuId(id);
+    }
+
     @GetMapping()
     public ResponseEntity<List<Playlist>> allPlaylist(){
         return ResponseEntity.ok(service.allPlaylist());

@@ -17,6 +17,5 @@ public class Critica {
     @ManyToOne
     private Utilizador critico;
     @ManyToOne
-    @JsonBackReference(value = "album-critica")
     private Album album;
 }

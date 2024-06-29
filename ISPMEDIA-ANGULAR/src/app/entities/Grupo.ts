@@ -3,10 +3,10 @@ import {User} from "./User";
 import {Conteudo} from "./Conteudo";
 
 export class Grupo{
-  id!: number;
+  id: number=0;
   nome: string="";
   owner:User= new User();
-  dataCriacao!: Date;
+  dataCriacao: Date=new Date();
   participantes:Participante[]=[];
   conteudoGrupo:Conteudo[]=[];
   constructor() {

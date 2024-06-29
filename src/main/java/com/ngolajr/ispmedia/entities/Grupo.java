@@ -2,9 +2,9 @@ package com.ngolajr.ispmedia.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import java.util.Date;
@@ -17,21 +17,14 @@ public class Grupo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
-
-    @CurrentTimestamp //criando o grupo com a data atual do sistema.
+    @CurrentTimestamp //creating the group with the current system date.
     private Date dataCriacao;
-
+    /*
     @ManyToOne
     private Utilizador owner;
-
-    @ManyToMany
-    @JoinTable(
-            name = "grupo_participantes",
-            joinColumns = @JoinColumn(name = "grupo_id"),
-            inverseJoinColumns = @JoinColumn(name = "participante_id")
-    )
+    */
+    @OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Participante> participantes;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Conteudo> conteudoGrupo;
 }

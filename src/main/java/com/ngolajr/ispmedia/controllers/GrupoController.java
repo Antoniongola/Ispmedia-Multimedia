@@ -21,6 +21,11 @@ public class GrupoController {
         return ResponseEntity.ok(this.service.criarGrupo(grupo));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Grupo> findById(@PathVariable long id){
+        return this.service.findGrupoById(id);
+    }
+
     @PostMapping("/{grupo}/{emissorConvite}/participante/{user}")
     public ResponseEntity<Response> addParticipante(@PathVariable long grupo, @PathVariable String user, @PathVariable String emissorConvite){
         if(service.addParticipante(grupo, user, emissorConvite))

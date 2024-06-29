@@ -19,6 +19,13 @@ export class PlaylistService {
     return this.http.post<Playlist>(this.baseUrl, playlist, {headers});
   }
 
+  getPlaylist(id:number): Observable<Playlist> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Playlist>(this.baseUrl+`/${id}`, {headers});
+  }
+
   allPlaylist(): Observable<Playlist[]> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`

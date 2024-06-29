@@ -5,9 +5,10 @@ import com.ngolajr.ispmedia.entities.enums.EstadoConvite;
 import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import com.ngolajr.ispmedia.repositories.GrupoRepository;
 import com.ngolajr.ispmedia.repositories.NotificacaoRepository;
-import com.ngolajr.ispmedia.repositories.ParticipanteRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,26 +22,21 @@ public class GrupoService {
     private final GrupoConviteService grupoConviteService;
     private final NotificacaoRepository notificacaoRepo;
     private final GrupoConviteService conviteService;
-    private final ParticipanteRepository participanteRepo;
 
+    @Transactional
     public Grupo criarGrupo(Grupo grupo){
         List<Participante> convidados = new ArrayList<>();
         List<Participante> participantes = new ArrayList<>();
-        Participante owner = new Participante();
-        Utilizador userOwner = this.userRepo.findById(grupo.getOwner().getUsername()).get();
-        grupo.setOwner(userOwner);
-        owner.setUser(userOwner);
-        owner.setTipo(TipoParticipante.OWNER);
-        participantes.add(owner);
+
         for(Participante participante: grupo.getParticipantes()){
             if(participante.getTipo() != TipoParticipante.OWNER)
                 convidados.add(participante);
+            else
+                participantes.add(participante);
         }
+
         grupo.setParticipantes(participantes);
-        participanteRepo.save(owner);
         repository.save(grupo);
-        //owner.setGrupo(grupo);
-        //participanteRepo.save(owner);
 
         //convidando todos para entrar no grupo (excepto o criador do grupo)
         for(Participante participante : convidados){
@@ -48,11 +44,15 @@ public class GrupoService {
             convite.setEstadoConvite(EstadoConvite.PENDENTE);
             convite.setConvidado(participante.getUser());
             convite.setGrupo(grupo);
-            convite.setAnfitriao(grupo.getOwner());
+            convite.setAnfitriao(grupo.getParticipantes().get(0).getUser());
             grupoConviteService.criarConvite(convite);
         }
 
         return grupo;
+    }
+
+    public ResponseEntity<Grupo> findGrupoById(long grupoId){
+        return ResponseEntity.ok(repository.findById(grupoId).get());
     }
 
     public List<Grupo> gruposDoUser(String username){
