@@ -5,8 +5,8 @@ import com.ngolajr.ispmedia.entities.enums.EstadoConvite;
 import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import com.ngolajr.ispmedia.repositories.GrupoRepository;
 import com.ngolajr.ispmedia.repositories.NotificacaoRepository;
-import com.ngolajr.ispmedia.repositories.ParticipanteRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,26 +21,27 @@ public class GrupoService {
     private final GrupoConviteService grupoConviteService;
     private final NotificacaoRepository notificacaoRepo;
     private final GrupoConviteService conviteService;
-    private final ParticipanteRepository participanteRepo;
 
+    @Transactional
     public Grupo criarGrupo(Grupo grupo){
         List<Participante> convidados = new ArrayList<>();
         List<Participante> participantes = new ArrayList<>();
-        Participante owner = new Participante();
+
         Utilizador userOwner = this.userRepo.findById(grupo.getOwner().getUsername()).get();
+        Participante owner = new Participante(userOwner);
         grupo.setOwner(userOwner);
         owner.setUser(userOwner);
         owner.setTipo(TipoParticipante.OWNER);
+        owner.setGrupo(grupo);
         participantes.add(owner);
+
         for(Participante participante: grupo.getParticipantes()){
             if(participante.getTipo() != TipoParticipante.OWNER)
                 convidados.add(participante);
         }
+
         grupo.setParticipantes(participantes);
-        participanteRepo.save(owner);
         repository.save(grupo);
-        //owner.setGrupo(grupo);
-        //participanteRepo.save(owner);
 
         //convidando todos para entrar no grupo (excepto o criador do grupo)
         for(Participante participante : convidados){

@@ -7,6 +7,7 @@ import com.ngolajr.ispmedia.entities.enums.Privacidade;
 import com.ngolajr.ispmedia.repositories.ConteudoRepository;
 import com.ngolajr.ispmedia.repositories.PlaylistRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,12 @@ public class PlaylistService {
     private final PlaylistRepository repository;
     private final ConteudoRepository conteudoRepo;
     private final UtilizadorRepository userRepo;
+
+    @Transactional
     public Playlist newPlaylist(Playlist playlist) {
         boolean existente = false;
         List<Playlist> playlists = repository.findAll();
         List<Conteudo> conteudos = new ArrayList<>();
-
         Utilizador user = userRepo.findById(playlist.getOwner().getUsername()).get();
 
         for (Playlist list : playlists)
@@ -42,8 +44,10 @@ public class PlaylistService {
         playlist.setOwner(user);
         user.getPlaylists().add(playlist);
 
-        if(existente)
+        if(existente) {
+            System.out.println("lista existente");
             return null;
+        }
 
         repository.save(playlist);
         userRepo.save(user);

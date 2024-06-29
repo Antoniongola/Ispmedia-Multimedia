@@ -1,8 +1,10 @@
 package com.ngolajr.ispmedia.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ngolajr.ispmedia.entities.enums.Roles;
+import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CurrentTimestamp;
@@ -30,7 +32,15 @@ public class Utilizador {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference(value = "utilizador-playlist")
     private List<Playlist> playlists=new ArrayList<>();
+    /*
     @ManyToMany
+    @JoinTable(
+            name = "user_grupos",
+            joinColumns = @JoinColumn(name = "utilizador_username"),
+            inverseJoinColumns = @JoinColumn(name = "grupo")
+    )
     private List<Grupo> grupos = new ArrayList<>();
+    */
     private boolean isOnline=false;
+
 }

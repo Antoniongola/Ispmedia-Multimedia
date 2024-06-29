@@ -98,11 +98,14 @@ public class MusicaService {
                 album.setEditora(dto.getEditora());
                 album.setThumbNailUri(dto.getThumbNailUri());
                 album.setDescricao(dto.getDescricao());
+                album.setCriadorConteudo(criador);
+                album.setGenero(dto.getGenero());
                 this.repository.save(dto);
                 album.getMusics().add(dto);
                 dto.setAlbum(album);
                 albumRepository.save(album);
                 this.repository.save(dto);
+                fm.saveFile(musicFile, TipoFicheiro.MUSICA);
             }
             System.out.println("Pulou aqui o mambo do album");
             return ResponseEntity.ok().body(new Response("UPLOAD DE MUSICA FEITO COM SUCESSO"));
