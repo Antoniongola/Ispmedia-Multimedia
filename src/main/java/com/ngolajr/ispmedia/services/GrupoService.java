@@ -34,7 +34,6 @@ public class GrupoService {
             else
                 participantes.add(participante);
         }
-
         grupo.setParticipantes(participantes);
         repository.save(grupo);
 

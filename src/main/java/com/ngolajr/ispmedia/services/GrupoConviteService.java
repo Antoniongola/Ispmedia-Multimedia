@@ -30,7 +30,8 @@ public class GrupoConviteService {
         repository.save(convite);
         Notificacao notificacao = new Notificacao();
         notificacao.setTipoNotificacao(TipoNotificacao.CONVITENOVOGRUPO);
-        notificacao.setDescricao(user.getNome()+" convidou você para fazer parte do grupo <"+convite.getGrupo().getNome()+">");
+        notificacao.setDescricao(user.getNome()+" convidou você para fazer parte do grupo: <"+convite.getGrupo().getNome()+">");
+        notificacao.setEmissor(user);
         notificacao.setDestinatario(convite.getConvidado());
         notificacao.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
         notificacaoRepository.save(notificacao);
