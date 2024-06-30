@@ -6,9 +6,6 @@
     <div>
       <button class="btn btn-outline-primary" (click)="goToCriarPlaylistForm()">Criar Playlist</button>
     </div>
-<<<<<<<<< Temporary merge branch 1
-  </section>
-=========
     <div class="row" *ngFor="let playlist of playlists">
       <a [routerLink]="['playlist/'+playlist.id]">
         <ul class="row mt-2 list-unstyled">
@@ -39,8 +36,7 @@
         </ul>
       </a>
     </div>
-  </div>
->>>>>>>>> Temporary merge branch 2
+  </section>
 
   <!-- coluna do meio -->
   <section class="conteirner-Albuns-Artistas">
@@ -60,13 +56,7 @@
 
 
   <!-- coluna do lado direito-->
-<<<<<<<<< Temporary merge branch 1
   <section class="conteiner-Grupos">
-    <h4 class="text-center">GRUPOS</h4>
-    <div>
-      <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">Criar Grupo</button>
-=========
-  <div class="col-sm-3 card">
     <div class="row card">
       <h4 class="card-header text-center">GRUPOS <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">+</button></h4>
     </div>
@@ -89,17 +79,17 @@
                     <span>Participantes: {{grupo.participantes.length}}</span>
                   </div>
                 </div>
+                <!--
                 <div class="row">
                   <div class="col-12">
                     <span>Criada por: {{grupo.participantes[0].user.nome}}</span>
                   </div>
-                </div>
+                </div>-->
               </div>
             </div>
           </li>
         </ul>
       </a>
->>>>>>>>> Temporary merge branch 2
     </div>
   </section>
 </main>
