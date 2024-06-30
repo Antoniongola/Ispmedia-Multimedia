@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.services;
 
+import com.ngolajr.ispmedia.dtos.GrupoConviteDto;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.EstadoConvite;
@@ -39,11 +40,14 @@ public class GrupoConviteService {
     }
 
     //se a resposta for 1 então aceitou, se for -1 então negou.
-    public ResponseEntity<Response> responderConvite(long grupoConviteId, int resposta){
-        if(this.repository.findById(grupoConviteId).isEmpty()){
+    public ResponseEntity<Response> responderConvite(GrupoConviteDto dto){
+        long conviteId = dto.conviteId();
+        int resposta = dto.resposta();
+
+        if(this.repository.findById(conviteId).isEmpty()){
             return ResponseEntity.status(400).body(new Response("GRUPO NÃO EXISTENTE!!"));
         }
-        GrupoConvite grupoConvite = repository.findById(grupoConviteId).get();
+        GrupoConvite grupoConvite = repository.findById(conviteId).get();
         long idGrupo = grupoConvite.getGrupo().getId();
         String username =grupoConvite.getConvidado().getUsername();
         if(grupoRepository.findById(idGrupo).isPresent()){

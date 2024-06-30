@@ -14,6 +14,8 @@ import {UserService} from "../../services/user/user.service";
   styleUrl: './video-upload.component.css'
 })
 export class VideoUploadComponent implements OnInit{
+  progress: number = 0;
+  message: string = '';
   videoForm!:FormGroup;
   videos!:Video[];
   videoFile!:File;
@@ -50,12 +52,32 @@ export class VideoUploadComponent implements OnInit{
   onSubmit():void{
     const video:Video=new Video('', this.videoForm.get('nome')?.value, '', this.videoForm.get('descricao')?.value,
      new Genero(),'', this.user);
+    console.log('username: '+this.user.username);
 
+    this.videoService.uploadVideo(video, this.videoFile, this.videoImage).subscribe(
+      event => {
+        if (typeof event === 'object') {
+          this.progress = 0;
+          this.message = 'Upload complete';
+          alert('UPLOAD TERMINADO COM SUCESSO!');
+        } else if (event.status === 'progress') {
+          this.progress = event.message;
+        }
+      },
+      err => {
+        console.error(err);
+        this.message = 'Upload failed';
+        alert('ERRO NO UPLOAD!!!');
+      }
+    );
+
+    /*
     this.videoService.uploadVideo(video, this.videoFile, this.videoImage).subscribe(response=>{
       alert('SUCESSO, VÍDEO BEM ENVIADO. UPLOAD FEITTO COM SUCESSO. '+response);
       this.router.navigate(['/']);
     }, error => {
       alert('ERRO NO ENVIO: '+error)
     });
+    */
   }
 }

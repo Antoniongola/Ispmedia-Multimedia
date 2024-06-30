@@ -5,6 +5,7 @@ import com.ngolajr.ispmedia.entities.Video;
 import com.ngolajr.ispmedia.repositories.VideoRepository;
 import com.ngolajr.ispmedia.services.VideoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,16 @@ public class VideoController {
     private final VideoService service;
 
     @PostMapping
-    public ResponseEntity<Object> uploadVideo(@RequestPart Video video, @RequestPart MultipartFile videoFile, @RequestPart MultipartFile videoImage){
-        return this.service.uploadVideo(video, videoFile, videoImage);
+    public ResponseEntity<Object> uploadVideo(@RequestPart Video video, @RequestPart MultipartFile videoFile) throws Exception {
+        return ResponseEntity.ok(this.service.createVideo(video, videoFile, 0L));
     }
+
+    /*
+    @PostMapping
+    public ResponseEntity<Object> uploadVideo(@RequestPart Video video, @RequestPart MultipartFile videoFile, @RequestPart MultipartFile videoImage) throws Exception {
+        return ResponseEntity.ok(this.service.createVideo(video, videoFile, 0L));
+    }
+    */
 
     @GetMapping("/{id}")
     public ResponseEntity<Video> selectVideoInfos(@PathVariable UUID id){

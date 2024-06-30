@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.controllers;
 
+import com.ngolajr.ispmedia.dtos.GrupoConviteDto;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.GrupoConvite;
 import com.ngolajr.ispmedia.services.GrupoConviteService;
@@ -25,8 +26,8 @@ public class GrupoConviteController {
         return this.service.userConvites(username);
     }
 
-    @PutMapping("/{conviteId}/{resposta}")
-    public ResponseEntity<Response> responderConvite(@RequestBody long conviteId, @PathVariable int resposta){
-        return this.service.responderConvite(conviteId, resposta);
+    @PutMapping("/{grupoConvite}")
+    public ResponseEntity<Response> responderConvite(@RequestBody GrupoConviteDto dto, @PathVariable String grupoConvite){
+        return this.service.responderConvite(dto);
     }
 }

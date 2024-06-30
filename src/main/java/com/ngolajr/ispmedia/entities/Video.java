@@ -13,6 +13,9 @@ public class Video extends Conteudo{
     private long duration;
     private String path;
     private int streams;
+    private String formato;
+    private String tamanho;
+    private String type;
     public Video(){
         super();
         this.streams = 0;

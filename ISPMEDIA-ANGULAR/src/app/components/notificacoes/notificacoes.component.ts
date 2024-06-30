@@ -7,6 +7,7 @@ import {UserService} from "../../services/user/user.service";
 import {EstadoEntrega} from "../../entities/enums/EstadoEntrega";
 import {GrupoConvite} from "../../entities/GrupoConvite";
 import {GrupoConviteService} from "../../services/grupoConvite/grupo-convite.service";
+import {GrupoConviteDto} from "../../dtos/GrupoConviteDto";
 
 @Component({
   selector: 'app-notificacoes',
@@ -38,6 +39,15 @@ export class NotificacoesComponent implements OnInit{
       console.log('Deu certo nos grupos convites')
     }, error=>{
       console.log('Erro no convite!');
+    })
+  }
+
+  responderConvite(conviteId:number, resposta:number){
+    const dto:GrupoConviteDto = new GrupoConviteDto(conviteId, resposta);
+    this.grupoConvite.responderConvite(dto).subscribe(response=>{
+      alert(response.response);
+    }, error=>{
+      alert('ERRO, IMPOSSÍVEL RESPONDER SOLICITAÇÃO!');
     })
   }
 

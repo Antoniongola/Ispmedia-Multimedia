@@ -1,25 +1,45 @@
-<p>album-creation works!</p>
-<form [formGroup]="videoForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="nome">Nome do vídeo:</label><br>
-    <input id="nome" formControlName="nome" type="text">
-  </div>
+<div class="row">
+  <div class="row">
+    <div class="col justify-content-center align-items-center align-content-center">
+      <img src="assets/playlist.png">
+    </div>
+    <div class="col card justify-content-center align-items-center align-content-center">
+      <div class="">
+        <form [formGroup]="videoForm" (ngSubmit)="onSubmit()" class="col justify-content-center align-items-center align-content-center">
+          <div>
+            <label for="nome">Nome do vídeo:</label><br>
+            <input id="nome" formControlName="nome" type="text">
+          </div>
 
-  <div>
-    <label for="descricao">Descricao do vídeo:</label><br>
-    <textarea id="descricao" formControlName="descricao"></textarea>
-  </div>
+          <div>
+            <label for="descricao">Descricao do vídeo:</label><br>
+            <textarea id="descricao" formControlName="descricao"></textarea>
+          </div>
 
-  <div>
-    <label for="videoImage">Thumbnail do vídeo</label><br>
-    <input id="videoImage" type="file" (change)="onFileChange($event, 1)">
-  </div>
+          <!--
+          <div>
+            <label for="videoImage">Thumbnail do vídeo</label><br>
+            <input id="videoImage" type="file" (change)="onFileChange($event, 1)">
+          </div>
+          -->
 
-  <div>
-    <label for="videoFile">video</label><br>
-    <input id="videoFile" type="file" (change)="onFileChange($event, 2)">
-  </div>
+          <div>
+            <label for="videoFile">video</label><br>
+            <input id="videoFile" type="file" (change)="onFileChange($event, 2)">
+          </div>
 
-  <br>
-  <button class="btn btn-outline-primary" type="submit">Adicionar novo vídeo</button>
-</form>
+          <br>
+          <button class="btn btn-outline-primary" type="submit">Adicionar novo vídeo</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="progress > 0">
+      Progress: {{ progress }}%
+    </div>
+    <div *ngIf="message">
+      mensagem: {{ message }}
+    </div>
+  </div>
+</div>

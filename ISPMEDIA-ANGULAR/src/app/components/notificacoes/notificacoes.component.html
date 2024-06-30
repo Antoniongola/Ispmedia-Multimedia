@@ -4,10 +4,6 @@
       <div class="col justify-content-center align-items-center align-content-center">
         {{notificacao.descricao}}
       </div>
-      <div class="col-sm-2 card-header">
-        <button class="btn btn-outline-success m-2">Aceitar</button>
-        <button class="btn btn-outline-danger">Rejeitar</button>
-      </div>
     </div>
   </div>
 </div>
@@ -19,8 +15,8 @@
         {{convite.anfitriao.nome}} convidou você para o grupo: {{convite.grupo.nome}}
       </div>
       <div class="col-sm-2 card-header">
-        <button class="btn btn-outline-success m-2">Aceitar</button>
-        <button class="btn btn-outline-danger">Rejeitar</button>
+        <button class="btn btn-outline-success m-2" (click)="responderConvite(convite.id ,1)">Aceitar</button>
+        <button class="btn btn-outline-danger" (click)="responderConvite(convite.id ,-1)">Rejeitar</button>
       </div>
     </div>
   </div>

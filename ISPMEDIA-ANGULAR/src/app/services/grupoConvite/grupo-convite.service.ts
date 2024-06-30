@@ -3,6 +3,9 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {GrupoConvite} from "../../entities/GrupoConvite";
 import {Response} from "../../entities/Response";
 import {Observable} from "rxjs";
+import {GrupoConviteDto} from "../../dtos/GrupoConviteDto";
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +31,10 @@ export class GrupoConviteService {
   }
 
   // Method to respond to a convite
-  responderConvite(conviteId: number, resposta: number): Observable<Response> {
+  responderConvite(dto:GrupoConviteDto): Observable<Response> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.put<Response>(`${this.apiUrl}/${conviteId}/${resposta}`, {headers});
+    return this.http.put<Response>(`${this.apiUrl}/${dto.conviteId}`, dto,{headers});
   }
 }
