@@ -87,7 +87,7 @@ export class ArtistAlbumMusicsComponent implements OnInit{
         alert('CRITICA ADICIONADA COM SUCESSO AO ALBUM. '+response.critica);
         //this.router.navigate(['../']);
       }, error=>{
-        alert('DEU ERRADO PIDIMO '+error);
+        alert('A descrição apenas deve ter de 0 á 300 caracteres,Por favor reveja sua descrição');
       });
   }
 }
