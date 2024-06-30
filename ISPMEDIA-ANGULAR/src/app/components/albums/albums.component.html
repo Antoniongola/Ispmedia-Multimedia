@@ -1,8 +1,9 @@
-<main class="row">
-  <section class="col mb-2" *ngFor="let album of albums">
+<h2>ALBUMS</h2>
+<main class="All-Albums">
+  <section class="Albums" *ngFor="let album of albums">
     <a [routerLink]="['album/'+album.id]">
-      <section class="card CardALBUM">
-        <article class="card-img align-items-center conteinerCard-Imagem">
+      <section class="CardALBUM">
+        <article class=" conteinerCard-Imagem">
           <img *ngIf="albumImages[album.id]" [src]="albumImages[album.id]" alt="{{album.titulo}}" class="imagem-card imagemCard">
         </article>
         <article class="Conteiner-tituloCard">

@@ -1,55 +1,102 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  color:#fff;
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: #FF0000;
+  padding: 20px;
+}
+
+.nav-item {
+  margin: 0 10px;
+}
+
+.nav-item .dropdown-List {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-item .dropdown-List:hover,
+.nav-item .dropdown-toggle:hover {
+  background-color: #555;
+}
+
+.dropdown-menu {
+  background-color: #444;
+  border: none;
+  border-radius: 5px;
+}
+
+.dropdown-item {
+  color: #fff;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #666;
+}
+
+.icone {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.btnSair {
+  color: #fff;
+  border: 1px solid #fff;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btnSair:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+.dropdown-submenu {
   position: relative;
 }
-.navBarCss{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  border:1px solid #000;
-  padding: 15px;
-  background-color:  #FF0000;
 
-}
-.navBarCss .btnSair{
-  padding: 8px;
-  border: 1px solid #1d1d1d;
-  color:#fff;
-  background-color: #10282f;
-}
-.navBarCss .btnSair:hover{
-  background-color: #dc3545;
-}
-.dropdown-List{
-  padding: 2px;
-  background-color: #FF0000;
-  transition: all 0.1s linear;
-}
-.dropdown-List:hover{
-  padding: 6px;
-  background-color: #4d4d4d;
-}
-.dropdown-List-itens{
-  border: 1px solid #fff;
-}
-.dropdown-List-itens li{
-  padding: 8px;
-  background-color: #1d1d1d;
-
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  border-radius: 5px;
 }
 
-
-
-
-.icone{
-  width:50px;
-  height: 50px;
-  background-color: transparent;
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
 }
 
-.divider{
-  flex: 1 1 auto;
+.dropdown-submenu > .dropdown-toggle::after {
+  content: ' ▸';
+  float: right;
+  margin-left: .5em;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-item {
+    margin: 5px 0;
+  }
+
+  .dropdown-menu {
+    position: static;
+    float: none;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+    width: 100%;
+  }
 }

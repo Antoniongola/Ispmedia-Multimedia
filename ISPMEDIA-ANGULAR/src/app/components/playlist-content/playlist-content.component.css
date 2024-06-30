@@ -19,15 +19,19 @@
   width: 100%;
 }
 video{
-  width: 720px;
+  width: 100%;
   height: 400px;
   border-radius: 10px;
+  border:1px solid #121212;
+  box-shadow: 0px 0px 10px #FF0000;
+  margin-bottom: 10px;
 }
 .playlists{
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 .details-playlist{
   width: 100%;
@@ -43,7 +47,7 @@ video{
   background-color: #242424;
   padding: 10px 20px;
   gap: 20px;
-  border-radius:10px
+  border-radius:10px;
 }
 
 .icon-titlePlaylist{
@@ -64,7 +68,78 @@ video{
   width: 100%;
   height:100%;
   border-radius: 50%;
-  border: 1px solid #fff;
   padding: 10px;
   background-color: #FF0000;
+}
+.play-icon img:hover{
+  background-color: #B10000;
+}
+button{
+  background-color: transparent;
+  border:none;
+  padding: 3px;
+}
+.Barra-progress{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.Barra-progress .progress{
+  width: 100%;
+  background: #242424;
+}
+
+.progress {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: opacity 0.2s;
+
+}
+
+.progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background: #FF0000;
+  cursor: pointer;
+}
+
+.controls-volume input[type="range"]{
+  background-color: #FF0000;
+}
+
+
+.controls-playlist{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr;
+  justify-content: center;
+  align-items: center;
+}
+.controls-playPause{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+}
+.controls-volume{
+  width: 100%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+.currenTime-midia{
+  width: 100%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }

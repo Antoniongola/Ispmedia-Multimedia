@@ -1,17 +1,22 @@
-<div class="row">
-  <section class="col mb-2" *ngFor="let artist of artistas">
+<h2>Artistas</h2>
+<div class="All-Artists">
+  <section class="artists" *ngFor="let artist of artistas">
     <a [routerLink]="['artist/'+artist.id]">
-      <section class="card CardARTISTA">
+      <section class="CardARTISTA">
+
         <article class="conteinerCardARTISTA-Imagem">
           <img class="imagem-card imagemCardARTISTA" *ngIf="artistImages[artist.id]" [src]="artistImages[artist.id]" alt="{{artist.titulo}}">
         </article>
+
         <article class="Conteiner-tituloCardARTISTA">
           <h1>{{artist.titulo}}</h1>
         </article>
+
         <article class="card-bodyARTISTA">
           <p class="descricaoARTISTA">{{artist.descricao}}</p>
           <div><span>Criado por</span>: {{artist.criadorConteudo.nome}}</div>
         </article>
+
       </section>
     </a>
   </section>
