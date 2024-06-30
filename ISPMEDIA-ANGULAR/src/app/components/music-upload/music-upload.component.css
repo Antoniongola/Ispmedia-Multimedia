@@ -1,4 +1,4 @@
-@import url('https://cdn-uicons.flaticon.com/2.4.0/uicons-brands/css/uicons-brands.css');
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* ESTILIZAÇÃO GERAL */
@@ -15,9 +15,9 @@
   align-items: center;
 }
 
-.criarAlbumBackground{
-  background-color:#1d1d1d;
-}
+/*.criarAlbumBackground{
+  background-color:#dc3545;
+}*/
 
 
 .loginNavbar{
@@ -48,10 +48,15 @@ a{
   align-items: center;
   margin: 50px;
   padding-top: 25PX;
+  position: relative;
+  z-index: 1; /* Coloca o conteúdo do formulário acima do cartão */
 }
 
 h2{
   color: white;
+  position: relative;
+  z-index: 1; /* Coloca o conteúdo do formulário acima do cartão */
+
 }
 
 .loginTitulo{
@@ -133,7 +138,7 @@ label{
 #imagemStyle{
   position: relative;
   left: 30px;
-  bottom: 12px;
+
 }
 
 
@@ -143,3 +148,48 @@ label{
   right:60px;
   bottom:20px;
 }
+
+.CustomBUTADDREM{
+  background: none;
+}
+
+/*-----------------------Estilização dos bottões-------------------------------------*/
+
+.networkButons {
+  i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    bottom: 8px;
+  }
+}
+
+.networkButons{
+  width: 30px;
+  height: 30px;
+  border: 2px solid #121212;
+  border-radius: 50%;
+  background-color: #c31919;
+  color: white;
+}
+
+.networkButons:hover{
+  background-color: #121212;
+  transition: 0.5s;
+  /*color: rgba(255, 255, 255, 0.34); transparente*/
+}
+
+.background-card {
+  position: absolute;
+  top: 150px; /* Ajuste conforme necessário */
+  left: 15%;
+  transform: translateX(-50%);
+  width: 75%;
+  height: 65%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.96); /* Sombra para dar efeito de elevação */
+  border-radius: 10px; /* Bordas arredondadas */
+  z-index: 0; /* Coloca o cartão atrás do formulário */
+  color: rgba(0, 0, 0, 0.5);
+}
+
