@@ -57,8 +57,9 @@
 
   <!-- coluna do lado direito-->
   <section class="conteiner-Grupos">
-    <div class="row card">
-      <h4 class="card-header text-center">GRUPOS <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">+</button></h4>
+    <h4 class="text-center">MEUS GRUPOS</h4>
+    <div>
+      <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">Criar Grupo</button>
     </div>
     <div class="row" *ngFor="let grupo of grupos">
       <a [routerLink]="['group/'+grupo.id]">
