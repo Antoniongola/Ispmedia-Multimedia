@@ -1,45 +1,52 @@
-<div class="row">
-  <div class="col">
-    <img src="assets/playlist.png">
-  </div>
-  <div class="card col align-content-center align-items-center justify-content-center">
-      <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()">
+<div class="criarAlbumBackground " style=" background-size: cover; background-repeat: no-repeat; background-image: url('assets/playlistON.jpg')">
+  <div class="mainContent">
+    <div class="loginSection d-flex ">
+      <div class="background-card "style="background-color: #FFFFFF56; filter: blur(10px);"></div>
+      <div class="col-md-7 ms-4 ">
+        <h2 class="text-center loginTitulo display-5"><i class="bi bi-sort-down d-flex justify-content-between flex-wrap"></i>Criar <span class="text-dark">Playlist</span></h2>
         <div>
-          <label for="nome">Nome da playlist: </label>
-          <input id="nome" formControlName="nome" type="text">
+          <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex flex-wrap justify-content-between" style="position: relative; right: 60px; ">
+              <div class="me-3">
+                <label class="CriarAlbumsFormLabel" for="nome">Nome do grupo:</label>
+                <br>
+                <input class="custom-input rounded-2 " id="nome" style="border: 2px solid white;" formControlName="nome" type="text">
+              </div>
+
+              <div class="me-3" style="position: relative; left: 70px; top: 15px;">
+                <label for="privacidade">Privacidade</label>
+                <br>
+                <select class="custom-select rounded-2 mb-1" style="width: 280px; height: 40px;" id="privacidade" formControlName="privacidade">
+                  <option>PUBLICO</option>
+                  <option>PRIVADO</option>
+                </select>
+              </div>
+
+              <div class="me-3 mt-3" formArrayName="items">
+                <small class="mb-2 text-light">Quantidade musicas</small>
+                <button class="btn btn-dark d-flex flex-wrap justify-content-between" type="button" (click)="addItem()">Adicionar mais musicas</button>
+                <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
+                  <label for="item-{{i}}">Musica nº {{i + 1}}: </label>
+                  <select class="rounded-2 ms-3 mt-2" style="position: relative; height:30px; width: 100px" id="item-{{i}}" formControlName="name">
+                    <option *ngFor="let musica of musicas" [value]="musica.id">{{musica.titulo}}</option>
+                  </select>
+
+                  <button class="networkButons btn btn-outline-danger ms-3" type="button" (click)="removeItem(i)"><i class="bi bi-x mt-2"></i></button>
+                </div>
+              </div>
+
+
+            </div>
+            <button class="customBTN btn btn-dark mt-5 " type="submit">Criar Playlist</button>
+          </form>
         </div>
-
-        <label for="privacidade">Privacidade: </label>
-        <select id="privacidade" formControlName="privacidade">
-          <option [value]="1">PUBLICO</option>
-          <option [value]="0">PRIVADO</option>
-        </select>
-
-        <div formArrayName="items">
-          <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
-            <label for="item-{{i}}">Musica nº {{i + 1}}: </label>
-            <select id="item-{{i}}" formControlName="name">
-              <option *ngFor="let musica of musicas" [value]="musica.id">{{musica.titulo}}</option>
-            </select>
-            <button class="btn btn-outline-danger" type="button" (click)="removeItem(i)">Remover</button>
-          </div>
-        </div>
-        <button class="btn btn-outline-primary" type="button" (click)="addItem()">Adicionar mais músicas</button>
-
-        <div formArrayName="videos">
-          <div *ngFor="let videoF of videos.controls; let i=index" [formGroupName]="i">
-            <label for="video-{{i}}">Video nº {{i + 1}}: </label>
-            <select id="video-{{i}}" formControlName="name">
-              <option *ngFor="let video of videosList" [value]="video.id">{{video.titulo}}, {{video.id}}</option>
-            </select>
-            <button class="btn btn-outline-danger" type="button" (click)="removeVideo(i)">Remover</button>
-          </div>
-        </div>
-        <button class="btn btn-outline-primary" type="button" (click)="addVideo()">Adicionar mais vídeos</button>
-
-        <br>
-        <br>
-        <button class="btn btn-outline-success" type="submit">Criar Playlist</button>
-      </form>
+      </div>
+      <div class="col-md-8 rounded-4 justify-content-center"  id="imagemStyle">
+        <img src="" class="img-fluid" >
+      </div>
     </div>
+  </div>
+</div>
+<div class="text-center loginFooter">
+  <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
 </div>

@@ -1,21 +1,41 @@
+@import url('https://cdn-uicons.flaticon.com/2.4.0/uicons-brands/css/uicons-brands.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+
 *{
   margin: 0;
+  font-family: "Raleway", sans-serif ;
 }
+
+.mainContent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .greenPrimary{
-  background-color: #1ed760;
+  background-color: #dc3545;
+  color: aliceblue;
 }
 
+.greenPrimary:hover{
+  background-color: #601820;
+  transition: 0.5s;
+  color:#242424;
+}
+
+
 .loginBackground{
-  background-color:#242424;
+  background-color:#1d1d1d;
 }
 
 .loginNavbar{
   display:flex;
   flex-direction: row;
   margin-left: 10px;
-  width: 100%;
-  height: 100px;
+  width: auto;
+  height: 70px;
   color:white;
   font-size: 34px;
   background-color: #121212;
@@ -30,36 +50,62 @@ a{
 }
 
 .loginSection{
-  border-radius: 8px;
+  width: 65%;
+  height: 650px;
+  border-radius: 15px;
   background-color: #121212;
-  margin-top:10px;
-  margin-bottom: 10px;
-  margin-left: 20%;
-  margin-right: 20%;
-
-  h2{
-    color: white;
-  }
-
-  .loginTitulo{
-    padding-top: 60px;
-    padding-bottom: 20px;
-  }
-
-  img{
-    width:50px;
-    height: 50px;
-  }
-  .networkButons{
-    padding-left: 40px;
-    padding-right: 40px;
-    height: 50px;
-    margin-bottom: 8px;
-    border-radius: 24px;
-    background-color: #121212;
-    color: white;
-  }
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+  padding-top: 25PX;
 }
+
+h2{
+  color: white;
+}
+
+.loginTitulo{
+  padding-top: 25px;
+  padding-bottom: 10px;
+}
+
+.loginTitulo > span{
+  font-weight: bold;
+}
+
+
+.loginSection > img{
+  width:50px;
+  height: 50px;
+}
+
+/*-----------------------Estilização dos bottões-------------------------------------*/
+
+i{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: 8px;
+}
+
+
+.networkButons{
+  padding: 30px;
+  width: 12px;
+  height: 1px;
+  margin: 20px;
+  border: 2px solid #dc3545;
+  border-radius: 50%;
+  background-color: #121212;
+  color: white;
+}
+
+.networkButons:hover{
+  background-color: #dc3545;
+  transition: 0.5s;
+}
+
 
 .loginLineSeparator{
   background-color: white;
@@ -67,34 +113,44 @@ a{
   padding-right: 20px;
 }
 
+/*-----------------------------------Estilização de Criar Conta ou Recuperação Password---------------------*/
+
 .loginSignupArea{
   font-size: 16px;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 30px;
 
-  .signupNow{
-    color:white;
-    text-decoration: underline;
-  }
-
-  .signupNow:hover{
-    color: #1ed760;
-  }
 }
+
+.signupNow{
+  color:white;
+  text-decoration: underline;
+}
+
+.signupNow:hover{
+  color: #dc3545;
+  transition: 0.5s;
+}
+
+/*-----------------------------------Estilização de Criar Conta ou Recuperação Password---------------------*/
 
 .loginForm{
 
   input.custom-input {
-    height: 48px;
+    width: 150%;
+    height: 40px;
     background-color: #121212;
     border-radius: 4px;
     color: white;
+    position: relative;
+    right: 45px;
   }
 
   .loginFormLabel{
     color: white;
     margin-top: 8px;
     margin-bottom: 5px;
+    position: relative;
+    right: 45px;
   }
 
   button{
@@ -112,12 +168,27 @@ a{
 }
 
 .customPlaceholder{
-  color:#a7a7a7;
+  color:#e8e8e8;
 }
 
-.centraliza{
+.centralizaLink{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.centralizaForm{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/*-----------------------------------imagem----------------------------------*/
+
+#imagemStyle{
+  position: relative;
+  left: 30px;
+  bottom: 12px;
 }
