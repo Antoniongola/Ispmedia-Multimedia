@@ -1,38 +1,66 @@
-<form [formGroup]="artistForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="titulo">Nome do artista:</label><br>
-    <input id="titulo" formControlName="titulo" type="text">
+<div class="criarAlbumBackground ">
+  <div class="mainContent">
+    <div class="loginSection d-flex ">
+      <div class="col-md-7">
+        <h2 class="text-center loginTitulo display-3"><i class="bi bi-mic-fill"></i>Criar<span class="text-danger">Artista</span></h2>
+
+        <div>
+          <form [formGroup]="artistForm" (ngSubmit)="onSubmit()">
+
+            <div class="d-flex flex-wrap justify-content-between" style="position: relative; right: 60px;">
+              <div class="me-3">
+                <label class="CriarAlbumsFormLabel" for="nome">Nome do artista:</label>
+                <br>
+                <input class="custom-input rounded-2" id="nome" formControlName="nome" type="text">
+              </div>
+
+              <div class="me-3" style="position: relative; right: 17px">
+                <label class="CriarAlbumsFormLabel" for="editora">Editora do artista:</label>
+                <br>
+                <input class="custom-input rounded-2" id="editora" formControlName="editora" type="text">
+              </div>
+
+              <div class="me-3">
+                <label class="CriarAlbumsFormLabel" for="descricao">Descrição do artista:</label>
+                <br>
+                <textarea class="custom-textArea rounded-2" id="descricao" formControlName="descricao"></textarea>
+              </div>
+
+              <div class="me-3" style="position: relative; left: 70px; top: 15px;">
+                <label for="genero">Gênero</label>
+                <br>
+                <select class="custom-select rounded-2" id="genero" style="width: 270px; height: 35px;" formControlName="genero">
+                  <option>--Selecione o genero musical do artista--</option>
+                  <option *ngFor="let genero of generos" [value]="genero.id">{{genero.nome}}</option>
+                </select>
+              </div>
+
+              <div class="me-3">
+                <label for="anoInicioCarreira">Inicio de carreira</label>
+                <br>
+                <input class="custom-input rounded-2" id="anoInicioCarreira" formControlName="anoInicioCarreira" type="number">
+              </div>
+
+              <div class="me-3" >
+                <label for="anoFimCarreira">Fim de carreira:</label><br>
+                <input class="custom-input rounded-2" id="anoFimCarreira" formControlName="anoFimCarreira" type="number">
+              </div>
+              <div class="me-3">
+                <label for="artistImage">Imagem do artista</label>
+                <br>
+                <input class="form-control form-control-sm" id="artistImage" type="file" (change)="onFileChange($event)" style="width: 35%; height: 15px;">
+              </div>
+            </div>
+            <button class="customBTN btn btn-outline-danger mt-5 " type="submit">Adicionar novo album</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-8 rounded-4 justify-content-center"  id="imagemStyle">
+        <img src="assets/criarArtista.png" class="img-fluid" >
+      </div>
+    </div>
   </div>
-
-  <div>
-    <label for="editora">Editora do artista:</label><br>
-    <input id="editora" formControlName="editora" type="text">
-  </div>
-
-  <div>
-    <label for="descricao">Descricao do artista:</label><br>
-    <textarea id="descricao" formControlName="descricao"></textarea>
-  </div>
-
-  <select id="genero" formControlName="genero">
-    <option>--Selecione o genero musical do artista--</option>
-    <option *ngFor="let genero of generos" [value]="genero.id">{{genero.nome}}</option>
-  </select>
-
-  <div>
-    <label for="anoInicioCarreira">Inicio de carreira:</label><br>
-    <input id="anoInicioCarreira" formControlName="anoInicioCarreira" type="number">
-  </div>
-
-  <div>
-    <label for="anoFimCarreira">Fim de carreira:</label><br>
-    <input id="anoFimCarreira" formControlName="nome" type="number">
-  </div>
-
-  <div>
-    <label for="artistImage">Imagem do artista</label><br>
-    <input id="artistImage" type="file" (change)="onFileChange($event)">
-  </div>
-
-  <button class="btn btn-outline-primary" type="submit">Adicionar novo artista</button>
-</form>
+</div>
+<div class="text-center loginFooter">
+  <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
+</div>

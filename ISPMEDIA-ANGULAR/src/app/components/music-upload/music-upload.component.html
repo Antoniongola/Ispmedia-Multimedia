@@ -1,78 +1,113 @@
-<form [formGroup]="musicForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="tituloMusica">Nome da Música:</label>
-    <input id="tituloMusica" formControlName="tituloMusica" type="text">
-  </div>
+<div class="criarAlbumBackground" style="background: #dc3545">
+  <div class="mainContent">
+    <div class="loginSection d-flex">
+      <div class="col-md-7">
+        <h2 class="text-center loginTitulo display-6">
+          <i class="bi bi-file-earmark-music-fill"></i>Upload de
+          <span class="text-dark">Musicas</span>
+        </h2>
 
-  <div>
-    <label for="descricao">Descrição da música:</label><br>
-    <textarea id="descricao" formControlName="descricao"></textarea>
-  </div>
+        <div>
+          <form [formGroup]="musicForm" (ngSubmit)="onSubmit()">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="tituloMusica">Nome da Música:</label>
+                <input id="tituloMusica" class="form-control rounded-2" formControlName="tituloMusica" type="text">
+              </div>
 
-  <label for="autor">Autor da musica: </label>
-  <select id="autor" formControlName="autor">
-    <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
-  </select>
 
-  <span>PARTICIPAÇÕES</span>
-  <div formArrayName="items">
-    <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
-      <label for="item-{{i}}">Artista {{i + 1}}: </label>
-      <select id="item-{{i}}" formControlName="name">
-        <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
-      </select>
-      <button class="btn btn-outline-danger" type="button" (click)="removeItem(i)">Remover</button>
+              <div class="col-md-6">
+                <label for="autor">Autor da música:</label>
+                <select id="autor" class="form-select rounded-2" formControlName="autor">
+                  <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label for="generoMusica">Gênero da música:</label>
+                <select id="generoMusica" class="form-select rounded-2" formControlName="generoMusica">
+                  <option *ngFor="let genero of generos" [value]="genero.id">{{genero.nome}}</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+              <label for="editora">Nome da editora:</label>
+              <input id="editora" class="form-control rounded-2" formControlName="editora" type="text">
+            </div>
+
+              <div class="col-md-6">
+                <label for="descricao">Descrição da música:</label>
+                <textarea id="descricao" class="form-control rounded-2" formControlName="descricao"></textarea>
+              </div>
+
+              <div class="col-md-6">
+                <label for="letra">Letra da música:</label>
+                <textarea id="letra" class="form-control rounded-2" formControlName="letra"></textarea>
+              </div>
+
+              <div class="col-md-6 mt-2">
+                <ng-container *ngIf="!musicForm.get('mostrarCampo')?.value">
+                  <label for="album">Álbum da música:</label>
+                  <select id="album" class="form-select rounded-2" formControlName="album">
+                    <option *ngFor="let album of albums" [value]="album.id">{{album.titulo}}</option>
+                  </select>
+                </ng-container>
+              </div>
+
+
+              <div class="col-md-6 mt-3">
+                <label>
+                  <small class="mb-2 text-light d-flex justify-content-between flex-wrap">Modo de lançamento<strong>[Album/Single]</strong></small>
+                  <input type="checkbox" class="form-check-input rounded-2" > Album
+                  <input type="checkbox" class="form-check-input rounded-2" formControlName="mostrarCampo"> Single
+                </label>
+              </div>
+
+              <div class="col-md-6" style="position: relative; bottom: 55px;" *ngIf="musicForm.get('mostrarCampo')?.value">
+                <label for="dataLancamento">Data de lançamento do single:</label>
+                <input id="dataLancamento" class="form-control rounded-2" formControlName="dataLancamento" type="date">
+              </div>
+
+              <div class="col-md-7" >
+                <small class="mb-2 text-light">Quantidade participantes</small>
+                <button class="btn btn-outline-light d-flex flex-wrap justify-content-between" type="button" (click)="addItem()">Adicionar mais participantes</button>
+                <div formArrayName="items">
+                  <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i" class="d-flex align-items-center mb-2">
+                    <label for="item-{{i}}" class="me-2">Artista {{i + 1}}: </label>
+                    <select id="item-{{i}}" class="form-select rounded-2 me-2" formControlName="name">
+                      <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
+                    </select>
+                    <button class="networkButons btn btn-outline-danger ms-3" type="button" (click)="removeItem(i)"><i class="bi bi-x mt-2"></i></button>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-md-4 rounded-4 ms-4 mt-2">
+                <label for="musicFile">Ficheiro da música:</label>
+                <input id="musicFile" class="form-control rounded-2" type="file" (change)="onFileChange($event, 1)" required>
+              </div>
+
+              <div class="col-md-4 rounded-4 mt-2" >
+                <label for="musicImage">Imagem da música:</label>
+                <input id="musicImage" class="form-control rounded-2" type="file" (change)="onFileChange($event, 2)" required>
+              </div>
+
+              <div class="col-md-12 text-center mt-5">
+                <button class="customBTN btn btn-outline-danger rounded-2 " type="submit">Adicionar novo álbum</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-md-8 rounded-4 justify-content-center" style="background:#212529" id="imagemStyle">
+        <img src="assets/up.png" class="img-fluid">
+      </div>
     </div>
   </div>
-  <button class="btn btn-outline-primary" type="button" (click)="addItem()">Adicionar mais artistas</button>
+</div>
 
-  <div *ngIf="!musicForm.get('mostrarCampo')?.value">
-    <label for="album">album da música:</label>
-    <select id="album" formControlName="album">
-      <option *ngFor="let album of albums" value="{{album.id}}">{{album.titulo}}</option>
-    </select>
-  </div>
-
-  <div>
-    <label for="generoMusica">Genero da música:</label>
-    <select id="generoMusica" formControlName="generoMusica">
-      <option *ngFor="let genero of generos" value="{{genero.id}}">{{genero.nome}}</option>
-    </select>
-  </div>
-
-  <div>
-    <label>
-      <input type="checkbox" formControlName="mostrarCampo">
-      Single
-    </label>
-  </div>
-
-  <div>
-    <label for="editora">Nome da editora:</label>
-    <input id="editora" formControlName="editora" type="text">
-  </div>
-
-  <div>
-    <label for="letra">Letra da música:</label><br>
-    <textarea id="letra" formControlName="letra"></textarea>
-  </div>
-
-  <div>
-    <label for="musicFile">Ficheiro da musica</label>
-    <input id="musicFile" type="file" (change)="onFileChange($event, 1)" required>
-  </div>
-
-  <div>
-    <label for="musicImage">Imagem da música:</label>
-    <input id="musicImage" type="file" (change)="onFileChange($event, 2)" required>
-  </div>
-
-  <div *ngIf="musicForm.get('mostrarCampo')?.value">
-    <div>
-      <label for="dataLancamento">Data de lançamento do single: </label>
-      <input id="dataLancamento" formControlName="dataLancamento" type="date">
-    </div>
-  </div>
-
-  <button class="btn btn-outline-success" type="submit">Upload de música</button>
-</form>
+<div class="text-center loginFooter">
+  <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
+</div>
