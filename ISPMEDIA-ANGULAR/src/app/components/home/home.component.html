@@ -2,7 +2,13 @@
 <main class="Conteiner-Home">
   <!-- coluna da esquerda-->
   <section class="col-sm-3 Playlist">
-    <h4 class="card-header text-center">PLAYLISTS <button class="btn btn-outline-primary" (click)="goToCriarPlaylistForm()">+</button></h4>
+    <h4 class="text-center">MINHAS PLAYLISTS</h4>
+    <div>
+      <button class="btn btn-outline-primary" (click)="goToCriarPlaylistForm()">Criar Playlist</button>
+    </div>
+<<<<<<<<< Temporary merge branch 1
+  </section>
+=========
     <div class="row" *ngFor="let playlist of playlists">
       <a [routerLink]="['playlist/'+playlist.id]">
         <ul class="row mt-2 list-unstyled">
@@ -21,10 +27,10 @@
                   <div class="col-12">
                     <span>musicas/videos: {{playlist.conteudos.length}}</span>
                   </div>
-                  <div class="row">
-                    <div class="col-12">
-                      <span>Criada por: {{playlist.owner.nome}}</span>
-                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <span>Criada por: {{playlist.owner.nome}}</span>
                   </div>
                 </div>
               </div>
@@ -33,7 +39,8 @@
         </ul>
       </a>
     </div>
-  </section>
+  </div>
+>>>>>>>>> Temporary merge branch 2
 
   <!-- coluna do meio -->
   <section class="conteirner-Albuns-Artistas">
@@ -53,15 +60,23 @@
 
 
   <!-- coluna do lado direito-->
+<<<<<<<<< Temporary merge branch 1
   <section class="conteiner-Grupos">
-    <h4 class="card-header text-center">GRUPOS <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">+</button></h4>
+    <h4 class="text-center">GRUPOS</h4>
+    <div>
+      <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">Criar Grupo</button>
+=========
+  <div class="col-sm-3 card">
+    <div class="row card">
+      <h4 class="card-header text-center">GRUPOS <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">+</button></h4>
+    </div>
     <div class="row" *ngFor="let grupo of grupos">
       <a [routerLink]="['group/'+grupo.id]">
         <ul class="row mt-2 list-unstyled">
           <li class="card">
             <div class="row">
               <div class="col-md-3 card-header justify-content-center align-items-center">
-                <img src="assets/group.png" class="img-fluid" alt="GRUPOS">
+                <img src="assets/group.png" class="img-fluid" alt="Imagem 1">
               </div>
               <div class="col-md-9">
                 <div class="row">
@@ -71,20 +86,125 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span>nº participantes: {{grupo.participantes.length}}</span>
+                    <span>Participantes: {{grupo.participantes.length}}</span>
                   </div>
-                  <!--
-                  <div class="row">
-                    <div class="col-12">
-                      <span>Criado por: {{grupo.participantes[0].user.nome}}</span>
-                    </div>
-                  </div>-->
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <span>Criada por: {{grupo.participantes[0].user.nome}}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </li>
         </ul>
       </a>
+>>>>>>>>> Temporary merge branch 2
     </div>
   </section>
 </main>
+
+
+
+
+<!--
+<div class="fundo">
+<div class="row">
+
+
+  <div class="col-3 ">
+    <div class="row seccao">
+      <div *ngIf="token == null" class="linha spc">
+        <a [routerLink]="['']">
+          <img class="iconeLinha" src="assets/spotify.png">
+          <span class="textoLinha">SNT-ISPMEDIA</span>
+        </a>
+
+      </div>
+
+      <div class="linha spc">
+        <a [routerLink]="['']">
+          <img class="iconeLinha" src="assets/home.png">
+          <span class="textoLinha">Inicio</span>
+        </a>
+      </div>
+
+      <div class="linha spc">
+        <a [routerLink]="['search']">
+          <img class="iconeLinha" src="assets/loupe.png">
+          <span class="textoLinha">Pesquisar</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="row seccao">
+      <div class="head-biblioteca">
+        <img src="assets/playlist.png">
+        <p class="texto" >A tua biblioteca</p>
+        <span class="icone">+</span>
+        <span class="icone">-></span>
+      </div>
+      <div class="biblioteca">
+        <img class="img-biblioteca" src="assets/FS4Life%20(Frente)%20.jpg">
+        <p>Teste</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col seccao">
+
+    <div class="row cabecalho">
+      <div class="row">
+        <div class="col">
+            <span class="spc">Recuar</span>
+            <span class="spc">avançar</span>
+        </div>
+        <div class="col" *ngIf="token == ''">
+          <a [routerLink]="['signup']"><p class="texto spc">Cadastrar</p></a>
+          <a [routerLink]="['login']"><button class="login spc">Iniciar Sessão</button></a>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <ul class="dropdown-menu cabecalho" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item cabecalho" href="#">Ação 1</a></li>
+            <li><a class="dropdown-item cabecalho" href="#">Ação 2</a></li>
+            <li><a class="dropdown-item cabecalho" (click)="terminarSessao()">Terminar sessão</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <p class="texto" >conteudo do meio</p>
+  </div>
+
+  <div class="col-3" *ngIf="token != null">
+    <div class="seccao">
+      <p class="texto" >sobre a musica em reprodução</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col reprodutor">
+    <div class="col">
+      <img class="imagem-musica" src="assets/FS4Life%20(Frente)%20.jpg">
+    </div>
+    <div class="col">
+      <div class="row"><span>Titulo da música</span></div>
+      <div class="row"><span>Cantor</span></div>
+    </div>
+  </div>
+
+  <div class="col controladorMusica">
+    <p class="texto" >sobre a musica em reprodução</p>
+  </div>
+
+  <div class="col controladorColunas">
+    <p class="texto" >sobre a musica em reprodução</p>
+  </div>
+</div>
+</div>
+-->

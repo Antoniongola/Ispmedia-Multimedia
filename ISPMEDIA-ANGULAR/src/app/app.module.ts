@@ -32,6 +32,7 @@ import { ConteudoPartilhadoComponent } from './components/conteudo-partilhado/co
 import { UsersComponent } from './components/users/users.component';
 import { PlaylistContentComponent } from './components/playlist-content/playlist-content.component';
 import { GroupContentComponent } from './components/group-content/group-content.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -67,10 +68,12 @@ import { GroupContentComponent } from './components/group-content/group-content.
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgOptimizedImage
   ],
   providers: [LoginServiceService,
   UploadService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

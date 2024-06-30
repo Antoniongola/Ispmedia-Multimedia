@@ -23,7 +23,7 @@ describe('AppComponent', () => {
   it(`should have as title 'ISPMEDIA-ANGULAR'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ISPMEDIA-ANGULAR');
+    expect(app.ngOnInit).toEqual('ISPMEDIA-ANGULAR');
   });
 
   it('should render title', () => {
