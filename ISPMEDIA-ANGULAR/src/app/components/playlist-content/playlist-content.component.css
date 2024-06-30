@@ -23,21 +23,24 @@ video{
   height: 400px;
   border-radius: 10px;
   border:1px solid #121212;
-  box-shadow: 0px 0px 10px #FF0000;
+  box-shadow: 0 0 10px #dc3545;
   margin-bottom: 10px;
 }
 .playlists{
-  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 .details-playlist{
-  width: 100%;
-  display: flex;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 4fr;
   justify-content: center;
+  align-items: center;
   margin:10px 0;
+  gap: 10px;
+
 }
 .card-playlist{
   width: 500px;
@@ -48,6 +51,11 @@ video{
   padding: 10px 20px;
   gap: 20px;
   border-radius:10px;
+  transition: all 0.2s linear;
+}
+.card-playlist:hover{
+  background-color: #121212;
+  box-shadow: 0 0 3px #ffffff;
 }
 
 .icon-titlePlaylist{
@@ -69,7 +77,7 @@ video{
   height:100%;
   border-radius: 50%;
   padding: 10px;
-  background-color: #FF0000;
+  background-color: #dc3545;
 }
 .play-icon img:hover{
   background-color: #B10000;
@@ -107,12 +115,12 @@ button{
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  background: #FF0000;
+  background: #fff;
   cursor: pointer;
 }
 
 .controls-volume input[type="range"]{
-  background-color: #FF0000;
+  background-color: #dc3545;
 }
 
 

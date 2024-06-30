@@ -74,7 +74,7 @@ h2{
 
 span:hover{
   color:#121212;
-  background-color: #ff0018;
+  background-color: transparent;
   transition: 0.5s;
 }
 

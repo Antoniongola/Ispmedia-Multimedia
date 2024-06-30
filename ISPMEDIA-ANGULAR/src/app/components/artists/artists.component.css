@@ -11,15 +11,19 @@
   align-items: center;
   gap: 10px;
   margin: 10px;
+
 }
 .artists{
   width: 100%;
   background-color: #242424;
+  border-radius: 20px;
 }
 h2{
   text-align: center;
   text-transform: uppercase;
-  margin: 10px 0;
+  margin: 15px 0;
+  /*background-color: #242424;*/
+  padding: 10px;
 }
 .CardARTISTA{
   max-width: 100%;
@@ -29,8 +33,9 @@ h2{
   align-items: center;
   border: none;
   margin:15px 0px;
-
   padding: 10px;
+  transition: all 0.2s linear;
+
 }
 
 
