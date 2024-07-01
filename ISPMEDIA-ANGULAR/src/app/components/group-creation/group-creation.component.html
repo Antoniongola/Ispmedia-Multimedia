@@ -1,28 +1,40 @@
-<div class="row">
-  <div class="col">
-    <img src="assets/group.png">
-  </div>
-  <div class="card col align-content-center align-items-center justify-content-center">
-    <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
-      <div>
-        <label for="nome">Nome do grupo:</label>
-        <input id="nome" formControlName="nome" type="text">
-      </div>
+<div class="criarAlbumBackground " style=" background-size: cover; background-repeat: no-repeat; background-image: url('assets/backband.jpeg')">
+  <div class="mainContent">
+    <div class="loginSection d-flex ">
+      <div class="background-card "style="background-color: #00000080; filter: blur(10px);"></div>
+      <div class="col-md-7 ms-4 ">
+        <h2 class="text-center loginTitulo display-5"><i class="bi bi-people-fill d-flex justify-content-between flex-wrap"></i>Criar <span class="text-danger">Grupo</span></h2>
+        <div>
+          <form [formGroup]="groupForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex flex-wrap justify-content-between" style="position: relative; right: 60px; ">
+              <div class="me-3">
+                <label class="CriarAlbumsFormLabel" for="nome">Nome do grupo:</label>
+                <br>
+                <input class="custom-input rounded-2 " id="nome" style="border: 2px solid white;" formControlName="nome" type="text">
+              </div>
 
-      <div formArrayName="items">
-        <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
-          <label for="item-{{i}}">Participante nº {{i + 1}}: </label>
-          <select id="item-{{i}}" formControlName="name">
-            <option *ngFor="let user of users" [value]="user.username">{{user.nome}}</option>
-          </select>
-          <button class="btn btn-outline-danger" type="button" (click)="removeItem(i)">Remover</button>
+              <div class="me-3" formArrayName="items" style="position: relative; left: 85px; top:15px;">
+                <small class="mb-2 text-light">Quantidade participantes</small>
+                <button class="btn btn-outline-light d-flex flex-wrap justify-content-between" type="button" (click)="addItem()">Adicionar mais participantes</button>
+                <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
+                  <label for="item-{{i}}">Participantes nº {{i + 1}}: </label>
+                  <select class="rounded-2 ms-3 mt-2" style="position: relative; height:30px; width: 100px" id="item-{{i}}" formControlName="name">
+                    <option *ngFor="let user of users" [value]="user.username">{{user.nome}}</option>
+                  </select>
+                  <button class="networkButons btn btn-outline-danger ms-3" type="button" (click)="removeItem(i)"><i class="bi bi-x mt-2"></i></button>
+                </div>
+              </div>
+            </div>
+            <button class="customBTN btn btn-danger mt-5 " type="submit">Criar Grupo</button>
+          </form>
         </div>
       </div>
-      <button class="btn btn-outline-primary" type="button" (click)="addItem()">Adicionar mais participantes</button>
-
-      <br>
-      <br>
-      <button class="btn btn-outline-success" type="submit">Criar Grupo</button>
-    </form>
+      <div class="col-md-8 rounded-4 justify-content-center"  id="imagemStyle">
+        <img src="assets/band.png" class="img-fluid" >
+      </div>
+    </div>
   </div>
+</div>
+<div class="text-center loginFooter">
+  <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
 </div>

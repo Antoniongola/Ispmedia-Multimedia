@@ -1,23 +1,40 @@
-<div *ngFor="let notificacao of notificacoes">
-  <div class="card">
-    <div class="row">
-      <div class="col justify-content-center align-items-center align-content-center">
+<h5>Notificações <span> ({{convites.length}})</span> </h5>
+<section *ngFor="let notificacao of notificacoes">
+  <section class="notifify-Card">
+    <article class="Notifies">
+
+      <div class="Notifies-Message">
+        <div class="Notify icon">
+        <img src="assets/Notify.png" alt="Notify icon">
+        </div>
         {{notificacao.descricao}}
       </div>
-    </div>
-  </div>
-</div>
 
-<div *ngFor="let convite of convites">
-  <div class="card">
-    <div class="row">
-      <div class="col justify-content-center align-items-center align-content-center">
+      <!--<div class="Notify-Status" >
+        <p>{{notificacao.estadoEntregaNotificacao}}</p>
+      </div>!-->
+
+      <div class="btn-acceptReject">
+        <button class="btn  m-2">Aceitar</button>
+        <button class="btn ">Rejeitar</button>
+      </div>
+    </article>
+  </section>
+</section>
+<h5>Convites <span> ({{convites.length}})</span> </h5>
+
+<section *ngFor="let convite of convites">
+  <div class="invites-card">
+    <div class="Invites">
+      <div class="Invites-Message">
+        <img src="assets/invites.png" alt="invites icon">
         {{convite.anfitriao.nome}} convidou você para o grupo: {{convite.grupo.nome}}
       </div>
-      <div class="col-sm-2 card-header">
-        <button class="btn btn-outline-success m-2" (click)="responderConvite(convite.id ,1)">Aceitar</button>
-        <button class="btn btn-outline-danger" (click)="responderConvite(convite.id ,-1)">Rejeitar</button>
+
+      <div class=" btn-acceptReject">
+        <button class="btn m-2">Aceitar</button>
+        <button class="btn">Rejeitar</button>
       </div>
     </div>
   </div>
-</div>
+</section>

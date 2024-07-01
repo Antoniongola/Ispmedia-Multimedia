@@ -7,14 +7,24 @@
 }
 
 
+
 .Conteiner-Home{
   max-width: 100%;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 3fr;
   padding: 15px;
   align-items: start;
   /*gap:10px*/
 }
+.Playlist-Groups{
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 4fr ;
+  padding: 15px;
+
+  align-items: start;
+}
+
 .Conteiner-Home button{
   padding: 8px;
   color:#151515;
@@ -22,7 +32,7 @@
   text-transform: capitalize;
   background-color: #fff;
   border:none;
-  box-shadow: 0px 0px 10px  #FF0000;
+  box-shadow: 0px 0px 10px  #dc3545;
 }
 .Conteiner-Home button:hover{
   color: #fff;
@@ -34,7 +44,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   gap: 15px;
   /*border:2px solid #fff;*/
   padding: 15px;
@@ -43,17 +53,72 @@
 .Playlist h4{
   width: 100%;
 }
-.conteirner-Albuns-Artistas{
+.Playlists-Displays-Cards{
+  max-width: 100%;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
+  background-color: #242424;
+  border-radius: 5px;
+  padding:10px;
+  transition: all 0.2s linear;
+}
+.Playlists-Displays-Cards:hover{
+  transform: scale(1.03);
+  background-color: #dc3545;
+}
+
+.Card{
   width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  margin:2px;
+
+}
+.Card-image{
+  width: 40px;
+  height: 40px;
+  display: flex;
+}
+
+.Card-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.detail-titulo{
+  font-weight: bolder;
+  font-size: 15pt;
+}
+
+.detail-conteudo{
+  font-size: 12pt;
+}
+.details-Creator{
+  text-align: start;
+  font-size: 10pt;
+}
+
+
+
+
+.conteirner-Albuns-Artistas{
+  max-width: 100%;
   display: grid;
-  grid-template-columns: 4fr 4fr;
+  grid-template-columns: 4fr;
   justify-content: center;
   text-align: center;
-  border-left:2px solid #fff;
-  border-right:2px solid #fff;
+  box-shadow: 0px 0px 5px #151515;
   padding: 15px;
   text-transform:uppercase;
   gap: 10px;
+  margin: 0 10px;
+  border-radius: 5px;
 }
 
 .conteiner-Grupos{
@@ -61,13 +126,58 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   gap: 15px;
   /*border:2px solid #fff;*/
   padding: 15px;
-  text-align: center;
+  text-align: start;
+
 }
+
 .conteiner-Grupos h4{
   width: 100%;
 }
+.card-details-groups{
+  max-width: 100%;
+  width: 300px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  background-color: #242424;
+  border-radius: 5px;
+  padding:15px 30px;
+  transition: all 0.2s linear;
+}
+.card-details-groups:hover{
+  transform: scale(1.03);
+  background-color: #dc3545;
+}
+.detailGroups-image{
+  width: 40px;
+  height: 40px;
+}
+.detailGroups-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.detailsGroup-conteudo{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  text-align: justify;
+}
+.detailsGroup-Name{
+  font-size: 15pt;
+  font-weight: bolder;
+
+}
+.detailsGroup-nUsers{
+  font-size: 12pt;
+  font-weight: bolder;
+}
+
 

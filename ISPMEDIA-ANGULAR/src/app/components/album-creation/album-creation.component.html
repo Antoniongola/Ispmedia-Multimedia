@@ -1,40 +1,71 @@
-<p>album-creation works!</p>
-<form [formGroup]="albumForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="nome">Nome do album:</label><br>
-    <input id="nome" formControlName="nome" type="text">
+<div class="criarAlbumBackground  ">
+  <div class="mainContent">
+    <div class="loginSection d-flex justify-content-around ">
+      <div class="col-md-7">
+        <h2 class="text-center loginTitulo display-3"><i class="bi bi-file-earmark-music-fill"></i>Criar<span class="text-danger">Albums</span></h2>
+
+        <div>
+          <form [formGroup]="albumForm" (ngSubmit)="onSubmit()">
+
+              <div class="d-flex flex-wrap justify-content-between" style="position: relative; right: 60px;">
+                <div class="me-3">
+                  <label class="CriarAlbumsFormLabel" for="nome">Nome do álbum:</label>
+                  <br>
+                  <input class="custom-input rounded-2" id="nome" formControlName="nome" type="text">
+                </div>
+
+                <div class="me-3" style="position: relative; right: 17px">
+                  <label class="CriarAlbumsFormLabel" for="editora">Editora do álbum:</label>
+                  <br>
+                  <input class="custom-input rounded-2" id="editora" formControlName="editora" type="text">
+                </div>
+
+                <div class="me-3">
+                  <label class="CriarAlbumsFormLabel" for="descricao">Descrição do álbum:</label>
+                  <br>
+                  <textarea class="custom-textArea rounded-2" id="descricao" formControlName="descricao"></textarea>
+                </div>
+
+                <div class="me-3" style="position: relative; left: 70px; top: 15px;">
+                  <label for="genero">Gênero</label>
+                  <br>
+                  <select class="custom-select rounded-2" id="genero" style="width: 270px; height: 35px;" formControlName="genero">
+                    <option>--Selecione o gênero musical do álbum--</option>
+                    <option *ngFor="let genero of generos" [value]="genero.id">{{genero.nome}}</option>
+                  </select>
+                </div>
+
+                <div class="me-3">
+                  <label for="artista">Artista</label>
+                  <br>
+                  <select class="custom-select rounded-2 mt-1" id="artista" formControlName="artista" >
+                    <option>--Selecione o artista do álbum--</option>
+                    <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
+                  </select>
+                </div>
+
+                <div class="me-3" style="position: relative; right: 50px; bottom: 15px;">
+                  <label class="CriarAlbumsFormLabel" for="dataLancamento">Data de lançamento:</label>
+                  <br>
+                  <input class="custom-data rounded-2" id="dataLancamento" formControlName="dataLancamento" type="date" placeholder="Insira a data">
+                </div>
+
+                <div class="me-3">
+                  <label for="albumImage">Imagem do álbum</label>
+                  <br>
+                  <input class="form-control form-control-sm" id="albumImage" type="file" (change)="onFileChange($event)" style="width: 35%; height: 15px;">
+                </div>
+              </div>
+              <button class="customBTN btn btn-outline-danger mt-5 " type="submit">Adicionar novo album</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-8 rounded-4 justify-content-center" style="background: #dc3545" id="imagemStyle">
+        <img src="assets/criarAlbum.png" class="img-fluid " >
+      </div>
+    </div>
   </div>
-
-  <div>
-    <label for="editora">Editora do album:</label><br>
-    <input id="editora" formControlName="editora" type="text">
-  </div>
-
-  <div>
-    <label for="descricao">Descricao do album:</label><br>
-    <textarea id="descricao" formControlName="descricao"></textarea>
-  </div>
-
-  <select id="genero" formControlName="genero">
-    <option>--Selecione o genero musical do album--</option>
-    <option *ngFor="let genero of generos" [value]="genero.id">{{genero.nome}}</option>
-  </select>
-
-  <br><br>
-  <select id="artista" formControlName="artista">
-    <option>--Selecione o artista do album--</option>
-    <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
-  </select>
-
-  <div>
-    <label for="dataLancamento">Data de lançamento:</label><br>
-    <input id="dataLancamento" formControlName="dataLancamento" type="date">
-  </div>
-
-  <div>
-    <label for="albumImage">Imagem do album</label><br>
-    <input id="albumImage" type="file" (change)="onFileChange($event)">
-  </div>
-
-  <button class="btn btn-outline-primary" type="submit">Adicionar novo album</button>
-</form>
+</div>
+<div class="text-center loginFooter">
+  <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
+</div>

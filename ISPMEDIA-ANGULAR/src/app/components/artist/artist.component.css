@@ -44,12 +44,12 @@
 
 
 .card-bodyArtistaAlbums{
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 5px;
- }
+}
 
 .artistaAlbums-titulo{
   font-size: 60px;

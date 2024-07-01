@@ -1,54 +1,53 @@
-<div class="navbar  navBarCss" *ngIf="isLoggedIn()">
-  <img src="assets/spotifyW.png" class="nav-item icone">
+<div class="navbar navBarCss" *ngIf="isLoggedIn()">
+  <article class="Logo">
+    <img src="assets/spotifyW.png" class="icone">
+  </article>
+
   <div class="nav-item">
     <a [routerLink]="['']" class="dropdown-List">Pagina inicial</a>
   </div>
-  <div class="nav-item  ">
+  <div class="nav-item">
     <a [routerLink]="['news']" class="dropdown-List">Notificações</a>
   </div>
   <div class="dropdown nav-item">
     <span class="dropdown-toggle dropdown-List" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-      Albuns
+      Conteúdo
     </span>
     <ul class="dropdown-menu cabecalho dropdown-List-itens" aria-labelledby="dropdownMenuButton">
-      <li><a [routerLink]="['albums/new']" class="dropdown-item cabecalho" >Adicionar um novo album</a></li>
-      <li><a [routerLink]="['albums']" class="dropdown-item cabecalho" >Ver todos albuns</a></li>
-    </ul>
-  </div>
-  <div class="dropdown nav-item">
-    <span class="dropdown-toggle dropdown-List"  data-bs-toggle="dropdown" aria-expanded="false">
-      Artistas
-    </span>
-    <ul class="dropdown-menu cabecalho dropdown-List-itens" aria-labelledby="dropdownMenuButton">
-      <li><a [routerLink]="['artists/new']" class="dropdown-item cabecalho" >Adicionar um novo artista</a></li>
-      <li><a [routerLink]="['artists']" class="dropdown-item cabecalho" >Ver todos artistas</a></li>
-    </ul>
-  </div>
-  <div class="dropdown nav-item">
-      <span class="dropdown-toggle dropdown-List"  data-bs-toggle="dropdown" aria-expanded="false">
-        Musicas
-      </span>
-    <ul class="dropdown-menu cabecalho dropdown-List-itens" aria-labelledby="dropdownMenuButton">
-      <li><a [routerLink]="['musics/new']" class="dropdown-item cabecalho" >Adicionar um novo single</a></li>
-      <li><a [routerLink]="['musics']" class="dropdown-item cabecalho" >Ver todas musicas</a></li>
+      <li class="dropdown-submenu">
+        <a class="dropdown-item cabecalho" data-bs-toggle="dropdown">Álbuns</a>
+        <ul class="dropdown-menu cabecalho">
+          <li><a [routerLink]="['albums/new']" class="dropdown-item cabecalho">Adicionar novo álbum</a></li>
+          <li><a [routerLink]="['albums']" class="dropdown-item cabecalho">Ver todos álbuns</a></li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu">
+        <a class="dropdown-item cabecalho " data-bs-toggle="dropdown">Artistas</a>
+        <ul class="dropdown-menu cabecalho">
+          <li><a [routerLink]="['artists/new']" class="dropdown-item cabecalho">Adicionar novo artista</a></li>
+          <li><a [routerLink]="['artists']" class="dropdown-item cabecalho">Ver todos artistas</a></li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu">
+        <a class="dropdown-item cabecalho " data-bs-toggle="dropdown">Músicas</a>
+        <ul class="dropdown-menu cabecalho">
+          <li><a [routerLink]="['musics/new']" class="dropdown-item cabecalho">Adicionar novo single</a></li>
+          <li><a [routerLink]="['musics']" class="dropdown-item cabecalho">Ver todas músicas</a></li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu">
+        <a class="dropdown-item cabecalho" data-bs-toggle="dropdown">Vídeos</a>
+        <ul class="dropdown-menu cabecalho">
+          <li><a [routerLink]="['videos/new']" class="dropdown-item cabecalho">Adicionar novo vídeo</a></li>
+          <li><a [routerLink]="['videos']" class="dropdown-item cabecalho">Ver todos vídeos</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
   <div class="nav-item">
     <a [routerLink]="['radios']">
-      <span  class="dropdown-List">
-        Radios
-      </span>
+      <span class="dropdown-List">Rádios</span>
     </a>
   </div>
-  <div class="dropdown nav-item">
-    <span class="dropdown-toggle  dropdown-List"  data-bs-toggle="dropdown" aria-expanded="false">
-      Videos
-    </span>
-    <ul class="dropdown-menu dropdown-List-itens" aria-labelledby="dropdownMenuButton">
-      <li><a [routerLink]="['videos/new']" class="dropdown-item " >Adicionar novo video</a></li>
-      <li><a [routerLink]="['videos']" class="dropdown-item" >Ver todos videos</a></li>
-    </ul>
-  </div>
-  <!-- aqui metes mambo pra pesquisar -->
   <button class="btn btn-outline-secondary btnSair" (click)="logOut()">Sair da conta</button>
 </div>

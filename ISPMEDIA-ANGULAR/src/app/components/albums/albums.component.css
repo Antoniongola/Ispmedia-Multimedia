@@ -3,18 +3,48 @@
   padding: 0;
   box-sizing: border-box;
 }
+/*Componente Albums*/
+.conteiner-Albums{
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+.All-Albums{
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 10px;
+}
+.Albums{
+  width: 100%;
+}
+
+h2{
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #242424;
+  padding: 10px;
+}
+
 .CardALBUM{
   max-width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border: none;
   margin:15px 0px;
+  background-color: white;
+  border-radius: 10px;
 }
 .conteinerCard-Imagem{
-  width: 350px;
+  width: 100%;
   height: 200px;
-
 }
 .imagemCard{
   width: 100%;

@@ -1,48 +1,62 @@
-<div class="loginBackground">
-  <div class="row loginNavbar">
+<div class="loginBackground">  <!--
+ <div class="row loginNavbar">
     <div class="loginLogo">
-      <span><img class="" src="assets/spotify.png"> SNT-ISPMEDIA</span>
+      <span><img class="bg-white" src="assets/spotify.png"> Spotify</span>
     </div>
   </div>
-  <div class="loginSection">
-    <h2 class="text-center loginTitulo">Criar Conta No SNT-ISPMEDIA</h2>
-    <hr>
-    <div>
-      <form class="loginForm" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <div class="centraliza">
-          <div>
-            <label class="loginFormLabel" for="nome">Nome</label>
-            <br>
-            <input id="nome" placeholder="Insira o seu nome completo" formControlName="nome" type="text" class="custom-input">
-          </div>
+  -->
 
-          <div>
-            <label class="loginFormLabel" for="username">Username</label>
-            <br>
-            <input id="username" placeholder="Insira o seu email" formControlName="username" type="email" class="custom-input">
-          </div>
+  <div class="mainContent">
+    <div class="loginSection d-flex ">
 
-          <div>
-            <label class="loginFormLabel" for="password">Palavra-passe</label>
-            <br>
-            <input id="password" placeholder="Insira a sua senha" formControlName="password" type="password" class="custom-input">
-          </div>
+      <div class="col-md-5 rounded-4 justify-content-center " style="background: #121212" id="imagemStyle">
+        <img src="assets/signup.png" class="img-fluid " id="homemLoginImagem">
+      </div>
 
-          <button type="submit" class="text-center greenPrimary btn loginButton">Criar Conta</button>
+      <div class="col-md-7">
+        <h2 class="text-center loginTitulo">Crie a sua conta no <span class="text-dark"><strong>Ispmedia </strong> </span></h2>
+        <div class="centralizaLink">
+          <button class="networkButons"><i class="fi fi-brands-google "></i></button>
+          <button class="networkButons "><i class="fi fi-brands-facebook"></i></button>
+          <button class="networkButons "><i class="fi fi-brands-apple"></i></button>
         </div>
-        <div class="centraliza row">
-          <button class="networkButons text-center">Continuar com o Google</button>
-          <button class="networkButons text-center">Continuar com o Facebook</button>
-          <button class="networkButons text-center">Continuar com o Apple</button>
+
+        <div>
+          <form class="loginForm" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="centralizaForm">
+              <div>
+                <label class="loginFormLabel" for="nome">Nome</label>
+                <br>
+                <input id="nome" placeholder="Insira o seu nome completo" formControlName="nome" type="text" class="custom-input">
+              </div>
+
+              <div>
+                <label class="loginFormLabel" for="username">Username</label>
+                <br>
+                <input id="username" placeholder="Insira o seu username" formControlName="username" type="text" class="custom-input">
+              </div>
+
+              <div>
+                <label class="loginFormLabel" for="password">Palavra-passe</label>
+                <br>
+                <input id="password" placeholder="Insira a sua senha" formControlName="password" type="password" class="custom-input">
+              </div>
+
+              <button type="submit" class="text-center greenPrimary btn loginButton">Inicie Sessão</button>
+            </div>
+            <div class="text-center loginSignupArea">
+              <span class="signupNow">Esqueceste-te da tua palavra-passe?</span>
+            </div>
+            <div class="text-center loginSignupArea">
+              <span class="customPlaceholder">Já tem conta..? <a href="../login"><span class="signupNow">Regista-te no Spotify</span></a></span>
+            </div>
+          </form>
         </div>
-        <div class="text-center loginSignupArea">
-          <span class="customPlaceholder">Já tem conta? <a [routerLink]="['../login']"><span class="signupNow">Fazer login no SNT-Ispmedia</span></a></span>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
-
-  <div class="text-center loginFooter">
-    <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
   </div>
 </div>
+<div class="text-center loginFooter">
+  <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
+</div>
+>

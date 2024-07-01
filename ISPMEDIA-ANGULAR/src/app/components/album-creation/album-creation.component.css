@@ -1,0 +1,145 @@
+@import url('https://cdn-uicons.flaticon.com/2.4.0/uicons-brands/css/uicons-brands.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* ESTILIZAÇÃO GERAL */
+
+*{
+  margin: 0;
+  font-family: "Raleway", sans-serif ;
+}
+
+
+.mainContent{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.criarAlbumBackground{
+  background-color:#1d1d1d;
+}
+
+
+.loginNavbar{
+  display:flex;
+  flex-direction: row;
+  margin-left: 10px;
+  width: auto;
+  height: 70px;
+  color:#dc3545;
+  font-size: 34px;
+  background-color: #121212;
+  img{
+    width: 60px;
+    height: 60px;
+  }
+}
+
+a{
+  text-decoration: none;
+}
+
+.loginSection{
+  width: 65%;
+  height: 650px;
+  border-radius: 15px;
+
+  justify-content: center;
+  align-items: center;
+  margin: 50px;
+  padding-top: 25PX;
+}
+
+h2{
+  color: white;
+}
+
+.loginTitulo{
+  padding-top: 25px;
+  padding-bottom: 10px;
+}
+
+.loginTitulo > span{
+  font-weight: bold;
+}
+
+
+.loginSection > img{
+  width:50px;
+  height: 50px;
+}
+
+/*-----------------------Estilização do titulo-------------------------------------*/
+
+
+span:hover{
+  color:#121212;
+  background-color: transparent;
+  transition: 0.5s;
+}
+
+
+/*-----------------------------------Estilização de Campos---------------------*/
+
+label{
+  color: white;
+}
+
+.custom-input {
+  width: 150%;
+  height: 40px;
+
+}
+
+.custom-select{
+  width: 100%;
+  height: 35px;
+  border: 2px solid white;
+}
+
+.custom-textArea{
+  width: 150%;
+  height: 55px;
+}
+
+.custom-data{
+  width: 180%;
+  height: 45px;
+
+}
+
+.CriarAlbumsFormLabel{
+  color: white;
+  margin-top: 8px;
+  margin-bottom: 5px;
+
+}
+
+/*-------------------------------------------ESTILIZAÇÃO DO FOOTER-----------------------------------------------------*/
+.loginFooter{
+  font-size: 14px;
+  padding-top: 30px;
+  background-color: #121212;
+  padding-bottom: 30px;
+}
+
+.customPlaceholder{
+  color:#e8e8e8;
+}
+
+
+/*-----------------------------------imagem----------------------------------*/
+
+#imagemStyle{
+  position: relative;
+  left: 30px;
+  bottom: 12px;
+}
+
+
+/*---------------------------------ESTELIZÇÃO---------------------------------*/
+.customBTN{
+  position: relative;
+  right:60px;
+  bottom:20px;
+}

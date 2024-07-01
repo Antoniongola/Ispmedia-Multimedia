@@ -1,97 +1,81 @@
-
 <main class="Conteiner-Home">
+  <section class="Playlist-Groups">
   <!-- coluna da esquerda-->
-  <section class="col-sm-3 Playlist">
-    <h4 class="text-center">MINHAS PLAYLISTS</h4>
+  <section class=" Playlist">
+    <h4 class="">MINHAS PLAYLISTS</h4>
     <div>
       <button class="btn btn-outline-primary" (click)="goToCriarPlaylistForm()">Criar Playlist</button>
     </div>
-    <div class="row" *ngFor="let playlist of playlists">
+
+    <section class="col" *ngFor="let playlist of playlists">
       <a [routerLink]="['playlist/'+playlist.id]">
-        <ul class="row mt-2 list-unstyled">
-          <li class="card">
-            <div class="row">
-              <div class="col-md-3 card-header justify-content-center align-items-center">
-                <img src="assets/playlist.png" class="img-fluid" alt="Imagem 1">
-              </div>
-              <div class="col-md-9">
-                <div class="row">
-                  <div class="col-12">
-                    <span>Nome: {{playlist.titulo}}</span>
-                  </div>
+          <section class="Playlists-Displays-Cards">
+
+              <article class="Card">
+                <div class="Card-image">
+                  <img src="assets/playlistW.png" class="img-fluid" alt="Imagem 1">
                 </div>
-                <div class="row">
-                  <div class="col-12">
+
+
+                <div class="Card-details-playlist">
+                  <article class="detail-titulo">
+                    <span>{{playlist.titulo}}</span>
+                  </article>
+
+                  <article class="detail-conteudo ">
                     <span>musicas/videos: {{playlist.conteudos.length}}</span>
-                  </div>
+                  </article>
                 </div>
-                <div class="row">
-                  <div class="col-12">
-                    <span>Criada por: {{playlist.owner.nome}}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
+
+              </article>
+
+                <article class="details-Creator">
+                  <span>Criada por: {{playlist.owner.nome}}</span>
+                </article>
+          </section>
       </a>
-    </div>
+    </section>
+  </section>
+
+    <!-- coluna do lado direito-->
+    <section class="conteiner-Grupos">
+      <h4 class="">GRUPOS</h4>
+      <div>
+        <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">Criar Grupo</button>
+      </div>
+
+      <section class="col" *ngFor="let grupo of grupos">
+        <a [routerLink]="['group/'+grupo.id]">
+          <section class="card-details-groups">
+
+            <article class="detailGroups-image">
+              <img src="assets/groupsW.png" class="iconGroups" alt="Imagem 1">
+            </article>
+
+            <article class="detailsGroup-conteudo">
+              <p class="class=detailsGroup-Name">Nome: {{grupo.nome}}</p>
+              <p class="detailsGroup-nUsers " >Participantes: {{grupo.participantes.length}}</p>
+            </article>
+          </section>
+        </a>
+      </section>
+    </section>
+
   </section>
 
   <!-- coluna do meio -->
   <section class="conteirner-Albuns-Artistas">
     <article class="Albuns">
-    <h4>Albuns</h4>
     <div class="row">
       <app-albums></app-albums>
     </div>
     </article>
     <article class="Artistas">
-        <h4>Artistas</h4>
+
         <div class="row">
           <app-artists></app-artists>
         </div>
     </article>
-  </section>
-
-
-  <!-- coluna do lado direito-->
-  <section class="conteiner-Grupos">
-    <h4 class="text-center">MEUS GRUPOS</h4>
-    <div>
-      <button class="btn btn-outline-primary" (click)="goToCriarGrupoForm()">Criar Grupo</button>
-    </div>
-    <div class="row" *ngFor="let grupo of grupos">
-      <a [routerLink]="['group/'+grupo.id]">
-        <ul class="row mt-2 list-unstyled">
-          <li class="card">
-            <div class="row">
-              <div class="col-md-3 card-header justify-content-center align-items-center">
-                <img src="assets/group.png" class="img-fluid" alt="Imagem 1">
-              </div>
-              <div class="col-md-9">
-                <div class="row">
-                  <div class="col-12">
-                    <span>Nome: {{grupo.nome}}</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12">
-                    <span>Participantes: {{grupo.participantes.length}}</span>
-                  </div>
-                </div>
-                <!--
-                <div class="row">
-                  <div class="col-12">
-                    <span>Criada por: {{grupo.participantes[0].user.nome}}</span>
-                  </div>
-                </div>-->
-              </div>
-            </div>
-          </li>
-        </ul>
-      </a>
-    </div>
   </section>
 </main>
 
@@ -99,6 +83,11 @@
 
 
 <!--
+                  <div class="">
+                    <span>Criada por: {{grupo.participantes[0].user.nome}}</span>
+                  </div>
+
+
 <div class="fundo">
 <div class="row">
 
