@@ -38,7 +38,8 @@ export class MusicaService {
   }
 
   loadMusicas(musicas:Musica[]|null, musicaSrcs: { [key: string]: any }) {
-    if(musicas instanceof Musica){
+    if(musicas!=null && musicas.length>0){
+      console.log('tá entar no loop da musica')
       musicas.forEach(musica => {
         this.getMusicById(musica.id).subscribe(response => {
           const objectURL = URL.createObjectURL(response);
