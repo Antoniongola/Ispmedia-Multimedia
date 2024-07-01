@@ -1,11 +1,26 @@
-<p>musics works!</p>
-
-<div>
-  <div *ngFor="let music of musicas">
-    <div>{{music.titulo}}</div>
-    <audio src="assets/Acabar%20Com%20Os%20Abusos.mp3" controls></audio>
+<div class="row ">
+  <div class="col m-2" *ngFor="let music of musicas">
+    <a [routerLink]="[music.id]">
+      <div class="card" (click)="playMusic(music.id)">
+        <div class="card-img">
+          <img class="card-img" [src]="imgSrcs[music.id]">
+        </div>
+        <div class="card-header text-center">{{music.titulo}}</div>
+        <div class="card-body">
+          <!--
+          <div class="row" *ngIf="music.artists.length>0">
+            <span>{{music.artista.genero}}</span>
+            <span *ngFor="let feat of music.artists">, {{feat.titulo}}</span>
+          </div>
+          <span *ngIf="music.artists.length==0">{{music.artista.titulo}}</span>-->
+          Uploaded by: {{music.criadorConteudo.nome}}
+        </div>
+      </div>
+    </a>
   </div>
-  <button (click)="playMusic('song.mp3')">Play Song</button>
+  <div class="row">
+    <audio [src]="imgSrcs[mediaId]" controls></audio>
+  </div>
 </div>
 
 <!--

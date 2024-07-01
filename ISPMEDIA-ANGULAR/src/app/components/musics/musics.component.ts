@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Musica} from "../../entities/Musica";
 import {MusicaService} from "../../services/musica/musica.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-musics',
@@ -8,36 +9,32 @@ import {MusicaService} from "../../services/musica/musica.service";
   styleUrl: './musics.component.css'
 })
 export class MusicsComponent implements OnInit{
-  musicas!:Musica[];
+  musicas:Musica[]=[];
   musica!:Musica;
-
-  constructor(private musicaService:MusicaService){
-
-  }
-
-  ngOnInit(): void {
-  /*
-    this.musicaService.getMusicById("9decd238-3d8d-4fbc-b238-706568949e2c").subscribe(response=>{
-      this.musica = response;
-    })
+  musicaSrcs: { [key: string]: any } = {}
+  imgSrcs: { [key: string]: any } = {}
+  mediaId:any="";
+  constructor(private musicaService:MusicaService,
+              private router:ActivatedRoute){
+    this.router.paramMap.subscribe(response=>{
+      this.mediaId = response.get('musicId');
+    });
 
     this.musicaService.getAllMusics().subscribe(response=>{
       this.musicas = response;
+      this.musicaService.loadImages(this.musicas, this.imgSrcs);
+      this.musicaService.loadMusicas(this.musicas, this.musicaSrcs);
     }, error => {
       console.log('erro nas músicas')
-    })
-    */
+    });
+  }
+
+  ngOnInit(): void {
+
   }
 
   playMusic(filename: string) {
-  /*
-    this.musicaService.getMusicById(filename).subscribe(response => {
-    this.musica = response;
-    const url = window.URL.createObjectURL(this.musica.path);
-    const audio = new Audio(url);
-    audio.play();
-
-    });*/
+    this.mediaId=filename;
   }
 
 }

@@ -12,7 +12,7 @@ export class Musica extends Conteudo {
   letra:string;
   dataLancamento:string;
   streams:number;
-  artista:Artista;
+  artista:Artista=new Artista('', '', '', '', new Genero(), '', new User(), [], 0, 0);
   constructor(id: string, titulo: string, thumbNailUri: string, descricao: string,
               genero:Genero, editora:string, user:User, autor:Artista,artists: Artista[],
               album: Album|null, duration: number, path: string,

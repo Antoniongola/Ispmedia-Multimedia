@@ -17,7 +17,8 @@ export class SignupComponent implements OnInit{
   teste = "User criado com sucesso!";
 
   constructor(private router:Router, private fb:FormBuilder,
-              private service: SignupService, private loginService:LoginServiceService) {
+              private service: SignupService,
+              private loginService:LoginServiceService) {
   }
 
   ngOnInit(): void {

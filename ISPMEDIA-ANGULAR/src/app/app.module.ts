@@ -33,6 +33,7 @@ import { UsersComponent } from './components/users/users.component';
 import { PlaylistContentComponent } from './components/playlist-content/playlist-content.component';
 import { GroupContentComponent } from './components/group-content/group-content.component';
 import {NgOptimizedImage} from "@angular/common";
+import { GrupoContentComponent } from './components/grupo-content/grupo-content.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {NgOptimizedImage} from "@angular/common";
     ConteudoPartilhadoComponent,
     UsersComponent,
     PlaylistContentComponent,
-    GroupContentComponent
+    GroupContentComponent,
+    GrupoContentComponent
   ],
   imports: [
     BrowserModule,
