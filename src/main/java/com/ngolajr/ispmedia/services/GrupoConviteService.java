@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,7 +65,9 @@ public class GrupoConviteService {
                 participante.setUser(user);
                 participante.setTipo(TipoParticipante.PARTICIPANTE);
                 //participante.setGrupo(grupo);
-                grupo.getParticipantes().add(participante);
+                List<Participante> participantes = grupo.getParticipantes();
+                participantes.add(participante);
+                grupo.setParticipantes(participantes);
                 grupoConvite.setEstadoConvite(EstadoConvite.ACEITE);
                 notificacao.setTipoNotificacao(TipoNotificacao.ACEITOUSERADICIONADONOGRUPO);
                 notificacao.setDescricao(grupoConvite.getConvidado().getNome()+" aceitou o seu convite para ser adiconado ao grupo!");

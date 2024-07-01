@@ -23,7 +23,7 @@ export class PlaylistCreationComponent implements OnInit{
   playlistForm!:FormGroup;
   musicas!:Musica[];
   videosList!:Video[];
-  conteudoFinal:Conteudo[]=[];
+  conteudoFinal:(Musica|Video)[]=[];
   submittedItems:any[]=[];
   submittedVideos:any[]=[];
   publico:Privacidade=Privacidade.PUBLICO;

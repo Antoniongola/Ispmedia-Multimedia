@@ -39,6 +39,7 @@ public class AlbumService {
 
      public ResponseEntity<Object> createAlbum (Album dto, MultipartFile albumImage){
           try{
+               dto.setDataType("album");
                dto.setThumbNailUri(albumImage.getOriginalFilename());
                if(dto.getArtista() != null){
                     System.out.println("artista: "+dto.getArtista().getTitulo());
@@ -64,6 +65,7 @@ public class AlbumService {
                     artista.setAlbums(new ArrayList<Album>());
                     artista.getAlbums().add(dto);
                }
+               artista.setDataType("artista");
                artistaRepository.save(artista);
 
                return ResponseEntity.ok(new Response("ALBUM CRIADO COM SUCESSO"));

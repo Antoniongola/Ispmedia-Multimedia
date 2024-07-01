@@ -1,12 +1,11 @@
 package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.entities.Conteudo;
+import com.ngolajr.ispmedia.entities.Musica;
 import com.ngolajr.ispmedia.entities.Playlist;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.enums.Privacidade;
-import com.ngolajr.ispmedia.repositories.ConteudoRepository;
-import com.ngolajr.ispmedia.repositories.PlaylistRepository;
-import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
+import com.ngolajr.ispmedia.repositories.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,8 @@ import java.util.List;
 public class PlaylistService {
     private final PlaylistRepository repository;
     private final ConteudoRepository conteudoRepo;
+    private final MusicaRepository musicaRepo;
+    private final VideoRepository videoRepo;
     private final UtilizadorRepository userRepo;
 
     @Transactional
@@ -29,12 +30,16 @@ public class PlaylistService {
         Utilizador user = userRepo.findById(playlist.getOwner().getUsername()).get();
         for(Conteudo content :playlist.getConteudos()){
             Conteudo conteudo = new Conteudo();
-            if(conteudoRepo.findById(content.getId()).isPresent()) {
-                conteudo = conteudoRepo.findById(content.getId()).get();
+            if(musicaRepo.findById(content.getId()).isPresent()){
+                conteudo = musicaRepo.findById(content.getId()).get();
+                conteudos.add(conteudo);
+            }else if(videoRepo.findById(content.getId()).isPresent()){
+                conteudo = videoRepo.findById(content.getId()).get();
                 conteudos.add(conteudo);
             }
         }
 
+        System.out.println("tamanho da lista: "+conteudos.size());
         playlist.setConteudos(conteudos);
         playlist.setOwner(user);
         repository.save(playlist);

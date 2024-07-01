@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
@@ -23,4 +22,5 @@ public class Conteudo {
     protected String editora;
     @ManyToOne
     private Utilizador criadorConteudo;
+    private String dataType;
 }

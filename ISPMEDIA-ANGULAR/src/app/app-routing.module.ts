@@ -44,7 +44,9 @@ const routes: Routes = [
   {path:'musics', component: MusicsComponent},
   {path:'musics/new', component: MusicUploadComponent},
   {path:'playlist/new', component: PlaylistCreationComponent},
-  {path:'playlist/:playlistId', component: PlaylistContentComponent},
+  {path:'playlist/:playlistId', component: PlaylistContentComponent, children:[
+      {path:'play/:mediaId', component: PlaylistContentComponent}
+    ]},
   {path:'radios', component:RadiosComponent},
   {path:'videos', component:VideosComponent},
   {path:'videos/new', component: VideoUploadComponent},

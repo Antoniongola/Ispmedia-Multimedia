@@ -10,6 +10,7 @@ export class Conteudo {
   genero:Genero=new Genero();
   editora:string="";
   criadorConteudo:User=new User();
+  dataType:string="";
 
   constructor(id: string, titulo: string, thumbNailUri: string,
               descricao: string, genero:Genero,

@@ -2,10 +2,8 @@ package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.FileManager;
-import com.ngolajr.ispmedia.entities.Musica;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.Video;
-import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import com.ngolajr.ispmedia.repositories.VideoRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.UUID;
@@ -82,7 +79,7 @@ public class VideoService {
         Video video = this.repository.findById(id).orElseThrow(() -> new RuntimeException("Video not found"));
         video.setStreams(video.getStreams() + 1);
         this.repository.save(video);
-        Path videoPath = Path.of(videoLocation + "\\").resolve(video.getPath()).normalize();
+        Path videoPath = Path.of(videoLocation + "\\compressed\\").resolve(video.getPath()).normalize();
         UrlResource videoResource = new UrlResource(videoPath.toUri());
 
         long fileSize = Files.size(videoPath);
@@ -164,6 +161,7 @@ public class VideoService {
             throw new Exception("File was not received correctly.");
         }
 
+        video.setDataType("video");
         //String uploadDir = Paths.get("src", "main", "resources", "upload", "video").toString();
         String originalFilePath = videoLocation + "\\"+file.getOriginalFilename();
         String compressedFilePath = videoLocationCompressed + "\\compressed_" + file.getOriginalFilename();
@@ -176,8 +174,8 @@ public class VideoService {
         compressVideo(originalFilePath, compressedFilePath);
         logger.info("Video compressed and saved to: " + compressedFilePath);
 
-        extractFirstFrame(originalFilePath, imageLocation);
-        logger.info("First frame extracted and saved to: " + imageLocation);
+        //extractFirstFrame(originalFilePath, imageLocation);
+        //logger.info("First frame extracted and saved to: " + imageLocation);
         if (originalFile.delete()) {
             logger.info("Original file removed: " + originalFilePath);
         }
@@ -197,7 +195,8 @@ public class VideoService {
 
     private void compressVideo(String inputPath, String outputPath) throws Exception {
         logger.info("Starting video compression: " + inputPath);
-        ProcessBuilder processBuilder = new ProcessBuilder(ffmpegPath, "-i", inputPath, "-vf", "scale=640:-1", "-crf", "28", "-preset", "fast", outputPath);
+        ProcessBuilder processBuilder = new ProcessBuilder(ffmpegPath, "-i", inputPath, "-vf", "scale=640:-1",
+                "-crf", "28", "-preset", "fast", outputPath);
         processBuilder.redirectErrorStream(true);
 
         Process process = processBuilder.start();
@@ -236,69 +235,4 @@ public class VideoService {
         }
         logger.info("First frame extracted and saved to: " + imagePath);
     }
-
-
-    /*
-    private void compressVideo(String inputPath, String outputPath) throws Exception {
-        logger.info("Starting video compression: " + inputPath);
-        ProcessBuilder processBuilder = new ProcessBuilder("ffmpeg", "-i", inputPath, "-vf", "scale=640:-1", "-crf", "28", "-preset", "fast", outputPath);
-        processBuilder.redirectErrorStream(true);
-        Process process = processBuilder.start();
-        process.waitFor();
-        if (process.exitValue() != 0) {
-            logger.error("Error during compression.");
-            throw new Exception("Error during compression.");
-        }
-        logger.info("Compression completed: " + outputPath);
-    }
-
-    private void extractFirstFrame(String videoPath, String imagePath) throws Exception {
-        logger.info("Extracting first frame from: " + videoPath);
-        ProcessBuilder processBuilder = new ProcessBuilder(ffmpegPath, "-i", videoPath, "-vf", "select=eq(n\\,0)", "-q:v", "3", imagePath);
-        processBuilder.redirectErrorStream(true);
-        Process process = processBuilder.start();
-        process.waitFor();
-        if (process.exitValue() != 0) {
-            logger.error("Error extracting first frame.");
-            throw new Exception("Error extracting first frame.");
-        }
-        logger.info("First frame extracted and saved to: " + imagePath);
-    }
-    */
-    /*
-    public File compressVideo(MultipartFile multipartFile) throws IOException, InterruptedException {
-        // Criar diretório uploads se não existir
-        File uploadDir = new File(this.videoLocation);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-
-        // Salvar o arquivo recebido no diretório personalizado
-        File originalFile = new File(uploadDir, multipartFile.getOriginalFilename());
-        multipartFile.transferTo(originalFile);
-
-        // Criar o arquivo de saída para o vídeo comprimido
-        String compressedFileName = "compressed_" + originalFile.getName();
-        File compressedVideoFile = new File(uploadDir, compressedFileName);
-
-        String ffmpegLocation = "C:\\FFmpeg\\bin\\ffmpeg.exe";
-        // Construir e iniciar o processo do FFmpeg
-
-        ProcessBuilder processBuilder = new ProcessBuilder(
-                ffmpegLocation, "-i", originalFile.getAbsolutePath(),
-                "-vcodec", "libx264", "-crf", "32",
-                "-preset", "fast", // Preset de compressão
-                "-threads", "4", // Utilizar 4 threads
-                compressedVideoFile.getAbsolutePath());
-
-        System.out.println("COMEÇANDO O PROCESSO!");
-        Process process = processBuilder.start();
-
-        // Esperar pelo término do processo
-        process.waitFor();
-
-        // Retornar o arquivo comprimido
-        return compressedVideoFile;
-    }
-    */
 }

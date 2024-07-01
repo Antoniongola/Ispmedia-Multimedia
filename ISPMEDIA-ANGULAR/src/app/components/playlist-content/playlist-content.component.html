@@ -2,12 +2,10 @@
 <main class="content-playlist">
 
   <section class="midia-display">
-    <!--
-    <video controls class="midias-display" >
-      <source type="video/mp4" >
-    </video>-->
-    <video #videoPlayer controls>
-      <source src="assets/acustica.mp4" type="video/mp4">
+    <audio *ngIf="isMusic" [src]="srcs[mediaId]" controls>
+    </audio>
+    <video *ngIf="isVideo" class="midias-display" #videoPlayer controls>
+      <source [src]="srcs[mediaId]" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </section>
@@ -16,15 +14,13 @@
     <h1>Playlist {{playlist.titulo}}</h1>
     <article class="details-playlist">
       <section class="card-playlist" *ngFor="let conteudo of playlist.conteudos">
-        <article class="icon-titlePlaylist">
-          <img ngSrc="assets/playlistW.png" class="icon-playlist" alt="" height="512" width="512">
-          <p>{{conteudo.titulo}}</p>
-        </article>
-        <article class="play-icon">
-        <img ngSrc="assets/PlayW.png" class="" alt="" height="30" width="30">
-        </article>
+        <a [routerLink]="['play/'+conteudo.id]">
+          <article class="icon-titlePlaylist" (click)="playMedia(conteudo)">
+            <img src="assets/playlistW.png" class="icon-playlist" alt="" height="512" width="512">
+            <p>{{conteudo.titulo}}</p>
+          </article>
+        </a>
       </section>
-     <!-- <p>Playlist:{{playlist.privacidade}}</p> !-->
     </article>
   </section>
 </main>

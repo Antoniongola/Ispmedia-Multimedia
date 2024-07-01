@@ -1,11 +1,9 @@
 package com.ngolajr.ispmedia.services;
 
-import com.ngolajr.ispmedia.dtos.ArtistaDto;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.ArtistaRepository;
-import com.ngolajr.ispmedia.repositories.ConteudoRepository;
 import com.ngolajr.ispmedia.repositories.GeneroRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.Getter;
@@ -39,6 +37,7 @@ public class ArtistaService {
 
     public ResponseEntity<Object> newArtista(Artista dto, MultipartFile artistImage){
         System.out.println("Nome do artista: "+dto.getTitulo());
+        dto.setDataType("artista");
         if(!repository.existsArtistaByTitulo(dto.getTitulo()) && (!dto.getTitulo().equals("") && !dto.getTitulo().equals("0"))){
             try {
                 Utilizador criador = userRepo.findById(dto.getCriadorConteudo().getUsername()).get();

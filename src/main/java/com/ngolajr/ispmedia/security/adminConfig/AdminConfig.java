@@ -3,16 +3,12 @@ package com.ngolajr.ispmedia.security.adminConfig;
 import com.ngolajr.ispmedia.entities.Conteudo;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.enums.Roles;
-import com.ngolajr.ispmedia.repositories.ConteudoRepository;
-import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
+import com.ngolajr.ispmedia.repositories.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +18,8 @@ public class AdminConfig implements CommandLineRunner {
     private final PasswordEncoder bcrypt;
     private final UtilizadorRepository repository;
     private final ConteudoRepository conteudoRepo;
+    private final VideoRepository videoRepo;
+    private final MusicaRepository musicaRepo;
     @Override
     public void run(String... args) throws Exception {
         List<Conteudo> conteudos = conteudoRepo.findAll();
@@ -37,12 +35,18 @@ public class AdminConfig implements CommandLineRunner {
         }
 
         for(Conteudo content: conteudos){
-            Conteudo conteudo = content;
-            if(conteudo.getCriadorConteudo()==null){
+            if(content.getCriadorConteudo()==null){
                 //se não tiver um criador do connteúdo, atribuir ao adminisrador do sistema.
                 Utilizador owner = this.repository.findById("A3SNT@isptec.co.ao").get();
-                conteudo.setCriadorConteudo(owner);
-                conteudoRepo.save(conteudo);
+                content.setCriadorConteudo(owner);
+                conteudoRepo.save(content);
+            }
+            if(musicaRepo.findById(content.getId()).isPresent()){
+                content.setDataType("musica");
+                conteudoRepo.save(content);
+            }else if(videoRepo.findById(content.getId()).isPresent()){
+                content.setDataType("video");
+                conteudoRepo.save(content);
             }
 
         }

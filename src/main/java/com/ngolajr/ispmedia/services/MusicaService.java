@@ -1,6 +1,5 @@
 package com.ngolajr.ispmedia.services;
 
-import com.ngolajr.ispmedia.dtos.MusicaDto;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
@@ -47,6 +46,7 @@ public class MusicaService {
             Utilizador criador= userRepo.findById(dto.getCriadorConteudo().getUsername()).get();
             dto.setPath(musicFile.getOriginalFilename());
             dto.setCriadorConteudo(criador);
+            dto.setDataType("musica");
             if (musicImage != null)
                 dto.setThumbNailUri(musicImage.getOriginalFilename());
 
