@@ -8,6 +8,7 @@ import {EstadoEntrega} from "../../entities/enums/EstadoEntrega";
 import {GrupoConvite} from "../../entities/GrupoConvite";
 import {GrupoConviteService} from "../../services/grupoConvite/grupo-convite.service";
 import {GrupoConviteDto} from "../../dtos/GrupoConviteDto";
+import {EstadoConvite} from "../../entities/enums/EstadoConvite";
 
 @Component({
   selector: 'app-notificacoes',
@@ -17,7 +18,8 @@ import {GrupoConviteDto} from "../../dtos/GrupoConviteDto";
 export class NotificacoesComponent implements OnInit{
   username:any='';
   notificacoes:Notificacao[]=[];
-  estadoPendente:EstadoEntrega=EstadoEntrega.PENDENTE;
+  estadoPendenteEntrega:EstadoEntrega=EstadoEntrega.PENDENTE;
+  estadoPendenteConvite:EstadoConvite=EstadoConvite.PENDENTE;
   convites:GrupoConvite[]=[];
   constructor(private notificacaoService:NotificacaoService,
               private loginService:LoginServiceService,
@@ -52,4 +54,5 @@ export class NotificacoesComponent implements OnInit{
   }
 
   protected readonly TipoNotificacao = TipoNotificacao;
+  protected readonly EstadoConvite = EstadoConvite;
 }

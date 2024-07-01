@@ -1,5 +1,5 @@
 export enum EstadoConvite {
+  PENDENTE = 0,
   ACEITE = 1,
-  RECUSADO = -1,
-  PENDENTE = 0
+  RECUSADO = 2
 }
