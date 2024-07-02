@@ -2,7 +2,7 @@
 <main class="content-playlist">
 
   <section class="midia-display">
-    <audio *ngIf="isMusic" [src]="srcs[mediaId]">
+    <audio *ngIf="isMusic" [src]="srcs[mediaId]" controls>
     </audio>
     <video *ngIf="isVideo" class="midias-display" #videoPlayer controls>
       <source [src]="srcs[mediaId]" type="video/mp4">

@@ -11,10 +11,17 @@ export class CriticaService {
   token=localStorage.getItem('jwtToken');
   constructor(private http:HttpClient) {  }
 
-  fazerCritica(critica: Critica, albumId: string):Observable<Critica>{
+  fazerCritica(critica: Critica):Observable<Critica>{
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.post<Critica>(`${this.apiUrl}/${albumId}`, critica, {headers});
+    return this.http.post<Critica>(`${this.apiUrl}`, critica, {headers});
+  }
+
+  getAlbumCriticas(albumId:string):Observable<Critica[]>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Critica[]>(`${this.apiUrl}/${albumId}`, {headers});
   }
 }

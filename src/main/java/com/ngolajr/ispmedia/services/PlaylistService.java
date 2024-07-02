@@ -30,12 +30,14 @@ public class PlaylistService {
         Utilizador user = userRepo.findById(playlist.getOwner().getUsername()).get();
         for(Conteudo content :playlist.getConteudos()){
             Conteudo conteudo = new Conteudo();
-            if(musicaRepo.findById(content.getId()).isPresent()){
-                conteudo = musicaRepo.findById(content.getId()).get();
-                conteudos.add(conteudo);
-            }else if(videoRepo.findById(content.getId()).isPresent()){
-                conteudo = videoRepo.findById(content.getId()).get();
-                conteudos.add(conteudo);
+            if(content.getId()!=null){
+                if(musicaRepo.findById(content.getId()).isPresent()){
+                    conteudo = musicaRepo.findById(content.getId()).get();
+                    conteudos.add(conteudo);
+                }else if(videoRepo.findById(content.getId()).isPresent()){
+                    conteudo = videoRepo.findById(content.getId()).get();
+                    conteudos.add(conteudo);
+                }
             }
         }
 

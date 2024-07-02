@@ -35,6 +35,18 @@
                 </div>
               </div>
 
+              <div class="me-3 mt-3" formArrayName="videos">
+                <small class="mb-2 text-light">Quantidade videos</small>
+                <button class="btn btn-dark d-flex flex-wrap justify-content-between" type="button" (click)="addVideo()">Adicionar mais videos</button>
+                <div *ngFor="let item of items.controls; let i=index" [formGroupName]="i">
+                  <label for="item-{{i}}">Video nº {{i + 1}}: </label>
+                  <select class="rounded-2 ms-3 mt-2" style="position: relative; height:30px; width: 100px" id="item-{{i}}" formControlName="name">
+                    <option *ngFor="let video of videosList" [value]="video.id">{{video.titulo}}</option>
+                  </select>
+
+                  <button class="networkButons btn btn-outline-danger ms-3" type="button" (click)="removeVideo(i)"><i class="bi bi-x mt-2"></i></button>
+                </div>
+              </div>
 
             </div>
             <button class="customBTN btn btn-dark mt-5 " type="submit">Criar Playlist</button>

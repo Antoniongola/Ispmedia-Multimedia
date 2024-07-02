@@ -19,7 +19,7 @@ export class NotificacoesComponent implements OnInit{
   username:any='';
   notificacoes:Notificacao[]=[];
   estadoPendenteEntrega:EstadoEntrega=EstadoEntrega.PENDENTE;
-  estadoPendenteConvite:EstadoConvite=EstadoConvite.PENDENTE;
+  estadoConvite=EstadoConvite;
   convites:GrupoConvite[]=[];
   constructor(private notificacaoService:NotificacaoService,
               private loginService:LoginServiceService,

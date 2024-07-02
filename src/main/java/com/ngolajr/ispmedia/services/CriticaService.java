@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,14 +22,20 @@ public class CriticaService {
     private final AlbumRepository albumRepository;
     private final UtilizadorRepository userRepo;
 
-    public ResponseEntity<Critica> fazerCritica(Critica critica, UUID albumId){
-        if(albumRepository.findById(albumId).isPresent()){
-           Album album = albumRepository.findById(albumId).get();
+    public ResponseEntity<Critica> fazerCritica(Critica critica){
+        if(albumRepository.findById(critica.getAlbum().getId()).isPresent()){
+            int sum=0;
+           Album album = albumRepository.findById(critica.getAlbum().getId()).get();
            critica.setCritico(this.userRepo.findById(critica.getCritico().getUsername()).get());
            critica.setAlbum(album);
            repository.save(critica);
-           albumRepository.save(album);
+           int qtdCriticas = repository.findAllByAlbum_Id(critica.getAlbum().getId()).size();
+           for(Critica review: repository.findAllByAlbum_Id(critica.getAlbum().getId())){
+                sum+=review.getNota();
+           }
 
+           album.setPontuacaoMedia((double) sum /qtdCriticas);
+           albumRepository.save(album);
            return ResponseEntity.ok(critica);
         }
 
@@ -42,6 +49,13 @@ public class CriticaService {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    public ResponseEntity<List<Critica>> albumCriticas(UUID albumId){
+        if(this.albumRepository.findById(albumId).isPresent()){
+            return ResponseEntity.ok(this.repository.findAllByAlbum_Id(albumId));
+        }
+        return null;
     }
 
     public ResponseEntity<Response> apagarCritica(long criticaId){

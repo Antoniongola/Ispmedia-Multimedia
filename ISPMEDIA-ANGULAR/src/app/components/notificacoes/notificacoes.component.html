@@ -29,10 +29,10 @@
       <div class="Invites-Message">
         <img src="assets/invites.png" alt="invites icon">
         {{convite.anfitriao.nome}} convidou você para o grupo: {{convite.grupo.nome}}<br>
-        estado do convite: {{convite.estadoConvite}}
+        Estado do convite: {{convite.estadoConvite}}
       </div>
 
-      <div class=" btn-acceptReject" >
+      <div class=" btn-acceptReject" *ngIf="convite.estadoConvite==estadoConvite.PENDENTE">
         <button class="btn m-2" (click)="responderConvite(convite.id, 1)">Aceitar</button>
         <button class="btn" (click)="responderConvite(convite.id, -1)">Rejeitar</button>
       </div>

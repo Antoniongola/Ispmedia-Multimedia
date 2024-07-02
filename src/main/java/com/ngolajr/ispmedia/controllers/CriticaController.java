@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -14,9 +15,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CriticaController {
     private final CriticaService service;
-    @PostMapping("/{id}")
-    public ResponseEntity<Critica> criticar(@RequestBody Critica critica, @PathVariable UUID id){
-        return this.service.fazerCritica(critica, id);
+    @PostMapping()
+    public ResponseEntity<Critica> criticar(@RequestBody Critica critica){
+        return this.service.fazerCritica(critica);
+    }
+
+    @GetMapping("/{idAlbum}")
+    public ResponseEntity<List<Critica>> albumCriticas(@PathVariable UUID idAlbum){
+        return this.service.albumCriticas(idAlbum);
     }
 
     @PutMapping("/{albumId}/{criticaId}")

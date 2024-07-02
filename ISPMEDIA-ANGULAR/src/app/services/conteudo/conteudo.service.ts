@@ -22,6 +22,7 @@ export class ConteudoService {
         this.musicService.getMusicById(conteudo.id).subscribe(response => {
           const objectURL = URL.createObjectURL(response);
           srcs[conteudo.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+          console.log('link musica: ', this.sanitizer.bypassSecurityTrustUrl(objectURL));
         });
       }else if(conteudo.dataType=="video"){
         this.videoService.videoStream(conteudo.id).subscribe(response => {

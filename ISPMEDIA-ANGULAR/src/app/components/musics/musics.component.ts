@@ -35,6 +35,7 @@ export class MusicsComponent implements OnInit{
 
   playMusic(filename: string) {
     this.mediaId=filename;
+    console.log('id: '+filename);
   }
 
 }

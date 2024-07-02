@@ -41,10 +41,10 @@ const routes: Routes = [
   {path:'artists/new', component:ArtistCreationComponent},
   {path:'group/new', component:GroupCreationComponent},
   {path:'group/:groupId', component:GroupContentComponent},
+  {path:'musics/new', component: MusicUploadComponent},
   {path:'musics', component: MusicsComponent, children:[
       {path:':mediaId', component: MusicsComponent}
     ]},
-  {path:'musics/new', component: MusicUploadComponent},
   {path:'playlist/new', component: PlaylistCreationComponent},
   {path:'playlist/:playlistId', component: PlaylistContentComponent, children:[
       {path:'play/:mediaId', component: PlaylistContentComponent}

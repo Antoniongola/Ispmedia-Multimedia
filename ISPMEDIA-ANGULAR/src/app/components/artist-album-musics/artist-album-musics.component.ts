@@ -10,6 +10,7 @@ import {LoginServiceService} from "../../services/login/login-service.service";
 import {UserService} from "../../services/user/user.service";
 import {Musica} from "../../entities/Musica";
 import {MusicaService} from "../../services/musica/musica.service";
+import {Genero} from "../../entities/Genero";
 
 @Component({
   selector: 'app-artist-album-musics',
@@ -17,6 +18,7 @@ import {MusicaService} from "../../services/musica/musica.service";
   styleUrl: './artist-album-musics.component.css'
 })
 export class ArtistAlbumMusicsComponent implements OnInit{
+  criticas:Critica[]=[];
   criticaForm!:FormGroup;
   album!:Album;
   albumId:any='';
@@ -24,7 +26,6 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   musicId:string='';
   albumImage:{[key:string] : any} = {};
   criticoUsername:any="";
-  critico!:User;
   musicas:Musica[] | null=[];
   url:any=''
   musica!:any;
@@ -41,12 +42,6 @@ export class ArtistAlbumMusicsComponent implements OnInit{
 
   ngOnInit(){
     this.criticoUsername=this.loginService.getUsername();
-    this.userService.selecionarUser(this.criticoUsername).subscribe(response=>{
-      this.critico = response;
-      console.log("CRITICO CARREGADO COM SUCESSO!")
-    }, error=>{
-      console.log("NÃO FOI POSSÍVEL CARREGAR O CRÍTICO.");
-    });
     this.criticaForm = this.fb.group({
       nota:['', Validators.required],
       critica:['', Validators.required]
@@ -54,7 +49,10 @@ export class ArtistAlbumMusicsComponent implements OnInit{
 
     this.route.paramMap.subscribe(params=>{
       this.albumId = params.get('idAlbum');
+      this.mostrarCriticas(this.albumId);
     });
+
+
 
     this.albumService.getAlbum(this.albumId).subscribe(response=>{
       this.album = response;
@@ -77,17 +75,34 @@ export class ArtistAlbumMusicsComponent implements OnInit{
     });
   }
 
+  mostrarCriticas(albumId:string){
+    this.criticaService.getAlbumCriticas(albumId).subscribe(response=>{
+      this.criticas = response;
+      console.log('criticas carregadas!!');
+      console.log('tamanho da lista de criticas: '+response.length)
+    }, error=>{
+      console.log("erro nas criticas!!");
+    })
+  }
+
   onSubmit(){
+    let criticoUser = new User();
+    criticoUser.username=this.criticoUsername;
+
+    let albumUpload = new Album(this.albumId, '', '', '',new Genero(),'', new User(),
+      [], null, [], 0, '0', 0);
+
     const critica:Critica=new Critica(0,
       this.criticaForm.get('nota')?.value,
       this.criticaForm.get('critica')?.value,
-      this.critico, this.album);
+      criticoUser, albumUpload);
 
-      this.criticaService.fazerCritica(critica, this.albumId).subscribe(response=>{
+      this.criticaService.fazerCritica(critica).subscribe(response=>{
         alert('CRITICA ADICIONADA COM SUCESSO AO ALBUM. '+response.critica);
+        this.mostrarCriticas(this.album.id);
         //this.router.navigate(['../']);
       }, error=>{
-        alert('A descrição apenas deve ter de 0 á 300 caracteres,Por favor reveja sua descrição');
+        alert('A descrição apenas deve ter de 0 á 300 caracteres, Por favor reveja sua descrição');
       });
   }
 }

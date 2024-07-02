@@ -22,6 +22,8 @@ export class ArtistAlbumsComponent implements OnInit{
       this.filterValue = params.get('idArtista');
     });
 
+
+
     this.artistaSErvice.getArtista(this.filterValue).subscribe(response=>{
       this.artista = response;
       this.albumService.loadImages(this.artista.albums, this.albumImages);
