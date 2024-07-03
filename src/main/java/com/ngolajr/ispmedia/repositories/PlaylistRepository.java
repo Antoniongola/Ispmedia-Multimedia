@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface PlaylistRepository extends JpaRepository<Playlist, Long> {
     public List<Playlist> findAllByPrivacidadeEqualsOrOwnerEquals(Privacidade privacidade, Utilizador owner);
+    public List<Playlist> findAllByOwner(Utilizador owner);
 }

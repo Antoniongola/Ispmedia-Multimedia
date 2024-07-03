@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.controllers;
 
+import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.Playlist;
 import com.ngolajr.ispmedia.services.PlaylistService;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +36,15 @@ public class PlaylistController {
     @GetMapping("/{username}/publicas")
     public ResponseEntity<List<Playlist>> allPlaylistsPublicas(@PathVariable String username){
         return ResponseEntity.ok(service.listasPublicas(username));
+    }
+
+    @GetMapping("/user/{userid}")
+    public ResponseEntity<List<Playlist>> allUserPlaylist(@PathVariable String userid){
+        return (service.userPlaylists(userid));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Response> apagarPlaylist(@PathVariable String id){
+        return service.apagarPlaylist(Long.parseLong(id));
     }
 }

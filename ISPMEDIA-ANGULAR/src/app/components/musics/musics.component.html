@@ -1,7 +1,7 @@
 <div class="row ">
   <div class="col m-2" *ngFor="let music of musicas">
     <a [routerLink]="[music.id]">
-      <div class="card" (click)="playMusic(music.id)">
+      <div class="card" (click)="playMusic(music)">
         <div class="card-img">
           <img class="card-img" [src]="imgSrcs[music.id]">
         </div>
@@ -13,16 +13,33 @@
             <span *ngFor="let feat of music.artists">, {{feat.titulo}}</span>
           </div>
           <span *ngIf="music.artists.length==0">{{music.artista.titulo}}</span>-->
-          Uploaded by: {{music.criadorConteudo.nome}}
+          Uploaded by: {{music.criadorConteudo.nome}}<br>
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            ...
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-submenu">
+              <a class="dropdown-item dropdown-toggle" id="playlistDropdown">Adicionar a minha playlist</a>
+              <div class="dropdown-menu" aria-labelledby="playlistDropdown">
+                <a class="dropdown-item" *ngFor="let playlist of myPlaylists" (click)="addToPlaylist(playlist.id, music)">{{playlist.titulo}}</a>
+              </div>
+            </div>
+            <div class="dropdown-submenu">
+              <a class="dropdown-item dropdown-toggle" id="grupoDropdown">Adicionar ao meu grupo</a>
+              <div class="dropdown-menu" aria-labelledby="grupoDropdown">
+                <a class="dropdown-item" *ngFor="let grupo of myGroups" (click)="addToGrupo(grupo.id, music)">{{grupo.nome}}</a>
+              </div>
+            </div>
+            <a class="dropdown-item" *ngIf="music.criadorConteudo.username.toLowerCase() === username.toLowerCase()" (click)="deleteMusic(music.id)">Apagar Música</a>
+          </div>
         </div>
       </div>
     </a>
   </div>
-  <div class="row">
-    <audio [src]="imgSrcs[mediaId]" controls></audio>
+  <div class="col m-2" *ngIf="isPlaying">
+    {{letra}}
   </div>
 </div>
-
-<!--
-<router-outlet></router-outlet>
--->
+<div class="row">
+  <audio [src]="musicaSrcs[mediaId]" controls></audio>
+</div>

@@ -34,6 +34,7 @@ public class AdminConfig implements CommandLineRunner {
             repository.save(admin);
         }
 
+        /*
         for(Conteudo content: conteudos){
             if(content.getCriadorConteudo()==null){
                 //se não tiver um criador do connteúdo, atribuir ao adminisrador do sistema.
@@ -49,6 +50,6 @@ public class AdminConfig implements CommandLineRunner {
                 conteudoRepo.save(content);
             }
 
-        }
+        }*/
     }
 }

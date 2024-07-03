@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.services;
 
+import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.Conteudo;
 import com.ngolajr.ispmedia.entities.Musica;
 import com.ngolajr.ispmedia.entities.Playlist;
@@ -60,5 +61,22 @@ public class PlaylistService {
         Privacidade privacidade = Privacidade.PUBLICA;
         Utilizador owner = userRepo.findById(username).get();
         return repository.findAllByPrivacidadeEqualsOrOwnerEquals(privacidade, owner);
+    }
+
+    public ResponseEntity<List<Playlist>> userPlaylists(String username){
+        if(userRepo.findByUsername(username).isPresent()){
+            Utilizador owner = userRepo.findByUsername(username).get();
+            return ResponseEntity.ok(repository.findAllByOwner(owner));
+        }
+
+        return ResponseEntity.ok(null);
+    }
+
+    public ResponseEntity<Response> apagarPlaylist(long id){
+        if(repository.existsById(id)){
+            return ResponseEntity.ok(new Response("Album apgado com sucesso!"));
+        }
+
+        return ResponseEntity.ok(new Response("Album inexistente!!"));
     }
 }

@@ -1,1 +1,34 @@
-<p>group-content works!</p>
+<div class="row">
+    <section class="col">
+        <h2>Participantes do grupo</h2>
+        <div class="row m-2" *ngFor="let participante of participantes">
+            <div class="col-sm-2">
+              <img src="assets/user.png" width="50" height="50">
+            </div>
+            <div class="col">
+              <span>{{ participante.user.nome }}</span><br>
+              <span>{{participante.tipo}}</span>
+            </div>
+            <div class="col justify-content-center align-content-center align-items-center">
+              <div class="container mt-5">
+                <div *ngIf="isOwner && participante.user.username!=username" class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ...
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" (click)="grupoActions(participante, 1)">Tornar owner</a>
+                    <a class="dropdown-item" (click)="grupoActions(participante, 2)">Tornar editor</a>
+                    <a class="dropdown-item">Remover</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </section>
+    <section class="col">
+        <h2>Conteudos do grupo</h2>
+    </section>
+    <section class="col">
+        <h2>Player e detalhes</h2>
+    </section>
+</div>

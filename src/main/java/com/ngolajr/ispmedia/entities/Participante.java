@@ -1,5 +1,6 @@
 package com.ngolajr.ispmedia.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class Participante {
     private Utilizador user;
 
     @ManyToOne
+    @JsonBackReference("grupo-participante")
     private Grupo grupo;
 
     private TipoParticipante tipo;

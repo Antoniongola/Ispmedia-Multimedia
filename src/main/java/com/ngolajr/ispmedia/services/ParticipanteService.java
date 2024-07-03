@@ -32,28 +32,46 @@ public class ParticipanteService {
             Notificacao news = new Notificacao();
             Participante participante = this.participanteRepository.findById(participanteId).get();
             Utilizador userPromotor = this.userRepo.findByUsername(dto.promotor()).get();
+            Participante ptPromotor = this.participanteRepository.findByGrupo_IdAndUser_Username(participante.getGrupo().getId(), dto.promotor());
 
+            if(ptPromotor.getTipo()==TipoParticipante.OWNER){
+                news.setDestinatario(participante.getUser());
+                news.setEmissor(userPromotor);
+                if (dto.tipo()==TipoParticipante.EDITOR){
+                    participante.setTipo(TipoParticipante.EDITOR);
+                    news.setDescricao(userPromotor.getNome()+" tornou-lhe editor do grupo, já pode editar os conteúdos do grupo <"+participante.getGrupo().getNome()+">.");
+                    news.setTipoNotificacao(TipoNotificacao.EDITORGRUPO);
+                } else if(dto.tipo()==TipoParticipante.OWNER){
+                    participante.setTipo(TipoParticipante.OWNER);
+                    news.setDescricao(userPromotor.getNome()+" tornou-lhe owner do grupo, já pode remover ou adicionar participantes no grupo <"+participante.getGrupo().getNome()+">.");
+                    news.setTipoNotificacao(TipoNotificacao.OWNERGRUPO);
+                } else if (dto.tipo()==TipoParticipante.PARTICIPANTE){
+                    participante.setTipo(TipoParticipante.PARTICIPANTE);
+                    news.setDescricao(userPromotor.getNome()+" tornou-lhe participante do grupo, pode apenas assistir o conteudo do grupo <"+participante.getGrupo().getNome()+">.");
+                    news.setTipoNotificacao(TipoNotificacao.PARTICIPANTEGRUPO);
+                }
 
-            news.setDestinatario(participante.getUser());
-            news.setEmissor(userPromotor);
-            if (dto.tipo()==TipoParticipante.EDITOR){
-                participante.setTipo(TipoParticipante.EDITOR);
-                news.setDescricao(userPromotor.getNome()+" tornou-lhe editor do grupo, já pode editar os conteúdos do grupo <"+participante.getGrupo().getNome()+">.");
-                news.setTipoNotificacao(TipoNotificacao.EDITORGRUPO);
-            } else if(dto.tipo()==TipoParticipante.OWNER){
-                participante.setTipo(TipoParticipante.OWNER);
-                news.setDescricao(userPromotor.getNome()+" tornou-lhe owner do grupo, já pode remover ou adicionar participantes no grupo <"+participante.getGrupo().getNome()+">.");
-                news.setTipoNotificacao(TipoNotificacao.OWNERGRUPO);
-            } else if (dto.tipo()==TipoParticipante.PARTICIPANTE){
-                participante.setTipo(TipoParticipante.PARTICIPANTE);
-                news.setDescricao(userPromotor.getNome()+" tornou-lhe participante do grupo, pode apenas assistir o conteudo do grupo <"+participante.getGrupo().getNome()+">.");
-                news.setTipoNotificacao(TipoNotificacao.PARTICIPANTEGRUPO);
+                news.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
+                notificacaoRepository.save(news);
+                return ResponseEntity.ok(this.participanteRepository.save(participante));
             }
 
-            news.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
-            notificacaoRepository.save(news);
-            return ResponseEntity.ok(this.participanteRepository.save(participante));
+            return ResponseEntity.status(401).body(null);
         }
         return ResponseEntity.ok(null);
+    }
+
+    public ResponseEntity<Boolean> isGroupAdmin(long grupoId, String username){
+        if(participanteRepository.findByGrupo_IdAndUser_UsernameAndTipo(grupoId, username, TipoParticipante.OWNER)!=null)
+            return ResponseEntity.ok(true);
+
+        return ResponseEntity.ok(false);
+    }
+
+    public ResponseEntity<Boolean> isGroupEditor(long grupoId, String username){
+        if(participanteRepository.findByGrupo_IdAndUser_UsernameAndTipo(grupoId, username, TipoParticipante.EDITOR)!=null)
+            return ResponseEntity.ok(true);
+
+        return ResponseEntity.ok(false);
     }
 }

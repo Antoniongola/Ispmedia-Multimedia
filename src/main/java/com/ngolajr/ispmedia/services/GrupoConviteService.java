@@ -64,7 +64,7 @@ public class GrupoConviteService {
                 Participante participante = new Participante();
                 participante.setUser(user);
                 participante.setTipo(TipoParticipante.PARTICIPANTE);
-                //participante.setGrupo(grupo);
+                participante.setGrupo(grupo);
                 List<Participante> participantes = grupo.getParticipantes();
                 participantes.add(participante);
                 grupo.setParticipantes(participantes);

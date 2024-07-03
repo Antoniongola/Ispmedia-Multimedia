@@ -20,8 +20,18 @@ public class ParticipanteController {
         return service.groupParticipante(group);
     }
 
-    @PutMapping("/{grupo}")
-    public ResponseEntity<Participante> makeGroupEditor(@RequestBody ParticipanteDto dto, @PathVariable long grupo){
-        return service.makeParticipantRole(grupo, dto);
+    @GetMapping("/{group}/{username}/owner")
+    public ResponseEntity<Boolean> grupoParticipanteAdmin(@PathVariable long group, @PathVariable String username){
+        return service.isGroupAdmin(group, username);
+    }
+
+    @GetMapping("/{group}/{username}/editor")
+    public ResponseEntity<Boolean> grupoParticipanteEditor(@PathVariable long group, @PathVariable String username){
+        return service.isGroupAdmin(group, username);
+    }
+
+    @PutMapping("/{participante}")
+    public ResponseEntity<Participante> makeGroupEditor(@RequestBody ParticipanteDto dto, @PathVariable String participante){
+        return service.makeParticipantRole(Long.parseLong(participante), dto);
     }
 }

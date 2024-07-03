@@ -20,6 +20,7 @@ public class Grupo {
     @CurrentTimestamp //creating the group with the current system date.
     private Date dataCriacao;
     @OneToMany(mappedBy = "grupo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("grupo-participante")
     private List<Participante> participantes;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Conteudo> conteudoGrupo;

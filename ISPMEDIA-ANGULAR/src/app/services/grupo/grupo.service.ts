@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Grupo} from "../../entities/Grupo";
 import {Observable} from "rxjs";
+import {Conteudo} from "../../entities/Conteudo";
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +56,21 @@ export class GrupoService {
       'Authorization': `Bearer ${this.token}`
     });
     return this.http.get<Grupo[]>(`${this.baseUrl}/user/${userId}`, {headers});
+  }
+
+  addConteudoGrupo(grupoId: string, conteudo: Conteudo): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    const url = `${this.baseUrl}/${grupoId}`;
+    return this.http.put<Response>(url, conteudo, { headers });
+  }
+
+  apagarGrupo(grupoId: string): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    const url = `${this.baseUrl}/${grupoId}`;
+    return this.http.delete<Response>(url, { headers });
   }
 }

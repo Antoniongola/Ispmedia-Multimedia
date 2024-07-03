@@ -37,6 +37,13 @@ export class MusicaService {
     });
   }
 
+  loadMusica(musica:Musica, musicaSrcs: { [key: string]: any }) {
+      this.getMusicById(musica.id).subscribe(response => {
+        const objectURL = URL.createObjectURL(response);
+        musicaSrcs[musica.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      });
+  }
+
   loadMusicas(musicas:Musica[]|null, musicaSrcs: { [key: string]: any }) {
     if(musicas!=null && musicas.length>0){
       console.log('tá entar no loop da musica')

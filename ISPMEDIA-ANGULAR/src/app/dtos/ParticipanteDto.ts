@@ -1,6 +1,10 @@
 import {TipoParticipante} from "../entities/enums/TipoParticipante";
 
-export interface ParticipanteDto {
-  tipo: TipoParticipante;
-  promotor: string;
+export class ParticipanteDto {
+  tipo: TipoParticipante=TipoParticipante.PARTICIPANTE;
+  promotor: string="";
+  constructor(tipoPt:TipoParticipante, promotor:string) {
+    this.tipo=tipoPt;
+    this.promotor=promotor;
+  }
 }

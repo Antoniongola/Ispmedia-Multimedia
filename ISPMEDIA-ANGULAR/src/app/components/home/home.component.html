@@ -10,12 +10,10 @@
     <section class="col" *ngFor="let playlist of playlists">
       <a [routerLink]="['playlist/'+playlist.id]">
           <section class="Playlists-Displays-Cards">
-
               <article class="Card">
                 <div class="Card-image">
                   <img src="assets/playlistW.png" class="img-fluid" alt="Imagem 1">
                 </div>
-
 
                 <div class="Card-details-playlist">
                   <article class="detail-titulo">
@@ -30,7 +28,11 @@
               </article>
 
                 <article class="details-Creator">
-                  <span>Criada por: {{playlist.owner.nome}}</span>
+                  <span>Criada por: {{playlist.owner.nome}}</span><br>
+                  <div *ngIf="playlist.owner.username==username">
+                    <button class="btn btn-outline-danger m-2">Apagar</button>
+                    <button class="btn btn-outline-primary m-2">Atualizar</button>
+                  </div>
                 </article>
           </section>
       </a>

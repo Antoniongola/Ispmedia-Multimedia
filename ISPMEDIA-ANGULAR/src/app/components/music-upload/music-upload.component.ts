@@ -22,12 +22,12 @@ import {User} from "../../entities/User";
 export class MusicUploadComponent implements OnInit{
   musicForm!:FormGroup;
   generos!:Genero[];
-  artistas!:Artista[];
+  artistas:Artista[]=[];
   musicFile!:File;
   musicImage:File|string = '';
   submittedItems:any[] = [];
   musicArtists:Artista[] = [];
-  albums!:Album[];
+  albums:Album[]=[];
   user:User=new User();
   username:any;
 
@@ -72,11 +72,13 @@ export class MusicUploadComponent implements OnInit{
       console.log('erro nos artistas');
     });
 
+    /*
     this.albumService.getAlbums().subscribe(response=>{
       this.albums = response;
     }, error=>{
       console.log('erro ao carregar os albuns: '+error);
     });
+    */
   }
 
   createItem(): FormGroup {
@@ -102,6 +104,16 @@ export class MusicUploadComponent implements OnInit{
       this.musicFile = event.target.files[0];
     } else if (fileNumber === 2) {
       this.musicImage = event.target.files[0];
+    }
+  }
+
+  artistAlbums(){
+    if(this.musicForm.get('autor')?.value!=null){
+      this.artistas.forEach(artista=>{
+        if(artista.id==this.musicForm.get('autor')?.value){
+          this.albums = artista.albums;
+        }
+      });
     }
   }
 

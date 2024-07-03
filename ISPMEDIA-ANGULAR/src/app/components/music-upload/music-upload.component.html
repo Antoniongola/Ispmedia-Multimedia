@@ -18,8 +18,8 @@
 
               <div class="col-md-6">
                 <label for="autor">Autor da música:</label>
-                <select id="autor" class="form-select rounded-2" formControlName="autor">
-                  <option *ngFor="let artista of artistas" [value]="artista.id">{{artista.titulo}}</option>
+                <select id="autor" class="form-select rounded-2" formControlName="autor" (click)="artistAlbums()">
+                  <option *ngFor="let artista of artistas" [value]="artista.id" >{{artista.titulo}}</option>
                 </select>
               </div>
 

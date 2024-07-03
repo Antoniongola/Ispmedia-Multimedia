@@ -39,4 +39,18 @@ export class PlaylistService {
     });
     return this.http.get<Playlist[]>(this.baseUrl+`/${username}/publicas`, {headers});
   }
+
+  allUserPlaylist(userid: string): Observable<Playlist[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.get<Playlist[]>(`${this.baseUrl}/user/${userid}`, { headers });
+  }
+
+  apagarPlaylist(id: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.delete<any>(`${this.baseUrl}/${id}`, { headers });
+  }
 }
