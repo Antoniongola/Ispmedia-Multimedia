@@ -10,7 +10,7 @@
           <div class="col">
             <span class="card-header text-center">{{musica.titulo}}</span>
             <br>
-              <span>{{musica.artista.titulo}}</span>
+              <span>{{musica.criadorConteudo.nome}}</span>
           </div>
           <div class="col">
             <div class="row">
@@ -28,17 +28,16 @@
 
       <section class="Reviews">
         <h2>Críticas do Album</h2>
-        <section class="col" *ngFor="let critica of criticas">
-          <article class="display-Reviews">
+        <section class="col">
+          <article class="display-Reviews" *ngFor="let critica of criticas">
             <div class="Photo-Review">
               <img class="userPhoto-Review" src="assets/userPhoto.jpg">
             </div>
 
             <div class="review-detailsOfSUser">
-              <!--<p>Autor: {{critica.critico.nome}}</p>
+              <p>Autor: {{critica.critico.nome}}</p>
               <p>Nota: {{critica.nota}}</p>
-              <p>Descrição: {{critica.critica}}</p>-->
-              Testeeeeeeeeeeee
+              <p>Descrição: {{critica.critica}}</p>
             </div>
           </article>
         </section>
