@@ -1,6 +1,8 @@
 package com.ngolajr.ispmedia.controllers;
 
 import com.ngolajr.ispmedia.dtos.Response;
+import com.ngolajr.ispmedia.entities.Conteudo;
+import com.ngolajr.ispmedia.entities.Musica;
 import com.ngolajr.ispmedia.entities.Playlist;
 import com.ngolajr.ispmedia.services.PlaylistService;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,11 @@ public class PlaylistController {
     @GetMapping("/user/{userid}")
     public ResponseEntity<List<Playlist>> allUserPlaylist(@PathVariable String userid){
         return (service.userPlaylists(userid));
+    }
+
+    @PutMapping("/{id}/musicas")
+    public ResponseEntity<Response> addMusictoPlaylist(@PathVariable String id, @RequestBody Conteudo conteudo){
+        return service.addMusicToPlaylist(Long.parseLong(id), conteudo);
     }
 
     @DeleteMapping("/{id}")

@@ -3,6 +3,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Grupo} from "../../entities/Grupo";
 import {Observable} from "rxjs";
 import {Conteudo} from "../../entities/Conteudo";
+import {Video} from "../../entities/Video";
+import {Musica} from "../../entities/Musica";
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +60,7 @@ export class GrupoService {
     return this.http.get<Grupo[]>(`${this.baseUrl}/user/${userId}`, {headers});
   }
 
-  addConteudoGrupo(grupoId: string, conteudo: Conteudo): Observable<Response> {
+  addConteudoGrupo(grupoId: string, conteudo: Musica|Video): Observable<Response> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });

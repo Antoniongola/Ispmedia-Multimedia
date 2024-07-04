@@ -21,6 +21,7 @@ export class GroupContentComponent {
   participanteGrupo!:Participante;
   isOwner=false;
   isEditor=false;
+  isVisible = false;
 
   constructor(private participanteService:ParticipanteService,
               private route:ActivatedRoute,
@@ -42,6 +43,14 @@ export class GroupContentComponent {
         this.participanteGrupo=this.getParticipanteByUsername(this.username);
       });
     });
+  }
+
+  open() {
+    this.isVisible = true;
+  }
+
+  close() {
+    this.isVisible = false;
   }
 
   getParticipanteByUsername(username:string):Participante{

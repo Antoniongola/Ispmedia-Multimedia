@@ -72,11 +72,24 @@ public class PlaylistService {
         return ResponseEntity.ok(null);
     }
 
-    public ResponseEntity<Response> apagarPlaylist(long id){
-        if(repository.existsById(id)){
-            return ResponseEntity.ok(new Response("Album apgado com sucesso!"));
+    public ResponseEntity<Response> addMusicToPlaylist(long playlistId, Conteudo content){
+        if(repository.existsById(playlistId)){
+            System.out.println("encntrou a playlist");
+            Playlist playlist = repository.findById(playlistId).get();
+            playlist.getConteudos().add(content);
+            repository.save(playlist);
+            return ResponseEntity.ok(new Response(("Música adicionada com sucesso a playlist <"+playlist.getTitulo()+">.")));
         }
 
-        return ResponseEntity.ok(new Response("Album inexistente!!"));
+        return ResponseEntity.ok(new Response("Playlist inexistente!"));
+    }
+
+    public ResponseEntity<Response> apagarPlaylist(long id){
+        if(repository.existsById(id)){
+            repository.deleteById(id);
+            return ResponseEntity.ok(new Response("Playlist apagada com sucesso!"));
+        }
+
+        return ResponseEntity.ok(new Response("Playlist inexistente!!"));
     }
 }

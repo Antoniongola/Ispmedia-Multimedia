@@ -14,37 +14,30 @@
                 <label for="tituloMusica">Nome da Música:</label>
                 <input id="tituloMusica" class="form-control rounded-2" formControlName="tituloMusica" type="text">
               </div>
-
-
               <div class="col-md-6">
                 <label for="autor">Autor da música:</label>
                 <select id="autor" class="form-select rounded-2" formControlName="autor" (click)="artistAlbums()">
                   <option *ngFor="let artista of artistas" [value]="artista.id" >{{artista.titulo}}</option>
                 </select>
               </div>
-
               <div class="col-md-6">
                 <label for="generoMusica">Gênero da música:</label>
                 <select id="generoMusica" class="form-select rounded-2" formControlName="generoMusica">
                   <option *ngFor="let genero of generos" [value]="genero.id">{{genero.nome}}</option>
                 </select>
               </div>
-
               <div class="col-md-6">
               <label for="editora">Nome da editora:</label>
               <input id="editora" class="form-control rounded-2" formControlName="editora" type="text">
             </div>
-
               <div class="col-md-6">
                 <label for="descricao">Descrição da música:</label>
                 <textarea id="descricao" class="form-control rounded-2" formControlName="descricao"></textarea>
               </div>
-
               <div class="col-md-6">
                 <label for="letra">Letra da música:</label>
                 <textarea id="letra" class="form-control rounded-2" formControlName="letra"></textarea>
               </div>
-
               <div class="col-md-6 mt-2">
                 <ng-container *ngIf="!musicForm.get('mostrarCampo')?.value">
                   <label for="album">Álbum da música:</label>
@@ -53,8 +46,6 @@
                   </select>
                 </ng-container>
               </div>
-
-
               <div class="col-md-6 mt-3">
                 <label>
                   <small class="mb-2 text-light d-flex justify-content-between flex-wrap">Modo de lançamento<strong>[Album/Single]</strong></small>
@@ -62,7 +53,6 @@
                   <input type="checkbox" class="form-check-input rounded-2" formControlName="mostrarCampo"> Single
                 </label>
               </div>
-
               <div class="col-md-6" style="position: relative; bottom: 55px;" *ngIf="musicForm.get('mostrarCampo')?.value">
                 <label for="dataLancamento">Data de lançamento do single:</label>
                 <input id="dataLancamento" class="form-control rounded-2" formControlName="dataLancamento" type="date">
@@ -81,18 +71,14 @@
                   </div>
                 </div>
               </div>
-
-
               <div class="col-md-4 rounded-4 ms-4 mt-2">
                 <label for="musicFile">Ficheiro da música:</label>
                 <input id="musicFile" class="form-control rounded-2" type="file" (change)="onFileChange($event, 1)" required>
               </div>
-
               <div class="col-md-4 rounded-4 mt-2" >
                 <label for="musicImage">Imagem da música:</label>
                 <input id="musicImage" class="form-control rounded-2" type="file" (change)="onFileChange($event, 2)" required>
               </div>
-
               <div class="col-md-12 text-center mt-5">
                 <button class="customBTN btn btn-outline-danger rounded-2 " type="submit">Adicionar nova música</button>
               </div>
@@ -100,14 +86,9 @@
           </form>
         </div>
       </div>
-
       <div class="col-md-8 rounded-4 justify-content-center" style="background:#212529" id="imagemStyle">
         <img src="assets/up.png" class="img-fluid">
       </div>
     </div>
   </div>
-</div>
-
-<div class="text-center loginFooter">
-  <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
 </div>

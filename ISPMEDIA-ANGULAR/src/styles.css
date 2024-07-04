@@ -2,6 +2,55 @@
 @import url('https://cdn-uicons.flaticon.com/2.4.0/uicons-brands/css/uicons-brands.css');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
+/*estilo pra modal global*/
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-dialog {
+  width: 500px; /* Tamanho fixo */
+  max-width: 100%;
+}
+
+.modal-content {
+  color:#0a0a0a;
+  max-height: 80vh; /* Altura máxima para evitar que o modal seja muito alto */
+  overflow-y: auto; /* Scroll quando necessário */
+  background-color: #fff;
+  border: 1px solid #999;
+  border-radius: 0.3rem;
+  outline: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header, .modal-footer {
+  flex-shrink: 0; /* Manter o header e footer fixos */
+  h5{
+    color:#0a0a0a;
+  }
+}
+
+.modal-body {
+  flex-grow: 1; /* O corpo pode crescer e encolher */
+  overflow-y: auto; /* Scroll no corpo quando necessário */
+}
+
+/*esilo pra modal termina aqui*/
+
 
 /* You can add global styles to this file, and also import other style files */
 *{

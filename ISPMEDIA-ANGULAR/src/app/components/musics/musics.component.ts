@@ -7,6 +7,7 @@ import {PlaylistService} from "../../services/playlist/playlist.service";
 import {GrupoService} from "../../services/grupo/grupo.service";
 import {Grupo} from "../../entities/Grupo";
 import {Playlist} from "../../entities/Playlist";
+import {OfflineService} from "../../services/offline/offline.service";
 
 @Component({
   selector: 'app-musics',
@@ -15,7 +16,6 @@ import {Playlist} from "../../entities/Playlist";
 })
 export class MusicsComponent implements OnInit{
   musicas:Musica[]=[];
-  musica!:Musica;
   musicaSrcs: { [key: string]: any } = {}
   imgSrcs: { [key: string]: any } = {}
   myPlaylists:Playlist[]=[];
@@ -28,7 +28,12 @@ export class MusicsComponent implements OnInit{
               private router:ActivatedRoute,
               private loginService:LoginServiceService,
               private playlisService:PlaylistService,
-              private grupoService:GrupoService){
+              private grupoService:GrupoService,
+              private offlineService:OfflineService){
+
+  }
+
+  ngOnInit(): void {
     this.username=this.loginService.getUsername();
     this.router.paramMap.subscribe(response=>{
       this.mediaId = response.get('musicId');
@@ -50,12 +55,17 @@ export class MusicsComponent implements OnInit{
     })
   }
 
-  ngOnInit(): void {
-
+  downloadMusica(musica:Musica){
+    this.offlineService.downloadContent(musica);
   }
 
   addToPlaylist(playlistId:any, musica:Musica){
-    //this.playlisService.
+    console.log('teste da múzca: '+musica.id);
+    this.playlisService.addMusicToPlaylist(playlistId, musica).subscribe(response=>{
+      alert(response.response);
+    }, error=>{
+      console.log('erro: '+error);
+    })
   }
 
   addToGrupo(id:any, conteudo:(Musica)){
@@ -70,6 +80,8 @@ export class MusicsComponent implements OnInit{
   }
 
   deleteMusic(id:string){
-    this.musicaService.deleteMusic(id);
+    this.musicaService.deleteMusic(id).subscribe(response=>{
+      alert('música apagada com sucesso!');
+    });
   }
 }

@@ -15,17 +15,32 @@ export class ConteudoService {
               private videoService:VideoService,
               private sanitizer:DomSanitizer) { }
 
-  loadConteudos(conteudos:(Musica|Video)[], srcs: { [key: string]: any }){
-    console.log("tamanho da lista: "+conteudos.length);
-    conteudos.forEach(conteudo=>{
+  loadConteudos(conteudo:(Video|Musica), srcs: { [key: string]: any }){
+    //conteudos.forEach(conteudo=>{
       if(conteudo.dataType=="musica"){
         this.musicService.getMusicById(conteudo.id).subscribe(response => {
           const objectURL = URL.createObjectURL(response);
           srcs[conteudo.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-          console.log('link musica: ', this.sanitizer.bypassSecurityTrustUrl(objectURL));
         });
       }else if(conteudo.dataType=="video"){
         this.videoService.videoStream(conteudo.id).subscribe(response => {
+          const objectURL = URL.createObjectURL(response);
+          srcs[conteudo.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        });
+      }
+    //});
+  }
+
+
+  loadImages(conteudos:(Musica|Video)[], srcs: { [key: string]: any }){
+    conteudos.forEach(conteudo=>{
+      if(conteudo.dataType=="musica"){
+        this.musicService.getImage(conteudo.id).subscribe(response => {
+          const objectURL = URL.createObjectURL(response);
+          srcs[conteudo.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        });
+      }else if(conteudo.dataType=="video"){
+        this.videoService.videoImage(conteudo.id).subscribe(response => {
           const objectURL = URL.createObjectURL(response);
           srcs[conteudo.id] = this.sanitizer.bypassSecurityTrustUrl(objectURL);
         });

@@ -1,6 +1,7 @@
 package com.ngolajr.ispmedia.security.adminConfig;
 
 import com.ngolajr.ispmedia.entities.Conteudo;
+import com.ngolajr.ispmedia.entities.Musica;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.enums.Roles;
 import com.ngolajr.ispmedia.repositories.*;
@@ -32,6 +33,10 @@ public class AdminConfig implements CommandLineRunner {
             admin.setRoles(Set.of(Roles.ADMIN, Roles.EDITOR, Roles.USER));
 
             repository.save(admin);
+        }
+
+        for(Musica musica:musicaRepo.findAll()){
+            System.out.println("Música: "+musica.getTitulo()+", Artista da música: "+musica.getArtista().getTitulo());
         }
 
         /*

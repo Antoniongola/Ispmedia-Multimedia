@@ -22,6 +22,7 @@ import {PlaylistCreationComponent} from "./components/playlist-creation/playlist
 import {NotificacoesComponent} from "./components/notificacoes/notificacoes.component";
 import {PlaylistContentComponent} from "./components/playlist-content/playlist-content.component";
 import {GroupContentComponent} from "./components/group-content/group-content.component";
+import {OfflineContentComponent} from "./components/offline-content/offline-content.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -36,8 +37,7 @@ const routes: Routes = [
       {path:'album/:idAlbum', component: ArtistAlbumMusicsComponent}
     ]
   },
-  {path:'artists', component:ArtistsComponent
-  },
+  {path:'artists', component:ArtistsComponent},
   {path:'artists/new', component:ArtistCreationComponent},
   {path:'group/new', component:GroupCreationComponent},
   {path:'group/:groupId', component:GroupContentComponent},
@@ -45,6 +45,7 @@ const routes: Routes = [
   {path:'musics', component: MusicsComponent, children:[
       {path:':mediaId', component: MusicsComponent}
     ]},
+  {path:'offline', component: OfflineContentComponent},
   {path:'playlist/new', component: PlaylistCreationComponent},
   {path:'playlist/:playlistId', component: PlaylistContentComponent, children:[
       {path:'play/:mediaId', component: PlaylistContentComponent}

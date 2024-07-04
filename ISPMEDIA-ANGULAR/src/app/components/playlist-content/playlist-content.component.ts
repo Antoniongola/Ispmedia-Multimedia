@@ -26,7 +26,7 @@ export class PlaylistContentComponent {
   playlistId:any="";
   mediaId:any="";
   srcs:{[key:string]:any}={}
-  hasRequested:boolean=false;
+  imgSrcs:{[key:string]:any}={}
   isVideo:boolean=false;
   isMusic:boolean=false;
 
@@ -38,6 +38,7 @@ export class PlaylistContentComponent {
     });
     this.playlistServices.getPlaylist(this.playlistId).subscribe(response=>{
       this.playlist=response;
+      this.conteudoService.loadImages(this.playlist.conteudos, this.imgSrcs);
       console.log("Playlist carregada com sucesso");
     },error => {
       alert("Deu erro na requisição de getPlaylists ");
@@ -47,10 +48,8 @@ export class PlaylistContentComponent {
 
   playMedia(conteudo:Musica|Video){
     this.mediaId = conteudo.id;
-    if(!this.hasRequested){
-      this.hasRequested=true;
-      this.conteudoService.loadConteudos(this.playlist.conteudos, this.srcs);
-    }
+    this.conteudoService.loadConteudos(conteudo, this.srcs);
+
 
     if(conteudo.dataType=="video"){
       this.isMusic=false;

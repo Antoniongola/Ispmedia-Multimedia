@@ -1,11 +1,12 @@
 <div class="row ">
   <div class="col m-2" *ngFor="let music of musicas">
-    <a [routerLink]="[music.id]">
-      <div class="card" (click)="playMusic(music)">
+    <div class="card" (click)="playMusic(music)">
+      <a [routerLink]="[music.id]">
         <div class="card-img">
           <img class="card-img" [src]="imgSrcs[music.id]">
         </div>
         <div class="card-header text-center">{{music.titulo}}</div>
+      </a>
         <div class="card-body">
           <!--
           <div class="row" *ngIf="music.artists.length>0">
@@ -30,11 +31,11 @@
                 <a class="dropdown-item" *ngFor="let grupo of myGroups" (click)="addToGrupo(grupo.id, music)">{{grupo.nome}}</a>
               </div>
             </div>
+            <a class="dropdown-item" (click)="downloadMusica(music)">Baixar Música</a>
             <a class="dropdown-item" *ngIf="music.criadorConteudo.username.toLowerCase() === username.toLowerCase()" (click)="deleteMusic(music.id)">Apagar Música</a>
           </div>
         </div>
-      </div>
-    </a>
+    </div>
   </div>
   <div class="col m-2" *ngIf="isPlaying">
     {{letra}}

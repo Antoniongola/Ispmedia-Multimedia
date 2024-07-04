@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit{
     this.username=this.apiService.getUsername();
     this.playlistService.allPlaylistPublicas(this.username).subscribe(response=>{
       this.playlists = response;
-      console.log('LISTAS CRIADAS!');
     }, error=>{
       console.log('ERRO NAS PLAYLISTS, '+error);
     });
@@ -40,13 +39,14 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
 
-    /*
+  }
 
-
-
-    */
-
-
+  apagarPlaylist(id:any){
+    this.playlistService.apagarPlaylist(id).subscribe(response=>{
+      alert(response.response);
+    }, error=>{
+      console.log('erro ao apagar');
+    });
   }
 
   goToLogin(){

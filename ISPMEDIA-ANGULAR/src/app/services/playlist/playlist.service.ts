@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import {Playlist} from "../../entities/Playlist";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Musica} from "../../entities/Musica";
+import {Response} from "../../entities/Response";
+import {Video} from "../../entities/Video";
 
 @Injectable({
   providedIn: 'root'
@@ -47,10 +50,17 @@ export class PlaylistService {
     return this.http.get<Playlist[]>(`${this.baseUrl}/user/${userid}`, { headers });
   }
 
-  apagarPlaylist(id: string): Observable<any> {
+  apagarPlaylist(id: string): Observable<Response> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
-    return this.http.delete<any>(`${this.baseUrl}/${id}`, { headers });
+    return this.http.delete<Response>(`${this.baseUrl}/${id}`, { headers });
+  }
+
+  addMusicToPlaylist(id: string, musica: Musica|Video): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.put<Response>(`${this.baseUrl}/${id}/musicas`, musica, { headers });
   }
 }

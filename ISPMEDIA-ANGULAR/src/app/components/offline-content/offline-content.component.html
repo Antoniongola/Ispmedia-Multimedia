@@ -1,0 +1,29 @@
+<section class="row">
+  <h3>Olá, {{username}}</h3>
+  <div class="divider"></div>
+  <button class="btn btn-outline-danger" (click)="apagarTudo()">Apagar todos conteúdos offline</button>
+</section>
+<div class="row">
+  <div *ngIf="isPlaying" class="col">
+    <video *ngIf="mediaType=='video'" controls>
+      <source [src]="mediaUrl" type="video/mp4">
+      Seu navegador não suporta o elemento de vídeo.
+    </video>
+    <audio *ngIf="mediaType=='musica'" [src]="mediaUrl" controls></audio>
+  </div>
+  <div class="row">
+    <div class="col card" *ngFor="let content of conteudos">
+      <div class="col card-header">
+        <img src="assets/playlistW.png" width="50" height="50">
+      </div>
+      <div class="col">
+        {{content.nome}}<br>
+        {{content.dataType}}
+      </div>
+      <div class="justify-content-center align-items-center">
+        <button class="btn btn-outline-primary" (click)="play(content.url, content.dataType)">Play</button><br>
+        <button class="btn btn-outline-danger" (click)="apagarConteudo(content.nome)">Apagar</button>
+      </div>
+    </div>
+  </div>
+</div>

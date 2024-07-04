@@ -8,34 +8,36 @@
     </div>
 
     <section class="col" *ngFor="let playlist of playlists">
-      <a [routerLink]="['playlist/'+playlist.id]">
-          <section class="Playlists-Displays-Cards">
-              <article class="Card">
-                <div class="Card-image">
-                  <img src="assets/playlistW.png" class="img-fluid" alt="Imagem 1">
-                </div>
+      <section class="Playlists-Displays-Cards">
+        <a [routerLink]="['playlist/'+playlist.id]">
+          <article class="Card">
+            <div class="Card-image">
+              <img src="assets/playlistW.png" class="img-fluid" alt="Imagem 1">
+            </div>
 
-                <div class="Card-details-playlist">
-                  <article class="detail-titulo">
-                    <span>{{playlist.titulo}}</span>
-                  </article>
-
-                  <article class="detail-conteudo ">
-                    <span>musicas/videos: {{playlist.conteudos.length}}</span>
-                  </article>
-                </div>
-
+            <div class="Card-details-playlist">
+              <article class="detail-titulo">
+                <span>{{playlist.titulo}}</span>
               </article>
 
-                <article class="details-Creator">
-                  <span>Criada por: {{playlist.owner.nome}}</span><br>
-                  <div *ngIf="playlist.owner.username==username">
-                    <button class="btn btn-outline-danger m-2">Apagar</button>
-                    <button class="btn btn-outline-primary m-2">Atualizar</button>
-                  </div>
-                </article>
-          </section>
-      </a>
+              <article class="detail-conteudo ">
+                <span>musicas/videos: {{playlist.conteudos.length}}</span>
+              </article>
+            </div>
+
+          </article>
+
+            <article class="details-Creator">
+              <span>Criada por: {{playlist.owner.nome}}</span><br>
+            </article>
+        </a>
+          <article>
+            <div *ngIf="playlist.owner.username.toLowerCase()==username.toLowerCase()">
+              <button (click)="apagarPlaylist(playlist.id)" class="btn btn-outline-danger m-2">Apagar</button>
+              <button class="btn btn-outline-primary m-2">Atualizar</button>
+            </div>
+          </article>
+      </section>
     </section>
   </section>
 

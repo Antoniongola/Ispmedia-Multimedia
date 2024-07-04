@@ -60,7 +60,7 @@
       <section class="card-playlist" *ngFor="let conteudo of playlist.conteudos">
         <a [routerLink]="['play/'+conteudo.id]">
           <article class="icon-titlePlaylist" (click)="playMedia(conteudo)">
-            <img ngSrc="assets/playlistW.png" class="icon-playlist" alt="" height="512" width="512">
+            <img [src]="imgSrcs[conteudo.id]" class="icon-playlist" alt="" height="512" width="512">
             <p>{{conteudo.titulo}}</p>
           </article>
         </a>
