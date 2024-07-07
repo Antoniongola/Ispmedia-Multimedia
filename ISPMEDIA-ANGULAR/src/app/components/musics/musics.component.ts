@@ -60,7 +60,6 @@ export class MusicsComponent implements OnInit{
   }
 
   addToPlaylist(playlistId:any, musica:Musica){
-    console.log('teste da múzca: '+musica.id);
     this.playlisService.addMusicToPlaylist(playlistId, musica).subscribe(response=>{
       alert(response.response);
     }, error=>{

@@ -10,9 +10,9 @@
         {{notificacao.descricao}}
       </div>
 
-      <!--<div class="Notify-Status" >
-        <p>{{notificacao.estadoEntregaNotificacao}}</p>
-      </div>!-->
+      <div class="Notify-Status" *ngIf="notificacao.tipoNotificacao.toString()==='PEDIDONOVOGRUPO'">
+        <p>{{notificacao.tipoNotificacao}}</p>
+      </div>
 
       <!--<div class="btn-acceptReject">
         <button class="btn  m-2">Aceitar</button>
@@ -32,7 +32,7 @@
         Estado do convite: {{convite.estadoConvite}}
       </div>
 
-      <div class=" btn-acceptReject" *ngIf="convite.estadoConvite==estadoConvite.PENDENTE">
+      <div class=" btn-acceptReject" *ngIf="isPending(convite)">
         <button class="btn m-2" (click)="responderConvite(convite.id, 1)">Aceitar</button>
         <button class="btn" (click)="responderConvite(convite.id, -1)">Rejeitar</button>
       </div>

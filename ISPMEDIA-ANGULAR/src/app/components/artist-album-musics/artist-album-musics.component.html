@@ -43,7 +43,7 @@
         </section>
       </section>
 
-      <section class="col AvaliationForm-Reviews">
+      <section class="col AvaliationForm-Reviews" *ngIf="!hasCommented">
         <form [formGroup]="criticaForm" (submit)="onSubmit()">
           <label for="nota">Nota:</label><br>
           <select id="nota" formControlName="nota">

@@ -8,7 +8,8 @@ public enum TipoNotificacao {
     RECUSOUSERADICIONADONOGRUPO(4),
     EDITORGRUPO(5),
     OWNERGRUPO(6),
-    PARTICIPANTEGRUPO(7);
+    PARTICIPANTEGRUPO(7),
+    PEDIDONOVOGRUPO(8);
 
     private final int value;
 

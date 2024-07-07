@@ -4,6 +4,7 @@ import {GrupoConvite} from "../../entities/GrupoConvite";
 import {Response} from "../../entities/Response";
 import {Observable} from "rxjs";
 import {GrupoConviteDto} from "../../dtos/GrupoConviteDto";
+import {PedidoGrupoDto} from "../../dtos/PedidoGrupoDto";
 
 
 
@@ -23,6 +24,13 @@ export class GrupoConviteService {
     return this.http.post<Response>(`${this.apiUrl}`, convite, {headers});
   }
 
+  pedirEntarNoGrupo(convite: GrupoConvite, grupoId: any): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.post<Response>(`${this.apiUrl}/${grupoId}`, convite, { headers });
+  }
+
   userConvite(username: string): Observable<GrupoConvite[]> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
@@ -36,5 +44,12 @@ export class GrupoConviteService {
       'Authorization': `Bearer ${this.token}`
     });
     return this.http.put<Response>(`${this.apiUrl}/${dto.conviteId}`, dto,{headers});
+  }
+
+  responderPedido(grupoConvite: string, dto: PedidoGrupoDto): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    return this.http.put<Response>(`${this.apiUrl}/${grupoConvite}/pedido`, dto, { headers });
   }
 }

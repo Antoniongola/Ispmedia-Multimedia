@@ -28,19 +28,6 @@ public class Utilizador {
     @CurrentTimestamp
     @Column(updatable = false)
     private LocalDateTime createdDate;
-    /*
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonManagedReference(value = "utilizador-playlist")
-    private List<Playlist> playlists=new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_grupos",
-            joinColumns = @JoinColumn(name = "utilizador_username"),
-            inverseJoinColumns = @JoinColumn(name = "grupo")
-    )
-    private List<Grupo> grupos = new ArrayList<>();
-    */
     private boolean isOnline=false;
 
 }

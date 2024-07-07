@@ -1,1 +1,43 @@
-<p>radios works!</p>
+<section class="container">
+
+  <div  class="row ">
+    <div class="mb-4">
+      <button class="btn btn-outline-dark m-2"><a href="#angolaSection">Angola</a></button>
+      <button class="btn btn-outline-dark m-2"><a [routerLink]="['#portugalSection']">Portugal</a></button>
+    </div>
+    <h2 #angolaSection id="angolaSection">Angola</h2>
+    <div class="col m-1" *ngFor="let radio of angola" (click)="play(radio)">
+      <div class="card-img">
+        <img class="card-img" [src]="[radio.thumbNailUri]">
+      </div>
+      <div class="card-header text-center">
+        <span>{{radio.titulo}}</span>
+      </div>
+    </div>
+    <h2 #portugalSection id="portugalSection">Portugal</h2>
+    <div class="col m-1" *ngFor="let radio of portugal" (click)="play(radio)">
+      <div class="card-img">
+        <img class="card-img" [src]="[radio.thumbNailUri]">
+      </div>
+      <div class="card-header text-center">
+        <span>{{radio.titulo}}</span>
+      </div>
+    </div>
+    <h2 #usaSection id="usaSection">USA</h2>
+    <div class="col m-1" *ngFor="let radio of steide" (click)="play(radio)">
+      <div class="card-img">
+        <img class="card-img" [src]="[radio.thumbNailUri]">
+      </div>
+      <div class="card-header text-center">
+        <span>{{radio.titulo}}</span>
+      </div>
+    </div>
+
+  </div>
+  <section class="row">
+    <audio [src]="radioUri" controls>
+
+    </audio>
+  </section>
+</section>
+

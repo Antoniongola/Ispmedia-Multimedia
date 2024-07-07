@@ -35,26 +35,5 @@ public class AdminConfig implements CommandLineRunner {
             repository.save(admin);
         }
 
-        for(Musica musica:musicaRepo.findAll()){
-            System.out.println("Música: "+musica.getTitulo()+", Artista da música: "+musica.getArtista().getTitulo());
-        }
-
-        /*
-        for(Conteudo content: conteudos){
-            if(content.getCriadorConteudo()==null){
-                //se não tiver um criador do connteúdo, atribuir ao adminisrador do sistema.
-                Utilizador owner = this.repository.findById("A3SNT@isptec.co.ao").get();
-                content.setCriadorConteudo(owner);
-                conteudoRepo.save(content);
-            }
-            if(musicaRepo.findById(content.getId()).isPresent()){
-                content.setDataType("musica");
-                conteudoRepo.save(content);
-            }else if(videoRepo.findById(content.getId()).isPresent()){
-                content.setDataType("video");
-                conteudoRepo.save(content);
-            }
-
-        }*/
     }
 }

@@ -42,7 +42,7 @@ export class ArtistCreationComponent implements OnInit{
     })
 
     this.artistForm = this.fb.group({
-      titulo:['', Validators.required],
+      nome:['', Validators.required],
       editora:[''],
       descricao:[''],
       genero:[''],
@@ -64,16 +64,14 @@ export class ArtistCreationComponent implements OnInit{
       const genero : Genero = new Genero();
       genero.id = this.artistForm.get('genero')?.value;
 
-      const artista : Artista = new Artista('', this.artistForm.get('titulo')?.value,'',
+      const artista : Artista = new Artista('', this.artistForm.get('nome')?.value,'',
         this.artistForm.get('descricao')?.value, genero, this.artistForm.get('editora')?.value, this.user,[],
         this.artistForm.get('anoInicioCarreira')?.value, this.artistForm.get('anoFimCarreira')?.value);
-      artista.titulo=this.artistForm.get('titulo')?.value;
 
       console.log("enviando o nome: "+artista.titulo);
       this.artistaService.addArtista(artista, this.artistImage).subscribe(response=>{
         alert("NOVO ARTISTA ADICIONADO COM SUCESSO");
         this.router.navigate(['/']);
-
       }, error=>{
         console.log('DEU ERRADO PIDIMOOOO: '+error);
       });

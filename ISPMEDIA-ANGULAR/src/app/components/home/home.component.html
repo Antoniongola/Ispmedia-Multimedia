@@ -49,19 +49,22 @@
       </div>
 
       <section class="col" *ngFor="let grupo of grupos">
-        <a [routerLink]="['group/'+grupo.id]">
           <section class="card-details-groups">
-
-            <article class="detailGroups-image">
-              <img src="assets/groupsW.png" class="iconGroups" alt="Imagem 1">
-            </article>
-
-            <article class="detailsGroup-conteudo">
-              <p class="class=detailsGroup-Name">Nome: {{grupo.nome}}</p>
-              <p class="detailsGroup-nUsers " >Participantes({{grupo.participantes.length}})</p>
-            </article>
+            <a [routerLink]="['group/'+grupo.id]">
+              <article class="detailGroups-image">
+                <img src="assets/groupsW.png" class="iconGroups" alt="Imagem 1">
+              </article>
+            </a>
+              <article class="detailsGroup-conteudo">
+                <a [routerLink]="['group/'+grupo.id]">
+                  <p class="class=detailsGroup-Name">Nome: {{grupo.nome}}</p>
+                  <p class="detailsGroup-nUsers " >Participantes({{grupo.participantes.length}})</p>
+                </a>
+                <div *ngIf="!isPartOfGroup(grupo, username) && !grupoRequest[grupo.id]">
+                  <button class="btn btn-outline-danger" (click)="pedirEntrarNoGrupo(grupo)">Pedir para entrar!</button>
+                </div>
+              </article>
           </section>
-        </a>
       </section>
     </section>
 

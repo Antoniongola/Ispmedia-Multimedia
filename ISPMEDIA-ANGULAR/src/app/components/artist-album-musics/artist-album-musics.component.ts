@@ -18,6 +18,7 @@ import {Genero} from "../../entities/Genero";
   styleUrl: './artist-album-musics.component.css'
 })
 export class ArtistAlbumMusicsComponent implements OnInit{
+  hasCommented:boolean=false;
   criticas:Critica[]=[];
   criticaForm!:FormGroup;
   album!:Album;
@@ -78,8 +79,10 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   mostrarCriticas(albumId:string){
     this.criticaService.getAlbumCriticas(albumId).subscribe(response=>{
       this.criticas = response;
-      console.log('criticas carregadas!!');
-      console.log('tamanho da lista de criticas: '+response.length)
+      this.criticas.forEach(critica=>{
+        if(critica.critico.username.toLowerCase()==this.criticoUsername.toLowerCase())
+          this.hasCommented=true;
+      })
     }, error=>{
       console.log("erro nas criticas!!");
     })

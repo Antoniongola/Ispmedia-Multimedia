@@ -1,6 +1,7 @@
 package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.GrupoConviteDto;
+import com.ngolajr.ispmedia.dtos.PedidoGrupoDto;
 import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.*;
 import com.ngolajr.ispmedia.entities.enums.EstadoConvite;
@@ -38,6 +39,31 @@ public class GrupoConviteService {
         notificacao.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
         notificacaoRepository.save(notificacao);
         return ResponseEntity.ok(new Response("CONVITE CRIADO COM SUCESSO PARA "+convite.getConvidado().getNome()));
+    }
+
+    public ResponseEntity<Response> pedirPraEntrarGrupo(GrupoConvite convite, Grupo grupo){
+        boolean hasRequested=false;
+        Utilizador user = convite.getAnfitriao();
+        convite.setConvidado(null);
+        repository.save(convite);
+        for(Participante participante:grupo.getParticipantes()){
+            if(participante.getTipo()==TipoParticipante.OWNER){
+                /*
+                if(!hasRequested){
+                    repository.save(convite);
+                    hasRequested=true;
+                }
+                */
+                Notificacao notificacao = new Notificacao();
+                notificacao.setTipoNotificacao(TipoNotificacao.PEDIDONOVOGRUPO);
+                notificacao.setDescricao(user.getNome()+" Pediu-te para fazer parte do grupo: <"+convite.getGrupo().getNome()+">");
+                notificacao.setEmissor(user);
+                notificacao.setDestinatario(participante.getUser());
+                notificacao.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
+                notificacaoRepository.save(notificacao);
+            }
+        }
+        return ResponseEntity.ok(new Response("PEDIDO CRIADO COM SUCESSO PARA ENTRAR NO GRUPO: "+convite.getGrupo().getNome()));
     }
 
     //se a resposta for 1 então aceitou, se for -1 então negou.
@@ -87,6 +113,53 @@ public class GrupoConviteService {
 
         }
 
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("GRUPO NÃO ENCONTRADO!"));
+    }
+
+    public ResponseEntity<Response> responderPedidoGrupoUser(PedidoGrupoDto dto){
+
+        if(this.repository.findById(dto.conviteId()).isEmpty()){
+            return ResponseEntity.status(400).body(new Response("GRUPO NÃO EXISTENTE!!"));
+        }
+        GrupoConvite grupoConvite = repository.findById(dto.conviteId()).get();
+        long idGrupo = grupoConvite.getGrupo().getId();
+        String convidado = dto.quemPdiu();
+        String anfitriao = dto.quemRespondeu();
+        if(grupoRepository.findById(idGrupo).isPresent()){
+            Grupo grupo = grupoRepository.findById(idGrupo).get();
+            if(userRepo.findById(convidado).isEmpty()){
+                return ResponseEntity.status(400).body(new Response("ERRO, UTILIZADOR NÃO ENCONTRADO!"));
+            }
+            Utilizador user = userRepo.findById(convidado).get();
+            Utilizador chefe = userRepo.findById(anfitriao).get();
+            Notificacao notificacao = new Notificacao();
+            notificacao.setEmissor(chefe);
+            notificacao.setDestinatario(user);
+            if(dto.resposta() == 1) {
+                Participante participante = new Participante();
+                participante.setUser(user);
+                participante.setTipo(TipoParticipante.PARTICIPANTE);
+                participante.setGrupo(grupo);
+                List<Participante> participantes = grupo.getParticipantes();
+                participantes.add(participante);
+                grupo.setParticipantes(participantes);
+                grupoConvite.setEstadoConvite(EstadoConvite.ACEITE);
+                notificacao.setTipoNotificacao(TipoNotificacao.ACEITOUSERADICIONADONOGRUPO);
+                notificacao.setDescricao(chefe.getNome()+" aceitou o seu pedido para ser adicionado ao grupo!");
+                repository.save(grupoConvite);
+                grupoRepository.save(grupo);
+                notificacaoRepository.save(notificacao);
+                return ResponseEntity.ok(new Response("PEDIDO ACEITE COM SUCESSO!"));
+            }else{
+                grupoConvite.setEstadoConvite(EstadoConvite.RECUSADO);
+                notificacao.setTipoNotificacao(TipoNotificacao.RECUSOUSERADICIONADONOGRUPO);
+                notificacao.setDescricao(chefe.getNome()+" recusou o seu pedido para ser adicionado ao grupo!");
+                repository.save(grupoConvite);
+                grupoRepository.save(grupo);
+                notificacaoRepository.save(notificacao);
+                return ResponseEntity.ok(new Response("PEDIDO RECUSADO COM SUCESSO!"));
+            }
+        }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("GRUPO NÃO ENCONTRADO!"));
     }
 
