@@ -34,6 +34,7 @@ import { PlaylistContentComponent } from './components/playlist-content/playlist
 import { GroupContentComponent } from './components/group-content/group-content.component';
 import {NgOptimizedImage} from "@angular/common";
 import { OfflineContentComponent } from './components/offline-content/offline-content.component';
+import { LongPollingNewsComponent } from './components/long-polling-news/long-polling-news.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { OfflineContentComponent } from './components/offline-content/offline-co
     UsersComponent,
     PlaylistContentComponent,
     GroupContentComponent,
-    OfflineContentComponent
+    OfflineContentComponent,
+    LongPollingNewsComponent
   ],
   imports: [
     BrowserModule,

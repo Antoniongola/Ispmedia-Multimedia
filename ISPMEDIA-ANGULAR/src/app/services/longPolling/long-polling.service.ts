@@ -9,7 +9,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class LongPollingService {
 
-  private notificationsUrl = 'http://localhost:8080/notifications';
+  private notificationsUrl = 'http://localhost:8080/api/notifications';
 
   constructor(private http: HttpClient) { }
 
@@ -17,19 +17,17 @@ export class LongPollingService {
     return this.http.get(this.notificationsUrl+`/${username}`, { responseType: 'text' });
   }
 
-  longPollNotifications(username:string) {
+  longPollNotifications(username: string, callback: (notification: string) => void) {
     this.getNotifications(username).subscribe(
       (notification) => {
-        console.log('Notification received: ', notification);
-        // Aqui você pode adicionar lógica para tratar a notificação recebida
-
+        callback(notification);
         // Recomeçar o long polling
-        this.longPollNotifications(username);
+        this.longPollNotifications(username, callback);
       },
       (error) => {
         console.error('Error in long polling', error);
         // Adicionar lógica de tratamento de erros e, opcionalmente, recomeçar o polling após um tempo
-        setTimeout(() => this.longPollNotifications(username), 5000);
+        setTimeout(() => this.longPollNotifications(username, callback), 5000);
       }
     );
   }
