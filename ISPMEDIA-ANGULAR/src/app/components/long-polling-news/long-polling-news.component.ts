@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LongPollingService} from "../../services/longPolling/long-polling.service";
+import {LoginServiceService} from "../../services/login/login-service.service";
 
 @Component({
   selector: 'app-long-polling-news',
@@ -9,13 +10,17 @@ import {LongPollingService} from "../../services/longPolling/long-polling.servic
 export class LongPollingNewsComponent implements OnInit {
 
   notifications: string[] = [];
-  username: string = 'someUsername'; // Substitua pelo nome de usuário real
+  username: any = ''; // Substitua pelo nome de usuário real
 
-  constructor(private notificationService: LongPollingService) { }
+  constructor(private notificationService: LongPollingService,
+              private loginApi:LoginServiceService) { }
 
   ngOnInit() {
+    this.notifications=[];
+    this.username=this.loginApi.getUsername();
     this.notificationService.longPollNotifications(this.username, (notification) => {
-      this.notifications.push(notification);
+      if(!this.notifications.includes(notification))
+        this.notifications.push(notification);
     });
   }
 }

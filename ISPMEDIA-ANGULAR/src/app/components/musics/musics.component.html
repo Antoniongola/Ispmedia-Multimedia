@@ -1,4 +1,5 @@
 <div class="row ">
+  <app-long-polling-news></app-long-polling-news>
   <div class="col m-2" *ngFor="let music of musicas">
     <div class="card" (click)="playMusic(music)">
       <a [routerLink]="[music.id]">
