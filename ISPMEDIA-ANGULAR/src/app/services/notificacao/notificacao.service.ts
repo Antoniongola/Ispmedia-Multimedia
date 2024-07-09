@@ -7,7 +7,7 @@ import {Notificacao} from "../../entities/Notificacao";
   providedIn: 'root'
 })
 export class NotificacaoService {
-  private apiUrl = 'http://localhost:8080/api/notificacao';  // Base URL for the API
+  private apiUrl = 'https://localhost:8443/api/notificacao';  // Base URL for the API
 
   constructor(private http: HttpClient) { }
 

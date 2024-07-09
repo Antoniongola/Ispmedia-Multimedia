@@ -8,7 +8,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   providedIn: 'root'
 })
 export class VideoService {
-  private apiUrl = `http://localhost:8080/api/video`;
+  private apiUrl = `https://localhost:8443/api/video`;
   token:any=localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient,

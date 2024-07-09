@@ -10,7 +10,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   providedIn: 'root'
 })
 export class ArtistaService {
-  private apiUrl:string = "http://localhost:8080/api/conteudo/artista";
+  private apiUrl:string = "https://localhost:8443/api/conteudo/artista";
   private token = this.loginService.getToken();
 
   constructor(private http: HttpClient,

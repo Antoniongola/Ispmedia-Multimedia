@@ -9,7 +9,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class LongPollingService {
 
-  private notificationsUrl = 'http://localhost:8080/api/notifications';
+  private notificationsUrl = 'https://localhost:8443/api/notifications';
 
   constructor(private http: HttpClient) { }
 

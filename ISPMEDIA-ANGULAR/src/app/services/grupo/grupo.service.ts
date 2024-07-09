@@ -10,7 +10,7 @@ import {Musica} from "../../entities/Musica";
   providedIn: 'root'
 })
 export class GrupoService {
-  private baseUrl = 'http://localhost:8080/api/grupo';
+  private baseUrl = 'https://localhost:8443/api/grupo';
   token=localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient) { }

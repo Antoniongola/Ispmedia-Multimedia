@@ -10,7 +10,7 @@ import {SignupResponse} from "../../dtos/SignupResponse";
   providedIn: 'root'
 })
 export class SignupService {
-  private apiUrl:string = "http://localhost:8080/api/signup";
+  private apiUrl:string = "https://localhost:8443/api/signup";
   constructor(private http: HttpClient) { }
 
   cadastrar(signup: SignupDto): Observable<SignupResponse> {

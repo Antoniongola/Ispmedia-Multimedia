@@ -76,7 +76,12 @@
               "buildTarget": "ISPMEDIA-ANGULAR:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "ssl": true,
+            "sslKey": "src/app/server.key",
+            "sslCert": "src/app/server.crt"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

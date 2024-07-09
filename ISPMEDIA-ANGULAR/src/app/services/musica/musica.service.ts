@@ -8,7 +8,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   providedIn: 'root'
 })
 export class MusicaService {
-  private apiUrl = 'http://localhost:8080/api/musica';
+  private apiUrl = 'https://localhost:8443/api/musica';
 
   constructor(private http: HttpClient,
               private sanitizer: DomSanitizer) { }

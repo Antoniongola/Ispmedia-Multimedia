@@ -7,7 +7,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class CriticaService {
-  apiUrl='http://localhost:8080/api/critica';
+  apiUrl='https://localhost:8443/api/critica';
   token=localStorage.getItem('jwtToken');
   constructor(private http:HttpClient) {  }
 

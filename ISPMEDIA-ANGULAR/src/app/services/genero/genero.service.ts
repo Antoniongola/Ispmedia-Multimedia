@@ -8,7 +8,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class GeneroService {
-  url:string="http://localhost:8080/api/genero";
+  url:string="https://localhost:8443/api/genero";
   token=localStorage.getItem('jwtToken');
   constructor(private http: HttpClient) { }
 

@@ -11,7 +11,7 @@ import {UserService} from "../user/user.service";
   providedIn: 'root'
 })
 export class LoginServiceService {
-  private apiUrl:string = "http://localhost:8080/api/login";
+  private apiUrl:string = "https://localhost:8443/api/login";
   user!:User;
   username:any ='';
   constructor(private http: HttpClient,

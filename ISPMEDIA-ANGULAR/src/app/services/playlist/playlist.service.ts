@@ -10,7 +10,7 @@ import {Video} from "../../entities/Video";
   providedIn: 'root'
 })
 export class PlaylistService {
-  private baseUrl = 'http://localhost:8080/api/playlist';
+  private baseUrl = 'https://localhost:8443/api/playlist';
   token = localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient) { }

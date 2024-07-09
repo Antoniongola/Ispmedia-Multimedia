@@ -8,7 +8,7 @@ import {ParticipanteDto} from "../../dtos/ParticipanteDto";
   providedIn: 'root'
 })
 export class ParticipanteService {
-  private baseUrl = 'http://localhost:8080/api/participante';
+  private baseUrl = 'https://localhost:8443/api/participante';
   token = localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient) { }

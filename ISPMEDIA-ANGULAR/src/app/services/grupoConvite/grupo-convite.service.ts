@@ -12,7 +12,7 @@ import {PedidoGrupoDto} from "../../dtos/PedidoGrupoDto";
   providedIn: 'root'
 })
 export class GrupoConviteService {
-  private apiUrl = 'http://localhost:8080/api/convite';  // Base URL for the API
+  private apiUrl = 'https://localhost:8443/api/convite';  // Base URL for the API
   token=localStorage.getItem('jwtToken');
   constructor(private http: HttpClient) { }
 
