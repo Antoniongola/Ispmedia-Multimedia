@@ -9,7 +9,7 @@ import {Artista} from "../../entities/Artista";
   providedIn: 'root'
 })
 export class AlbumService {
-  apiUri:string = "https://localhost:8443/api/conteudo/album";
+  apiUri:string = "http://localhost:8080/api/conteudo/album";
   token=localStorage.getItem('jwtToken');
 
   constructor(private http:HttpClient,

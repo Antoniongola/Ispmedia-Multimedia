@@ -32,7 +32,18 @@
   justify-content: center;
   align-items: center;
 }
-
+.ImageIconInvite{
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+.InviteDetails{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .btn-acceptReject button:nth-child(1){
   background-color: white;
   color: #121212;

@@ -1,13 +1,134 @@
+/* Estilos gerais para os cards de música */
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.card-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-header {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 10px;
+}
+
+/* Estilos para o dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  background-color: #ffffff; /* Cor de fundo do menu principal */
+  border: 1px solid #cccccc; /* Borda do menu */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+  padding: 10px 0; /* Espaçamento interno */
+}
+
 .dropdown-submenu {
   position: relative;
 }
 
 .dropdown-submenu .dropdown-menu {
+  position: absolute;
   top: 0;
   left: 100%;
   margin-top: -1px;
+  background-color: #ffffff; /* Cor de fundo do submenu */
+  border: 1px solid #cccccc; /* Borda do submenu */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
 .dropdown-submenu:hover .dropdown-menu {
-  display: block;
+  display: block; /* Exibe o submenu ao passar o mouse */
+}
+
+.dropdown-item {
+  color: #333333; /* Cor do texto dos itens */
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+}
+
+.dropdown-toggle::after {
+  display: inline-block;
+  margin-left: .255em;
+  vertical-align: .255em;
+  content: "";
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-bottom: 0;
+  border-left: .3em solid transparent;
+}
+.controlsMusica {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audio-player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background-color: #eee;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #007bff;
+}
+
+.current-time, .duration {
+  margin-top: 5px;
+}
+
+.btnControlsAux {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.btnControlsAux button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #007bff;
+  margin: 0 10px;
+}
+
+.btnControlsAux button:hover {
+  color: #0056b3;
+}
+
+.playedSound {
+  width: 30px;
+  margin-top: 10px;
 }

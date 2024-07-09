@@ -28,9 +28,14 @@
   <div class="invites-card">
     <div class="Invites">
       <div class="Invites-Message">
+
+        <div class="ImageIconInvite">
         <img src="assets/invites.png" alt="invites icon">
-        {{convite.anfitriao.nome}} convidou você para o grupo: {{convite.grupo.nome}}<br>
-        Estado do convite: {{convite.estadoConvite}}
+        </div>
+        <div class="InviteDetails">
+          {{convite.anfitriao.nome}} convidou você para o grupo: {{convite.grupo.nome}}<br>
+          Estado do convite: {{convite.estadoConvite}}
+        </div>
       </div>
 
       <div class=" btn-acceptReject" *ngIf="isPending(convite)">

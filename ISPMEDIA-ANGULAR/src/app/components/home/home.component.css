@@ -32,7 +32,7 @@
   text-transform: capitalize;
   background-color: #fff;
   border:none;
-  box-shadow: 0px 0px 10px  #dc3545;
+  box-shadow: 0 0 10px  #dc3545;
 }
 .Conteiner-Home button:hover{
   color: #fff;

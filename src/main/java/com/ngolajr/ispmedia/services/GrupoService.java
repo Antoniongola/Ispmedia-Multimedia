@@ -68,11 +68,15 @@ public class GrupoService {
         List<Grupo> grupos = new ArrayList<>();
         if(userRepo.findById(username).isPresent()){
             Utilizador user = userRepo.findById(username).get();
+            System.out.println("chega aqui");
             for(Grupo grupo: repository.findAll())
                 for(Participante participante:grupo.getParticipantes()){
-                    if(participante.getUser().getUsername().equals(username) &&
-                            (participante.getTipo()==TipoParticipante.EDITOR || participante.getTipo()==TipoParticipante.OWNER)) {
+                    System.out.println("chega nos participantes, USERNAME: "+participante.getUser());
+                    System.out.println("role: "+participante.getTipo());
+                    if(participante.getUser().getUsername().equalsIgnoreCase(username) &&
+                            (participante.getTipo().toString().equalsIgnoreCase("EDITOR") || participante.getTipo().toString().equalsIgnoreCase("OWNER"))) {
                         grupos.add(grupo);
+                        System.out.println("chegou no participante: "+participante.getUser().getNome());
                         break;
                     }
                 }

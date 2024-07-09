@@ -12,11 +12,14 @@ export class NavbarComponent implements OnInit{
   isEditor:boolean=false;
   constructor(private loginService:LoginServiceService) {
   }
+  menuAberto = false;
 
   ngOnInit() {
 
   }
-
+  toggleMenu() {
+    this.menuAberto = !this.menuAberto;
+  }
   logOut(){
     this.isEditor=false;
     this.loginService.logOut();
