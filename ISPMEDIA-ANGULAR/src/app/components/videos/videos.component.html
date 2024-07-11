@@ -1,29 +1,61 @@
-<div class="row-cols-2">
-  <app-long-polling-news></app-long-polling-news>
-  <section class="row">
-    <div class="row card" *ngFor="let video of videos">
-      <div class="card-img">
-        <img *ngIf="videoThumbs[video.id]" [src]="videoThumbs[video.id]" alt="{{video.titulo}}">
-      </div>
-      <div class="card-heade text-center">
-        <p>{{video.titulo}}</p>
-      </div>
-      <div class="card-body">
-        <p>{{video.descricao}}</p>
-        <p>Criado por:{{video.criadorConteudo.nome}}</p>
-        <button class="text-center btn btn-outline-primary" (click)="playVideo(video.id)">Play video</button>
-      </div>
-    </div>
-  </section>
+<app-long-polling-news></app-long-polling-news>
+<main class="ReprodutorVideos">
 
   <!-- Reprodutor do vídeo -->
-  <section class="col">
-    <div *ngIf="videoPlaying">
-      <h2>{{ videoPlaying.titulo }}</h2>
-      <video #videoPlayer controls>
+  <section class="Reprodutor" *ngIf="videoPlaying">
+    <div class="video">
+      <video #videoPlayer  (timeupdate)="updateTime(videoPlayer)">
         <source [src]="videoSrcs[videoPlaying.id]" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
+    <!-- Controles de Reprodução -->
+    <div class="controlesVideo">
+
+      <!-- Barra de Progressão -->
+      <div class="barraProgressao">
+        <input type="range" min="0" [max]="videoDuration" [(ngModel)]="currentVideoTime" (input)="seek(videoPlayer)">
+        <span>{{ formatTime(currentVideoTime) }} / {{ formatTime(videoDuration) }}</span>
+      </div>
+
+
+      <button class="mute-unmute" (click)="toggleMute()">
+        <i [class]="isMuted ? 'bi bi-volume-mute-fill': 'bi bi-volume-up-fill'"></i>
+      </button>
+      <button class="rewind" (click)="recuar()">
+        <i class="bi bi-skip-backward-fill"></i>
+      </button>
+
+      <button class="play-pause" (click)="togglePlayPause()">
+        <i [class]="isPlaying ? 'bi bi-pause-fill' : 'bi bi-play-fill'"></i>
+      </button>
+
+      <button class="rewind" (click)="avancar()">
+        <i class="bi bi-skip-forward-fill"></i>
+      </button>
+    </div>
+
+
+
+    <h2>{{ videoPlaying.titulo }}</h2>
   </section>
-</div>
+
+  <section class="VideoReproduzir">
+    <article class="videosDetails" *ngFor="let video of videos">
+      <div class="VideoThumbnail">
+        <img *ngIf="videoThumbs[video.id]" [src]="videoThumbs[video.id]" alt="{{video.titulo}}">
+      </div>
+      <article>
+      <div class="videoTitulo">
+        <p>{{video.titulo}}</p>
+      </div>
+
+      <div class="MoreDetailsVideo">
+        <p>{{video.descricao}}</p>
+        <p>Criado por:{{video.criadorConteudo.nome}}</p>
+        <button class="buttonplay" (click)="playVideo(video.id)">Play video</button>
+      </div>
+      </article>
+    </article>
+  </section>
+</main>

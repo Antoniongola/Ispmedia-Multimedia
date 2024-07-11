@@ -79,8 +79,8 @@
           "defaultConfiguration": "development",
           "options": {
             "ssl": true,
-            "sslKey": "src/app/server.key",
-            "sslCert": "src/app/server.crt"
+            "sslKey": "Certificado/anderson.key",
+            "sslCert": "Certificado/anderson.crt"
           }
         },
         "extract-i18n": {

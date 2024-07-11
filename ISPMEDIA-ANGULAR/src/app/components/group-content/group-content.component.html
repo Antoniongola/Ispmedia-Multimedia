@@ -1,19 +1,21 @@
-<div class="row">
-    <section class="col">
+<main class="conteinerGroup">
+    <section class="Participantes">
         <h2>Participantes do grupo</h2>
-        <div class="row m-2" *ngFor="let participante of participantes">
-            <div class="col-sm-2">
-              <img src="assets/user.png" width="50" height="50">
-            </div>
-            <div class="col">
-              <span>{{ participante.user.nome }}</span><br>
-              <span>{{participante.tipo}}</span>
-            </div>
-            <div class="col justify-content-center align-content-center align-items-center">
-              <div class="container mt-5">
+        <section class="" *ngFor="let participante of participantes">
+          <article class="DetailsParticipantesGroup">
+            <article class="imagemIconUser">
+              <img src="assets/icons8-user-50.png" >
+            </article>
+
+            <div class="detailsNameAndTypeUSer">
+              <span>{{ participante.user.nome }}</span>
+              <span>{{participante.tipo}}
+
+                <section class="">
+              <article class="">
                 <div *ngIf="isOwner && participante.user.username.toLowerCase()!=username.toLowerCase()" class="dropdown">
                   <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    ...
+                    Privilegiar
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" (click)="grupoActions(participante, 1)">Tornar owner</a>
@@ -21,18 +23,29 @@
                     <a class="dropdown-item">Remover</a>
                   </div>
                 </div>
-              </div>
+              </article>
+            </section>
+              </span>
             </div>
-        </div>
+          </article>
+        </section>
     </section>
-    <section class="col">
-        <h2>Conteudos do grupo <button *ngIf="isEditor || isOwner" (click)="open()" class="btn btn-dark">+</button></h2>
+    <section class="conteudoGroup">
+      <div>
+        <h2>Conteudos do grupo </h2>
+        <button  *ngIf="isEditor || isOwner" (click)="open()" class="btnAdicionarSomething">+</button>
+      </div>
     </section>
-    <section class="col">
+    <section class="playerDetails">
         <h2>Player e detalhes</h2>
     </section>
   <app-long-polling-news></app-long-polling-news>
-</div>
+</main>
+
+
+
+
+
 
 <!-- Modal pra introduzir conteúdos no grupo-->
 <div class="modal" tabindex="-1" role="dialog" *ngIf="isVisible">

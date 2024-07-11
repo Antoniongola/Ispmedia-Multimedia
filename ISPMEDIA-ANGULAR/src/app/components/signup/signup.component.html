@@ -1,4 +1,4 @@
-<div class="loginBackground">  <!--
+<main class="loginBackground">  <!--
  <div class="row loginNavbar">
     <div class="loginLogo">
       <span><img class="bg-white" src="assets/spotify.png"> Spotify</span>
@@ -6,8 +6,8 @@
   </div>
   -->
 
-  <div class="mainContent">
-    <div class="loginSection d-flex ">
+  <section class="mainContent">
+    <section class="loginSection d-flex ">
 
       <div class="col-md-5 rounded-4 justify-content-center " style="background: #121212" id="imagemStyle">
         <img src="assets/signup.png" class="img-fluid " id="homemLoginImagem">
@@ -31,7 +31,7 @@
               </div>
 
               <div>
-                <label class="loginFormLabel" for="username">Username</label>
+                <label class="loginFormLabel" for="username">Email</label>
                 <br>
                 <input id="username" placeholder="Insira o seu username" formControlName="username" type="text" class="custom-input">
               </div>
@@ -42,21 +42,17 @@
                 <input id="password" placeholder="Insira a sua senha" formControlName="password" type="password" class="custom-input">
               </div>
 
-              <button type="submit" class="text-center greenPrimary btn loginButton">Inicie Sessão</button>
+              <button type="submit" class="text-center greenPrimary btn loginButton">Criar conta</button>
             </div>
             <div class="text-center loginSignupArea">
               <span class="signupNow">Esqueceste-te da tua palavra-passe?</span>
             </div>
             <div class="text-center loginSignupArea">
-              <span class="customPlaceholder">Já tem conta? <a [routerLink]="['login']"><span class="signupNow">Entrar no SNT-ISPMEDIA</span></a></span>
+              <span class="customPlaceholder">Já tem conta? <a [routerLink]="['../login']"><span class="signupNow">Entrar no SNT-ISPMEDIA</span></a></span>
             </div>
           </form>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<!--<div class="text-center loginFooter">
-  <span class="customPlaceholder">Este site é protegido por reCAPTCHA. Aplicam-se a Política de Privacidade e os Termos do Serviço da Google.</span>
-</div>-->
->
+    </section>
+  </section>
+</main>

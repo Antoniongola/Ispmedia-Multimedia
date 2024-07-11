@@ -1,30 +1,73 @@
-<section class="row">
-  <app-long-polling-news></app-long-polling-news>
-  <h3>Olá, {{username}}</h3>
-  <div class="divider"></div>
-  <button class="btn btn-outline-danger" (click)="apagarTudo()">Apagar todos conteúdos offline</button>
-</section>
-<div class="row">
-  <div *ngIf="isPlaying" class="col">
-    <video *ngIf="mediaType=='video'" controls>
+<div class="titulos">
+  <h3> Ouvir Músicas Off-line</h3>
+</div>
+<main>
+  <article *ngIf="isPlaying && mediaType == 'video'" class="col">
+    <video controls>
       <source [src]="mediaUrl" type="video/mp4">
       Seu navegador não suporta o elemento de vídeo.
     </video>
-    <audio *ngIf="mediaType=='musica'" [src]="mediaUrl" controls></audio>
-  </div>
-  <div class="row">
-    <div class="col-sm-2 card " *ngFor="let content of conteudos">
-      <div class="col card-header">
-        <img src="assets/playlistW.png" width="50" height="50">
+  </article>
+
+  <article *ngIf="isPlaying && mediaType == 'musica'" class="controlsMusica">
+    <div class="audio-player">
+      <audio #audioElement [src]="mediaUrl"
+             (loadedmetadata)="onMetadataLoaded()"
+             (timeupdate)="onTimeUpdate()">
+      </audio>
+      <img [src]="isPlaying && 'assets/icons8-sound.gif'" class="playedSound">
+
+      <div class="progress-container" (click)="seek($event)">
+        <div class="progress-bar" [style.width.%]="progress"></div>
       </div>
-      <div class="col">
-        {{content.nome}}<br>
-        {{content.dataType}}
+      <span class="current-time">{{ formatTime(currentTime) }}</span> /
+      <span class="duration">{{ formatTime(duration) }}</span>
+
+      <div class="btnControlsAux">
+        <button class="mute-unmute" (click)="toggleMute()">
+          <i [class]="isMuted ? 'bi bi-volume-mute-fill': 'bi bi-volume-up-fill'"></i>
+        </button>
+        <button class="rewind" (click)="recuar()">
+          <i class="bi bi-skip-backward-fill"></i>
+        </button>
+
+        <button class="play-pause" (click)="togglePlayPause()">
+          <i class="bi bi-pause"></i>
+        </button>
+
+        <button class="rewind" (click)="avancar()">
+          <i class="bi bi-skip-forward-fill"></i>
+        </button>
       </div>
-      <div class="justify-content-center align-items-center">
-        <button class="btn btn-outline-primary" (click)="play(content.url, content.dataType)">Play</button><br>
-        <button class="btn btn-outline-danger" (click)="apagarConteudo(content.nome)">Apagar</button>
-      </div>
+
     </div>
-  </div>
-</div>
+
+  </article>
+
+  <section class="CardsMusicasOrVideo">
+    <article class="CardsDisplayed" *ngFor="let content of conteudos">
+      <article class="CardsDisplayed-ImageDescriptions">
+        <div class="Image">
+          <img src="assets/playlistW.png" alt="playlist icon branco">
+        </div>
+        <div class="detailsTypeAndName">
+          <p>{{content.nome}}</p>
+          <p>{{content.dataType}}</p>
+        </div>
+      </article>
+      <article class="ButtonsMusics">
+        <div class="buttons" (click)="play(content.url, content.dataType)">
+          <img src='assets/PlayW.png' alt="Play Icon">
+        </div>
+        <div class="buttons" (click)="apagarConteudo(content.nome)">
+          <img src="assets/trashW.png" alt="Trash Icon">
+        </div>
+      </article>
+    </article>
+  </section>
+
+  <section class="DeleteAll-Conteudos">
+    <app-long-polling-news></app-long-polling-news>
+    <button class="btn btn-outline-danger" (click)="apagarTudo()">Apagar todos conteúdos Offline</button>
+  </section>
+</main>

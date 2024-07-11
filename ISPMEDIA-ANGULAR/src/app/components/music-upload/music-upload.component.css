@@ -1,136 +1,190 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
-
-/* ESTILIZAÇÃO GERAL */
-
 *{
   margin: 0;
+  box-sizing: border-box;
   font-family: "Raleway", sans-serif ;
 }
 
-
+.CreatioConteinerMusic{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #dc3545;
+}
 .mainContent{
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-/*.criarAlbumBackground{
-  background-color:#dc3545;
-}*/
-
-
-.loginNavbar{
-  display:flex;
-  flex-direction: row;
-  margin-left: 10px;
-  width: auto;
-  height: 70px;
-  color:#dc3545;
-  font-size: 34px;
-  background-color: #121212;
-  img{
-    width: 60px;
-    height: 60px;
-  }
+.conteinerCreation{
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 4fr 4fr;
 }
-
-a{
-  text-decoration: none;
-}
-
-.loginSection{
-  width: 65%;
-  height: 650px;
-  border-radius: 15px;
-
+.FormSection{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 50px;
-  padding-top: 25PX;
-  position: relative;
-  z-index: 1; /* Coloca o conteúdo do formulário acima do cartão */
 }
-
-h2{
-  color: white;
-  position: relative;
-  z-index: 1; /* Coloca o conteúdo do formulário acima do cartão */
-
+.DescriptionForm{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
 }
-
-.loginTitulo{
-  padding-top: 25px;
-  padding-bottom: 10px;
-}
-
-.loginTitulo > span{
+.DescriptionForm-H2{
+  width: 100%;
+  text-align: center;
+  font-size: 30pt;
   font-weight: bold;
 }
-
-
-.loginSection > img{
-  width:50px;
-  height: 50px;
+.ElementsConteiner{
+  max-width: 100%;
+}
+.Form{
+  max-width: 100%;
+  padding: 30px;
+  margin: 10px;
 }
 
-/*-----------------------Estilização do titulo-------------------------------------*/
-
-
-span:hover{
-  color:#121212;
-  background-color: #dc3545;
-  transition: 0.5s;
+.ElementsForm-article{
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
 }
-
-
-/*-----------------------------------Estilização de Campos---------------------*/
-
-label{
-  color: white;
-}
-
-.custom-input {
-  width: 150%;
-  height: 40px;
-
-}
-
-.custom-select{
+.RadiosDescription{
   width: 100%;
-  height: 35px;
-  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.RadiosDescription small{
+  flex-direction: column;
+  justify-content: center;
+}
+.RadiosDescription span{
+  font-weight: bold;
+}
+.inputsAlbumsOrSingle{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+ .inputCheckBoxAlbum,.inputCheckBoxSingle{
+   display: flex;
+   align-items: center;
+   gap: 10px;
+ }
+ .ConterinerSelectParticipantes{
+   max-width: 100%;
+   max-height: 200px;
+   overflow-y: auto;
+   box-shadow:0 0 3px #242424;
+   padding: 20px;
+   border-radius: 5px;
+ }
+ .ConterinerSelectParticipantes label{
+   display: flex;
+   align-items: center;
+ }
+ .ParticipatesInputs{
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   margin-top: 15px;
+   gap: 20px;
+ }
+.AddPartcipantes-Artists{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.AddPartcipantes-Artists div{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.custom-textArea{
-  width: 150%;
-  height: 55px;
+.AddPartcipantes-Artists div:nth-child(2){
+  margin-top: 25px;
 }
 
-.custom-data{
-  width: 180%;
-  height: 45px;
-
+.ElementsForm-ficheiros{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+  margin-top: 15px;
 }
 
-.CriarAlbumsFormLabel{
-  color: white;
-  margin-top: 8px;
-  margin-bottom: 5px;
-
+.btnRemoveParticipante{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  background-color: #c31919;
+  box-shadow: 0 0 10px #fff;
+  margin: 0 20px;
+}
+.btnRemoveParticipante i{
+  color: #ffffff;
 }
 
-/*-------------------------------------------ESTILIZAÇÃO DO FOOTER-----------------------------------------------------*/
-.loginFooter{
-  font-size: 14px;
-  padding-top: 30px;
-  background-color: #121212;
-  padding-bottom: 30px;
+
+.conteinerImage{
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+}
+.conteinerImage div{
+  width: 600px;
+  height:600px;
+  background-color: #212529;
+  border-radius: 20px;
+}
+.conteinerImage div img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.customPlaceholder{
-  color:#e8e8e8;
+/* Estilizando o scrollbar para navegadores Webkit (Chrome, Safari) */
+.ConterinerSelectParticipantes::-webkit-scrollbar {
+  width: 12px;
 }
+
+.ConterinerSelectParticipantes::-webkit-scrollbar-track {
+  background:#dc3545 ; /* Cor do fundo do track */
+  border-radius: 5px; /* Cantos arredondados */
+}
+
+.ConterinerSelectParticipantes::-webkit-scrollbar-thumb {
+  background: #fff; /* Cor do thumb */
+  border-radius: 5px; /* Cantos arredondados */
+}
+
+.ConterinerSelectParticipantes::-webkit-scrollbar-thumb:hover {
+  background: #444444; /* Cor do thumb quando hover */
+}
+
+
+
+
+
+
 
 
 /*-----------------------------------imagem----------------------------------*/
@@ -144,52 +198,15 @@ label{
 
 /*---------------------------------ESTELIZÇÃO---------------------------------*/
 .customBTN{
-  position: relative;
-  right:60px;
-  bottom:20px;
-}
-
-.CustomBUTADDREM{
-  background: none;
-}
-
-/*-----------------------Estilização dos bottões-------------------------------------*/
-
-.networkButons {
-  i {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    bottom: 8px;
-  }
-}
-
-.networkButons{
-  width: 30px;
-  height: 30px;
-  border: 2px solid #121212;
-  border-radius: 50%;
-  background-color: #c31919;
+  width: 50%;
+  border:1px solid #fff;
   color: white;
+  transition: all 0.3s linear;
+}
+.customBTN:hover{
+  background-color: #fff;
+  color: #dc3545;
+  font-weight: bold;
 }
 
-.networkButons:hover{
-  background-color: #121212;
-  transition: 0.5s;
-  /*color: rgba(255, 255, 255, 0.34); transparente*/
-}
-
-.background-card {
-  position: absolute;
-  top: 150px; /* Ajuste conforme necessário */
-  left: 15%;
-  transform: translateX(-50%);
-  width: 75%;
-  height: 65%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.96); /* Sombra para dar efeito de elevação */
-  border-radius: 10px; /* Bordas arredondadas */
-  z-index: 0; /* Coloca o cartão atrás do formulário */
-  color: rgba(0, 0, 0, 0.5);
-}
 

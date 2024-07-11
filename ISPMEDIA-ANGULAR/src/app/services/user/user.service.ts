@@ -9,7 +9,7 @@ import {LoginServiceService} from "../login/login-service.service";
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://localhost:8443/api';  // Altere para a URL correta do seu backend
+  private apiUrl = 'http://localhost:8080/api';  // Altere para a URL correta do seu backend
   token:any;
 
   constructor(private http: HttpClient, private loginService:LoginServiceService) {

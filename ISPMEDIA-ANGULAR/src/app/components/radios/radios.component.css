@@ -1,0 +1,157 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1{
+  max-width: 100%;
+  margin: 20px 20px;
+  text-align: center;
+  font-size: 35px;
+  font-weight: bolder;
+  text-transform: uppercase;
+}
+.containerRadios{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.sectionBtns{
+ width: 100%;
+
+}
+.BTNPAISES{
+  max-width: 100%;
+  margin:30px 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+
+
+}
+.BTNPAISES button{
+  width: 200px;
+  padding: 8px;
+  border:1px solid #dc3545;
+  border-radius: 5px;
+  background-color: transparent;
+
+}
+.BTNPAISES button:hover{
+  background-color: #444444;
+}
+.BTNPAISES button a{
+  color: #fff;
+}
+h2{
+  max-width: 100%;
+  margin: 30px 0;
+  font-size: 30px;
+  font-weight: bolder;
+  background-color: #dc3545;
+  padding: 12px;
+  text-transform: uppercase;
+}
+.RadiosAngola-conteiner,.RadiosPortugal-conteiner,.RadiosUSA-conteiner{
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  gap:20px;
+}
+.AllRadiosAngola,.AllRadiosPortugal,.AllRadiosUSA{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/*Radio A Tocar*/
+
+
+
+.RadioImag{
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ border: 1px solid #fff;
+  border-radius: 20px;
+  transition: all 0.2s linear;
+}
+.RadioImag:hover{
+  box-shadow: 0 0 5px #fff;
+}
+.RadioImag .imag{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+}
+
+.RadiosNomes{
+  font-weight: bold;
+  color: #dc3545;
+  font-size: 20pt;
+  margin:20px 0;
+
+  padding: 5px;
+}
+
+.audio-controls {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 350px;
+  padding: 20px;
+  background-color: #242424;
+  border-radius: 20px;
+  box-shadow: 0 0 10px #dc3545;
+}
+
+.play-pause, .mute-unmute, .rewind, .repeat {
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  cursor: pointer;
+  margin: 0 5px;
+  color: #dc3545;
+  border-radius: 50%;
+  border: none;
+}
+.play-pause:hover, .mute-unmute:hover, .rewind:hover, .repeat:hover{
+  color: #ffff;
+  background: #dc3545;
+}
+
+
+.progress-container {
+  width: 300px;
+  height: 10px;
+  background: #dc3545;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #007bff;
+  width: 0;
+}
+.volume-slider {
+  width: 100px;
+  margin: 0 10px;
+}
+
