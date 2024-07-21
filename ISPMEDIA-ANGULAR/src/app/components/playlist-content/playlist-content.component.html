@@ -5,8 +5,7 @@
     <audio *ngIf="isMusic" [src]="srcs[mediaId]" controls>
     </audio>
     <video *ngIf="isVideo" class="midias-display" #videoPlayer controls>
-      <source [src]="srcs[mediaId]" type="video/mp4">
-      Your browser does not support the video tag.
+      <!--<source [src]="srcs[mediaId]" type="video/mp4">-->
     </video>
 
     <section class="Barra-progress">

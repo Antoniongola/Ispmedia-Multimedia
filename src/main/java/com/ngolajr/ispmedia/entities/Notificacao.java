@@ -18,4 +18,6 @@ public class Notificacao {
     private String descricao;
     private EstadoEntrega estadoEntregaNotificacao;
     private TipoNotificacao tipoNotificacao;
+    @ManyToOne
+    private GrupoConvite convite;
 }

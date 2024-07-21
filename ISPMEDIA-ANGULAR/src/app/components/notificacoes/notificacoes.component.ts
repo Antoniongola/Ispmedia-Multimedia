@@ -33,12 +33,11 @@ export class NotificacoesComponent implements OnInit{
       this.notificacoes = response;
       console.log('pegou ya?');
     }, error=>{
-      console.log('error ya!')
+      console.log('error ya!');
     });
 
     this.grupoConvite.userConvite(this.username).subscribe(response=>{
       this.convites = response;
-      console.log('Deu certo nos grupos convites')
     }, error=>{
       console.log('Erro no convite!');
     })
@@ -55,9 +54,16 @@ export class NotificacoesComponent implements OnInit{
 
   responderPedido(news:Notificacao, opcao:number){
     let dto:PedidoGrupoDto=new PedidoGrupoDto();
+    dto.newsId=news.id.toString();
     dto.quemRespondeu=news.destinatario.username;
     dto.quemPdiu=news.emissor.username;
     dto.resposta=opcao;
+    dto.conviteId=news.convite.id;
+    this.grupoConvite.responderPedido(news.convite.id.toString(), dto).subscribe(response=>{
+      alert(response.response);
+    }, error=>{
+      alert('ERRO AO RESPONDER PEDIDO: '+error);
+    });
 
   }
 

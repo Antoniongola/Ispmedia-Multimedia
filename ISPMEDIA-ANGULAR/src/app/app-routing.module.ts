@@ -23,6 +23,7 @@ import {NotificacoesComponent} from "./components/notificacoes/notificacoes.comp
 import {PlaylistContentComponent} from "./components/playlist-content/playlist-content.component";
 import {GroupContentComponent} from "./components/group-content/group-content.component";
 import {OfflineContentComponent} from "./components/offline-content/offline-content.component";
+import {UsersComponent} from "./components/users/users.component";
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
@@ -51,6 +52,8 @@ const routes: Routes = [
       {path:'play/:mediaId', component: PlaylistContentComponent}
     ]},
   {path:'radios', component:RadiosComponent},
+  {path:'search', component: SearchComponent},
+  {path:'users', component:UsersComponent},
   {path:'videos', component:VideosComponent},
   {path:'videos/new', component: VideoUploadComponent},
 ];

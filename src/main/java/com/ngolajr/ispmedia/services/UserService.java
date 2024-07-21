@@ -2,11 +2,15 @@ package com.ngolajr.ispmedia.services;
 
 import com.ngolajr.ispmedia.dtos.SignUpDto;
 import com.ngolajr.ispmedia.entities.Grupo;
+import com.ngolajr.ispmedia.entities.Notificacao;
 import com.ngolajr.ispmedia.entities.Participante;
 import com.ngolajr.ispmedia.entities.Utilizador;
+import com.ngolajr.ispmedia.entities.enums.EstadoEntrega;
 import com.ngolajr.ispmedia.entities.enums.Roles;
+import com.ngolajr.ispmedia.entities.enums.TipoNotificacao;
 import com.ngolajr.ispmedia.entities.enums.TipoParticipante;
 import com.ngolajr.ispmedia.repositories.GrupoRepository;
+import com.ngolajr.ispmedia.repositories.NotificacaoRepository;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private final NotificacaoRepository newsRepo;
     private final UtilizadorRepository repository;
     private final GrupoRepository grupoRepo;
     private final PasswordEncoder encoder;
@@ -42,9 +47,15 @@ public class UserService {
 
     public boolean promoverUserParaEditor(String username){
         if(this.repository.existsById(username)){
+            Notificacao news = new Notificacao();
+            news.setTipoNotificacao(TipoNotificacao.EDITORPLATAFORMA);
+            news.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
+            news.setDescricao("VOCÊ FOI PROMOVIDO A EDITOR, JÁ PODE EDITAR INFORMAÇÕES NA PLATAFORMA.");
             Utilizador user = this.repository.findById(username).get();
+            news.setDestinatario(user);
             user.setRoles(Set.of(Roles.USER, Roles.EDITOR));
             this.repository.save(user);
+            this.newsRepo.save(news);
             return true;
         }
 
@@ -54,6 +65,10 @@ public class UserService {
     public boolean despromoverUser(String username){
         if(this.repository.existsById(username)){
             Utilizador user = this.repository.findById(username).get();
+            Notificacao news = new Notificacao();
+            news.setTipoNotificacao(TipoNotificacao.EDITORPLATAFORMA);
+            news.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
+            news.setDescricao("VOCÊ FOI DESPROMOVIDO, JÁ NÃO PODE EDITAR INFORMAÇÕES NA PLATAFORMA.");
             user.setRoles(Set.of(Roles.USER));
             this.repository.save(user);
             return true;

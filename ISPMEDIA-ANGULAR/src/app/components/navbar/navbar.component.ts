@@ -10,12 +10,16 @@ import {UserService} from "../../services/user/user.service";
 })
 export class NavbarComponent implements OnInit{
   isEditor:boolean=false;
-  constructor(private loginService:LoginServiceService) {
+
+  constructor(private loginService:LoginServiceService,
+              private userService:UserService) {
   }
   menuAberto = false;
 
   ngOnInit() {
-
+    this.userService.isEditor(this.loginService.getUsername()).subscribe(response=>{
+      this.isEditor = response;
+    })
   }
   toggleMenu() {
     this.menuAberto = !this.menuAberto;

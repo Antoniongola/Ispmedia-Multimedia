@@ -1,4 +1,5 @@
 export class PedidoGrupoDto {
+  newsId: string='';
   quemPdiu: string='';
   quemRespondeu: string='';
   conviteId: number=0;

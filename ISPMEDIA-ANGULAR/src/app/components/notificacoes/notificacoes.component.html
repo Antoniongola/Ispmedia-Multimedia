@@ -12,13 +12,13 @@
       </div>
 
       <div class="Notify-Status" *ngIf="notificacao.tipoNotificacao.toString()==='PEDIDONOVOGRUPO'">
-        <p>{{notificacao.tipoNotificacao}}</p>
+        <div class="btn-acceptReject">
+          <button class="btn  m-2" (click)="responderPedido(notificacao, 1)">Aceitar</button>
+          <button class="btn " (click)="responderPedido(notificacao, -1)">Rejeitar</button>
+        </div>
       </div>
 
-      <!--<div class="btn-acceptReject">
-        <button class="btn  m-2">Aceitar</button>
-        <button class="btn ">Rejeitar</button>
-      </div>-->
+
     </article>
   </section>
 </section>

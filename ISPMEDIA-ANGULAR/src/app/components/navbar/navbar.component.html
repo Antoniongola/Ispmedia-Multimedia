@@ -42,17 +42,25 @@
           <li><a [routerLink]="['videos']" class="dropdown-item cabecalho">Ver todos vídeos</a></li>
         </ul>
       </li>
+      <li class="dropdown-submenu">
+        <a class="dropdown-item cabecalho" data-bs-toggle="dropdown">Rádios</a>
+        <ul class="dropdown-menu cabecalho">
+          <li><a [routerLink]="['radios']" class="dropdown-item cabecalho">Todas rádios</a></li>
+        </ul>
+      </li>
+      <li class="dropdown-submenu">
+        <a class="dropdown-item cabecalho" data-bs-toggle="dropdown">Offline</a>
+        <ul class="dropdown-menu cabecalho">
+          <li><a [routerLink]="['offline']" class="dropdown-item cabecalho">Conteudos offline</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
   <div class="nav-item">
-    <a [routerLink]="['radios']">
-      <span class="dropdown-List">Rádios</span>
-    </a>
+    <a [routerLink]="['search']" class="dropdown-List">Pesquisa</a>
   </div>
-  <div class="nav-item">
-    <a [routerLink]="['offline']">
-      <span class="dropdown-List">Offline</span>
-    </a>
+  <div class="nav-item" *ngIf="isEditor">
+    <a [routerLink]="['users']" class="dropdown-List">Users</a>
   </div>
   <button class="btn btn-outline-secondary btnSair" (click)="logOut()">Sair da conta</button>
 </div>

@@ -1,0 +1,140 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.conteinerGroup{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3,4fr);
+  justify-content: center;
+  text-align: center;
+}
+.Participantes{
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+
+}
+.Participantes h2{
+  font-weight: bolder;
+}
+.DetailsParticipantesGroup{
+  max-width: 100%;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #242424;
+  margin: 10px 5px;
+  padding: 5px;
+}
+.imagemIconUser{
+  width: 40px;
+  height: 40px;
+}
+.imagemIconUser img{
+  width: 100%;
+  height: 100%;
+  object-fit:cover;
+}
+.detailsNameAndTypeUSer{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  text-align: center;
+  gap: 0;
+}
+.detailsNameAndTypeUSer span:nth-child(1){
+  width: 100%;
+  font-size: 18px;
+  font-weight: bold;
+}
+.detailsNameAndTypeUSer span:nth-child(2){
+  width: 100%;
+  font-size: 15px;
+  font-weight: lighter;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+
+}
+/* Estilos para o dropdown menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .btn {
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto */
+  border: none;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.dropdown .btn:hover {
+  background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  background-color: #fff; /* Cor de fundo do menu dropdown */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra do menu dropdown */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 0;
+}
+
+.dropdown-menu .dropdown-item {
+  padding: 8px 20px;
+  color: #333; /* Cor do texto dos itens do menu */
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #f0f0f0; /* Cor de fundo do item do menu ao passar o mouse */
+}
+
+.conteudoGroup{
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin: 10px;
+}
+.conteudoGroup h2{
+  font-weight: bolder;
+}
+.conteudoGroup div{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px
+}
+.btnAdicionarSomething{
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  background-color: #121212;
+  color: white;
+  transition: all 0.3s linear;
+}
+.btnAdicionarSomething:hover{
+  background-color: #dc3545;
+}

@@ -1,2 +1,87 @@
-<p>search works!</p>
 <app-long-polling-news></app-long-polling-news>
+<div class="row mt-4">
+  <form class="form-inline" (ngSubmit)="onSearch()">
+    <div class="form-group mb-2">
+      <input type="text" class="form-control" id="searchInput" placeholder="Digite sua pesquisa (nome, descrição ou gênero de um conteúdo)" [(ngModel)]="searchTerm" name="searchTerm">
+      <button type="submit" class="btn btn-primary mb-2 ml-2">Pesquisar</button>
+    </div>
+  </form>
+</div>
+
+<main class="content-playlist" *ngIf="hasSearched">
+  <section class="midia-display">
+    <audio *ngIf="isMusic" [src]="srcs[mediaId]" controls>
+    </audio>
+    <video *ngIf="isVideo" class="midias-display" #videoPlayer controls>
+    </video>
+
+    <section class="Barra-progress">
+      <input class="progress" type="range" min="0" [max]="duration" [(ngModel)]="currentTime" (input)="seek()">
+    </section>
+
+    <section class="controls-playlist">
+      <article class="controls-volume">
+        <button (click)="toggleFullscreen()"> <img title="Tela cheia" ngSrc="assets/fullscreenW.png"  alt="FullScreen" width="25" height="25" ></button>
+        <button (click)="muteUnmute()">
+          <article class="muteunmute-btn">
+            <ng-container *ngIf="isMuted || volume==0; else muteUnmuteTemplate">
+              <img ngSrc="assets/muteW.png" class="" alt="mute" width="25" height="25">
+            </ng-container>
+            <ng-template #muteUnmuteTemplate>
+              <img ngSrc="assets/unmuteW.png" class="" alt="unmute" width="25" height="25">
+            </ng-template>
+          </article>
+        </button>
+        <input type="range" min="0" max="100" [(ngModel)]="volume" (input)="setVolume()">
+      </article>
+
+      <article class="controls-playPause">
+        <button (click)="rewind()"><img ngSrc="assets/ReplayW10s.png" class="" alt="Pause" width="25" height="25"></button>
+        <button (click)="playPause()">
+          <article class="play-icon">
+            <ng-container *ngIf="isPlaying; else playTemplate">
+              <img ngSrc="assets/PauseW%20(1).png" class="" alt="Pause" width="30" height="30">
+            </ng-container>
+            <ng-template #playTemplate>
+              <img ngSrc="assets/PlayW.png" class="" alt="Play" width="30" height="30">
+            </ng-template>
+          </article>
+        </button>
+        <button (click)="forward()"><img ngSrc="assets/Forward10s.png" class="" alt="Pause" width="25" height="25"></button>
+      </article>
+
+      <article class="currenTime-midia">
+        {{ formatTime(currentTime) }} / {{ (formatTime(duration) )}}
+      </article>
+
+    </section>
+  </section>
+
+  <section class="playlists">
+    <h1>Resultados da pesquisa</h1>
+    <article class="details-playlist">
+
+      <section class="card-playlist" *ngFor="let conteudo of conteudos">
+        <a [routerLink]="['play/'+conteudo.id]">
+          <article class="icon-titlePlaylist" (click)="playMedia(conteudo)">
+            <img [src]="imgSrcs[conteudo.id]" class="icon-playlist" alt="" height="512" width="512">
+            <p>{{conteudo.titulo}}</p>
+          </article>
+        </a>
+
+        <button (click)="playPause()">
+          <article class="play-icon">
+            <ng-container *ngIf="isPlaying; else playTemplate">
+              <img ngSrc="assets/PauseW%20(1).png" class="" alt="Pause" width="30" height="30">
+            </ng-container>
+            <ng-template #playTemplate>
+              <img ngSrc="assets/PlayW.png" class="" alt="Play" width="30" height="30">
+            </ng-template>
+          </article>
+        </button>
+      </section>
+      <!-- <p>Playlist:{{playlist.privacidade}}</p> !-->
+    </article>
+
+  </section>
+</main>

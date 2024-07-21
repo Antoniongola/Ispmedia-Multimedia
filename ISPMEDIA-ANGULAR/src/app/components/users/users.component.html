@@ -1,2 +1,29 @@
-<p>users works!</p>
+<section class="Participantes">
+  <h2>Utilizadores da plataforma</h2>
+  <section class="" *ngFor="let participante of participantes">
+    <article class="DetailsParticipantesGroup">
+      <article class="imagemIconUser">
+        <img src="assets/icons8-user-50.png" >
+      </article>
+
+      <div class="detailsNameAndTypeUSer">
+        <span>{{ participante.nome }}</span>
+        <span>{{participante.roles[participante.roles.length-1].toUpperCase()}}</span>
+      </div>
+      <div class="divider"></div>
+      <section class="">
+        <article class="">
+          <div  class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Privilegiar
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="userActions(participante)">Tornar editor</a>
+            </div>
+          </div>
+        </article>
+      </section>
+    </article>
+  </section>
+</section>
 <app-long-polling-news></app-long-polling-news>

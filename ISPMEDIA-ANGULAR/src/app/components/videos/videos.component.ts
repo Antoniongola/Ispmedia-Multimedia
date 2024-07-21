@@ -58,22 +58,6 @@ export class VideosComponent implements OnInit {
     });
   }
 
-  playVideo(id: string) {
-    this.videoService.selectVideo(id).subscribe(
-      response => {
-        this.videoPlaying = response;
-        if (this.videoPlayer) {
-          this.videoPlayer.nativeElement.play();
-          this.isPlaying = true;
-        }
-        console.log('Video tocando:', this.videoPlaying?.titulo);
-      },
-      error => {
-        console.error('Erro ao tentar reproduzir o vídeo:', error);
-      }
-    );
-  }
-
   playVideoChunked(videoId: string) {
     console.log('tocou num vídeo: ');
     this.isPlaying = true;
@@ -102,7 +86,8 @@ export class VideosComponent implements OnInit {
         const url = URL.createObjectURL(blob);
         this.videoPlayer.nativeElement.src = url;
         this.videoSrcs[videoId] = url;
-        this.videoPlayer.nativeElement.currentTime = this.videoPlayer.nativeElement.currentTime;
+        this.videoPlayer.nativeElement.currentTime = tempoCorrentte;
+        this.videoPlayer.nativeElement.load();
         this.videoPlayer.nativeElement.play();
       });
     });

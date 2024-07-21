@@ -6,6 +6,7 @@ import {Playlist} from "../../entities/Playlist";
 import {Musica} from "../../entities/Musica";
 import {Video} from "../../entities/Video";
 import {ConteudoService} from "../../services/conteudo/conteudo.service";
+import {VideoService} from "../../services/video/video.service";
 
 @Component({
   selector: 'app-playlist-content',
@@ -13,7 +14,7 @@ import {ConteudoService} from "../../services/conteudo/conteudo.service";
   styleUrl: './playlist-content.component.css'
 })
 export class PlaylistContentComponent {
-  @ViewChild('mediaPlayer', { static: true }) mediaPlayer!: ElementRef<HTMLVideoElement>;
+  @ViewChild('videoPlayer', { static: false }) mediaPlayer!: ElementRef<HTMLVideoElement>;
 
   isPlaying = false;
   isMuted = false;
@@ -32,7 +33,8 @@ export class PlaylistContentComponent {
 
   constructor(private playlistServices:PlaylistService,
               private conteudoService:ConteudoService,
-              private routes:ActivatedRoute) {
+              private routes:ActivatedRoute,
+              private videoService:VideoService) {
     this.routes.paramMap.subscribe(params=>{
       this.playlistId= params.get('playlistId');
     });
@@ -48,18 +50,53 @@ export class PlaylistContentComponent {
 
   playMedia(conteudo:Musica|Video){
     this.mediaId = conteudo.id;
-    this.conteudoService.loadConteudos(conteudo, this.srcs);
-
 
     if(conteudo.dataType=="video"){
       this.isMusic=false;
       this.isVideo = true;
+      this.playVideoChunked(conteudo.id);
     }else if(conteudo.dataType=="musica"){
+      this.conteudoService.loadConteudos(conteudo, this.srcs);
       this.isMusic=true;
       this.isVideo = false;
     }
   }
 
+  playVideoChunked(videoId: string) {
+    console.log('tocou num vídeo: ');
+    this.isPlaying = true;
+    //const videoElement = this.videoPlayer.nativeElement;
+
+    //this.videoPlayer.nativeElement.addEventListener('loadedmetadata', () => {
+    const range = `bytes=0-`;
+    console.log('antes de chamar a função!!');
+    this.videoService.getVideoStream(videoId, range).subscribe(blob => {
+      const url = URL.createObjectURL(blob);
+      console.log('entra aqui no stream e pega o link: '+url);
+      this.mediaPlayer.nativeElement.src = url;
+      this.srcs[videoId] = url
+      this.mediaPlayer.nativeElement.load();
+      if (this.mediaPlayer) {
+        this.isPlaying = true;
+      }
+      this.mediaPlayer.nativeElement.play();
+    });
+    //});
+
+    this.mediaPlayer.nativeElement.addEventListener('seeking', () => {
+      const range = `bytes=${this.mediaPlayer.nativeElement.currentTime}-`;
+      const tempoCorrentte = this.mediaPlayer.nativeElement.currentTime;
+      this.videoService.getVideoStream(videoId, range).subscribe(blob => {
+        const url = URL.createObjectURL(blob);
+        //this.mediaPlayer.nativeElement.src = url;
+        //this.srcs[videoId] = url;
+        this.mediaPlayer.nativeElement.src = url;
+        this.mediaPlayer.nativeElement.load();
+        this.mediaPlayer.nativeElement.currentTime = tempoCorrentte;
+        this.mediaPlayer.nativeElement.play();
+      });
+    });
+  }
   ngAfterViewInit() {
     this.updateProgress();
     this.mediaPlayer.nativeElement.addEventListener('timeupdate', this.updateProgress.bind(this));
