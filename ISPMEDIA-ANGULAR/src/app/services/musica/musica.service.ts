@@ -3,12 +3,13 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Musica} from "../../entities/Musica";
 import {DomSanitizer} from "@angular/platform-browser";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MusicaService {
-  private apiUrl = 'http://localhost:8080/api/musica';
+  private apiUrl = environment.apiUrl+'/musica';
 
   constructor(private http: HttpClient,
               private sanitizer: DomSanitizer) { }

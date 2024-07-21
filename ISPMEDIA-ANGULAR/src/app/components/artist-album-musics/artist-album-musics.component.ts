@@ -11,6 +11,7 @@ import {UserService} from "../../services/user/user.service";
 import {Musica} from "../../entities/Musica";
 import {MusicaService} from "../../services/musica/musica.service";
 import {Genero} from "../../entities/Genero";
+import {Artista} from "../../entities/Artista";
 
 @Component({
   selector: 'app-artist-album-musics',
@@ -21,7 +22,10 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   hasCommented:boolean=false;
   criticas:Critica[]=[];
   criticaForm!:FormGroup;
-  album!:Album;
+  artista: Artista=new Artista('', '', '', '', new Genero(), '',
+    new User(), [], 0, 0);
+  album:Album=new Album('', '', '', '', new Genero(), '',
+    new User(), [], this.artista, [], 0 , '', 0);
   albumId:any='';
   audio:any;
   musicId:string='';
@@ -91,9 +95,10 @@ export class ArtistAlbumMusicsComponent implements OnInit{
   onSubmit(){
     let criticoUser = new User();
     criticoUser.username=this.criticoUsername;
-
+    const artista: Artista=new Artista('', '', '', '', new Genero(), '',
+      new User(), [], 0, 0);
     let albumUpload = new Album(this.albumId, '', '', '',new Genero(),'', new User(),
-      [], null, [], 0, '0', 0);
+      [], artista, [], 0, '0', 0);
 
     const critica:Critica=new Critica(0,
       this.criticaForm.get('nota')?.value,

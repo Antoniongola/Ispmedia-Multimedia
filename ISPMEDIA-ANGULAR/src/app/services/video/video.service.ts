@@ -4,11 +4,12 @@ import {map, Observable} from 'rxjs';
 import {Video} from "../../entities/Video";
 import {Album} from "../../entities/Album";
 import {DomSanitizer} from "@angular/platform-browser";
+import {environment} from "../../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
 export class VideoService {
-  private apiUrl = `http://localhost:8080/api/video`;
+  private apiUrl = environment.apiUrl+`/video`;
   token:any=localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient,
@@ -103,5 +104,13 @@ export class VideoService {
       'Authorization': `Bearer ${this.token}`
     });
     return this.http.get(`${this.apiUrl}/${id}/video`, {headers, responseType: 'blob' });
+  }
+
+  getVideoStream(id: string, range: string): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+    headers.set('Range', range);
+    return this.http.get(`${this.apiUrl}/play/${id}`, { headers, responseType: 'blob' });
   }
 }

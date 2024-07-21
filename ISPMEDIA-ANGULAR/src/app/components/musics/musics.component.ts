@@ -8,6 +8,12 @@ import {GrupoService} from "../../services/grupo/grupo.service";
 import {Grupo} from "../../entities/Grupo";
 import {Playlist} from "../../entities/Playlist";
 import {OfflineService} from "../../services/offline/offline.service";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {Conteudo} from "../../entities/Conteudo";
+import {User} from "../../entities/User";
+import {Genero} from "../../entities/Genero";
+import {ConteudoService} from "../../services/conteudo/conteudo.service";
+import {UserService} from "../../services/user/user.service";
 
 @Component({
   selector: 'app-musics',
@@ -15,6 +21,8 @@ import {OfflineService} from "../../services/offline/offline.service";
   styleUrl: './musics.component.css'
 })
 export class MusicsComponent implements OnInit{
+  musicUpdateForm!:FormGroup;
+  musicId='';
   musicas:Musica[]=[];
   musicaSrcs: { [key: string]: any } = {}
   imgSrcs: { [key: string]: any } = {}
@@ -22,22 +30,37 @@ export class MusicsComponent implements OnInit{
   myGroups:Grupo[]=[];
   mediaId:any="";
   username:any="";
+  isEditor=false;
   isPlaying=false;
+  isVisible=false;
   letra="";
   constructor(private musicaService:MusicaService,
+              private conteudoService:ConteudoService,
               private router:ActivatedRoute,
               private loginService:LoginServiceService,
               private playlisService:PlaylistService,
               private grupoService:GrupoService,
-              private offlineService:OfflineService){
+              private offlineService:OfflineService,
+              private fb:FormBuilder,
+              private userService:UserService){
 
   }
 
   ngOnInit(): void {
     this.username=this.loginService.getUsername();
+    this.userService.isEditor(this.username).subscribe(response=>{
+      this.isEditor=response;
+    })
+    this.musicUpdateForm = this.fb.group({
+      nome:'',
+      descricao:''
+    })
+
     this.router.paramMap.subscribe(response=>{
       this.mediaId = response.get('musicId');
     });
+
+
 
     this.musicaService.getAllMusics().subscribe(response=>{
       this.musicas = response;
@@ -53,6 +76,15 @@ export class MusicsComponent implements OnInit{
     this.grupoService.todosGruposDoUser(this.username).subscribe(response=>{
       this.myGroups=response;
     })
+  }
+
+  open(musica:Musica) {
+    this.musicId = musica.id;
+    this.isVisible = true;
+  }
+
+  close() {
+    this.isVisible = false;
   }
 
   downloadMusica(musica:Musica){
@@ -82,5 +114,14 @@ export class MusicsComponent implements OnInit{
     this.musicaService.deleteMusic(id).subscribe(response=>{
       alert('música apagada com sucesso!');
     });
+  }
+
+  atualizarMusica(){
+    let content:Conteudo=new Conteudo(this.musicId, '', '', '', new Genero(), '', new User());
+    content.titulo = this.musicUpdateForm.get('nome')?.value;
+    content.descricao = this.musicUpdateForm.get('descricao')?.value;
+    this.conteudoService.updateConteudo(content, content.id).subscribe(response=>{
+      alert('CONTEÚDO DA MÚSICA ALTERADO COM SUCESSO');
+    })
   }
 }

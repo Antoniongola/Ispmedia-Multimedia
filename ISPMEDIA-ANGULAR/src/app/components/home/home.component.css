@@ -104,9 +104,6 @@
   font-size: 10pt;
 }
 
-
-
-
 .conteirner-Albuns-Artistas{
   max-width: 100%;
   display: grid;
@@ -131,7 +128,6 @@
   /*border:2px solid #fff;*/
   padding: 15px;
   text-align: start;
-
 }
 
 .conteiner-Grupos h4{
@@ -173,11 +169,8 @@
 .detailsGroup-Name{
   font-size: 15pt;
   font-weight: bolder;
-
 }
 .detailsGroup-nUsers{
   font-size: 12pt;
   font-weight: bolder;
 }
-
-

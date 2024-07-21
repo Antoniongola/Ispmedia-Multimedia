@@ -5,12 +5,13 @@ import {Observable} from "rxjs";
 import {Conteudo} from "../../entities/Conteudo";
 import {Video} from "../../entities/Video";
 import {Musica} from "../../entities/Musica";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GrupoService {
-  private baseUrl = 'http://localhost:8080/api/grupo';
+  private baseUrl = environment.apiUrl+'/grupo';
   token=localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient) { }

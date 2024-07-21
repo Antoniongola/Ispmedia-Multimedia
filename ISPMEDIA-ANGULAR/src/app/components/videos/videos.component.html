@@ -2,11 +2,11 @@
 <main class="ReprodutorVideos">
 
   <!-- Reprodutor do vídeo -->
-  <section class="Reprodutor" *ngIf="videoPlaying">
+  <section class="Reprodutor" >
     <div class="video">
-      <video #videoPlayer  (timeupdate)="updateTime(videoPlayer)">
-        <source [src]="videoSrcs[videoPlaying.id]" type="video/mp4">
-        Your browser does not support the video tag.
+      <video #videoPlayer controls (timeupdate)="updateTime(videoPlayer)">
+        <!--<source [src]="videoSrcs[videoPlaying.id]" type="video/mp4">
+        Your browser does not support the video tag.-->
       </video>
     </div>
     <!-- Controles de Reprodução -->
@@ -37,7 +37,7 @@
 
 
 
-    <h2>{{ videoPlaying.titulo }}</h2>
+    <!--<h2>{{ videoPlaying.titulo }}</h2>-->
   </section>
 
   <section class="VideoReproduzir">
@@ -53,9 +53,43 @@
       <div class="MoreDetailsVideo">
         <p>{{video.descricao}}</p>
         <p>Criado por:{{video.criadorConteudo.nome}}</p>
-        <button class="buttonplay" (click)="playVideo(video.id)">Play video</button>
+        <button class="buttonplay" (click)="playVideoChunked(video.id)">Play video</button>
+        <div *ngIf="isEditor || video.criadorConteudo.username.toLowerCase()==username.toLowerCase()" class="btn btn-outline-primary" (click)="open(video.id)">Atualizar</div>
       </div>
       </article>
     </article>
   </section>
 </main>
+
+
+<!-- Modal pra introduzir conteúdos no grupo-->
+<div class="modal" tabindex="-1" role="dialog" *ngIf="isVisible">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Atualizar dados da \música</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="videoUpdateForm" (ngSubmit)="atualizaConteudo()">
+          <div class="">
+            <div class="me-3">
+              <label class="" for="nome">Nome do conteúdo::</label>
+              <br>
+              <input class="" id="nome" formControlName="nome" type="text">
+            </div>
+            <div class="me-3">
+              <label class="" for="descricao">Descrição do conteúdo:</label>
+              <br>
+              <textarea class="custom-input rounded-2" id="descricao" formControlName="descricao"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">Fechar</button>
+        <button type="button" class="btn btn-primary" (click)="atualizaConteudo()">Salvar mudanças</button>
+      </div>
+    </div>
+  </div>
+</div>
+

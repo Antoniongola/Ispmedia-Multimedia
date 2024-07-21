@@ -21,6 +21,7 @@ export class LongPollingNewsComponent implements OnInit {
     this.username=this.loginApi.getUsername();
     this.notificacao="No new notifications for "+this.username;
     this.notificationService.longPollNotifications(this.username, (notification) => {
+      console.log('notificações: '+notification)
       if(!this.notifications.includes(notification)
         && notification.toLowerCase()!= this.notificacao.toLowerCase())
         this.notifications.push(notification);

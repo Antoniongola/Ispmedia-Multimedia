@@ -5,12 +5,13 @@ import {Observable} from "rxjs";
 import {LoginResponse} from "../../dtos/LoginResponse";
 import {SignupDto} from "../../dtos/SignupDto";
 import {SignupResponse} from "../../dtos/SignupResponse";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignupService {
-  private apiUrl:string = "http://localhost:8080/api/signup";
+  private apiUrl:string = environment.apiUrl+"/signup";
   constructor(private http: HttpClient) { }
 
   cadastrar(signup: SignupDto): Observable<SignupResponse> {

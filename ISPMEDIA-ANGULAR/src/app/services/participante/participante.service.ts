@@ -3,12 +3,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Participante} from "../../entities/Participante";
 import {ParticipanteDto} from "../../dtos/ParticipanteDto";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipanteService {
-  private baseUrl = 'http://localhost:8080/api/participante';
+  private baseUrl = environment.apiUrl+'/participante';
   token = localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient) { }

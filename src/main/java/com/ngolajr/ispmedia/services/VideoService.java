@@ -8,6 +8,7 @@ import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import com.ngolajr.ispmedia.repositories.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -77,12 +79,13 @@ public class VideoService {
 
     public ResponseEntity<Resource> getVideoChunk(UUID id, HttpHeaders headers) throws IOException {
         Video video = this.repository.findById(id).orElseThrow(() -> new RuntimeException("Video not found"));
-        video.setStreams(video.getStreams() + 1);
-        this.repository.save(video);
+        //video.setStreams(video.getStreams() + 1);
+        //this.repository.save(video);
+        //String range = "bytes=0-";
         Path videoPath = Path.of(videoLocation + "\\compressed\\").resolve(video.getPath()).normalize();
         UrlResource videoResource = new UrlResource(videoPath.toUri());
 
-        long fileSize = Files.size(videoPath);
+        long fileSize = Long.getLong(video.getTamanho());
         HttpRange range = headers.getRange().isEmpty() ? null : headers.getRange().get(0);
 
         if (range != null) {
@@ -105,26 +108,63 @@ public class VideoService {
         }
     }
 
-    /*
-        public ResponseEntity<Resource> verVideo(UUID id) throws FileNotFoundException {
-            Video video = this.repository.findById(id).orElseThrow();
-            video.setStreams(video.getStreams()+1);
-            this.repository.save(video);
+    public ResponseEntity<byte[]> playVideo(UUID id, String range) {
+        Optional<Video> videoOpt = repository.findById(id);
 
-            File file = new File(videoLocation+"\\"+video.getPath());
-            HttpHeaders headers = new HttpHeaders();
-            try {
-                headers.add("Content-Disposition", "attachment; filename="+video.getThumbNailUri());
-                headers.add("Content-Type", Files.probeContentType(file.toPath()));
-            } catch (IOException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-            }
-            InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
-            return ResponseEntity.ok().
-                    headers(headers).
-                    body(resource);
+        if (!videoOpt.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(("Video not found!").getBytes());
         }
-    */
+
+        Video video = videoOpt.get();
+        File videoFile = new File(videoLocation + "\\compressed\\"+video.getPath());
+
+        if (!videoFile.exists()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(("Video file not found!").getBytes());
+        }
+
+        long videoSize = videoFile.length();
+        long start = 0;
+        long end = videoSize - 1;
+
+        if (range != null && range.startsWith("bytes=")) {
+            String[] ranges = range.substring(6).split("-");
+            try {
+                start = Long.parseLong(ranges[0]);
+                if (ranges.length > 1) {
+                    end = Long.parseLong(ranges[1]);
+                }
+            } catch (NumberFormatException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(("Invalid range header").getBytes());
+            }
+        }
+
+        long chunkSize = end - start + 1;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Range", "bytes " + start + "-" + end + "/" + videoSize);
+        headers.add("Accept-Ranges", "bytes");
+        headers.add("Content-Length", String.valueOf(chunkSize));
+        headers.add("Content-Type", video.getMimeType());
+        System.out.println("Range= "+String.valueOf(chunkSize));
+        System.out.println("Content type= "+video.getMimeType());
+
+        try (InputStream inputStream = new FileInputStream(videoFile)) {
+            byte[] buffer = new byte[(int) chunkSize];
+            inputStream.skip(start);
+            IOUtils.readFully(inputStream, buffer);
+            return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+                    .headers(headers)
+                    .body(buffer);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body((e.getMessage()).getBytes());
+        }
+    }
+
+
     public ResponseEntity<Resource> videoThumbnail(UUID id) throws FileNotFoundException {
         Video video = this.repository.findById(id).orElseThrow();
         File file = new File(imageLocation + "\\" + video.getThumbNailUri());

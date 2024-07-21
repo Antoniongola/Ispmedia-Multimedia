@@ -5,6 +5,7 @@ import {Response} from "../../entities/Response";
 import {Observable} from "rxjs";
 import {GrupoConviteDto} from "../../dtos/GrupoConviteDto";
 import {PedidoGrupoDto} from "../../dtos/PedidoGrupoDto";
+import {environment} from "../../../environments/environment";
 
 
 
@@ -12,7 +13,7 @@ import {PedidoGrupoDto} from "../../dtos/PedidoGrupoDto";
   providedIn: 'root'
 })
 export class GrupoConviteService {
-  private apiUrl = 'http://localhost:8080/api/convite';  // Base URL for the API
+  private apiUrl = environment.apiUrl+'/convite';  // Base URL for the API
   token=localStorage.getItem('jwtToken');
   constructor(private http: HttpClient) { }
 

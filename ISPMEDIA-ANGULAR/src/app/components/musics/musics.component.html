@@ -9,12 +9,7 @@
         <div class="card-header text-center">{{music.titulo}}</div>
       </a>
         <div class="card-body">
-          <!--
-          <div class="row" *ngIf="music.artists.length>0">
-            <span>{{music.artista.genero}}</span>
-            <span *ngFor="let feat of music.artists">, {{feat.titulo}}</span>
-          </div>
-          <span *ngIf="music.artists.length==0">{{music.artista.titulo}}</span>-->
+          Descrição: {{music.descricao}}<br><br>
           Uploaded by: {{music.criadorConteudo.nome}}<br>
           <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Acções
@@ -29,12 +24,13 @@
             <div class="dropdown-submenu">
               <a class="dropdown-item dropdown-toggle" id="grupoDropdown">Adicionar ao meu grupo</a>
               <div class="dropdown-menu" aria-labelledby="grupoDropdown">
-                <a class="dropdown-item" *ngFor="let grupo of myGroups" (click)="addToGrupo(grupo.id, music)">{{grupo.nome}}</a>
+                <a class="dropdown-item" *ngFor="let grupo of myGroups" (click)="addToGrupo(grupo.id, music)">grupos: {{myGroups.length}}, {{grupo.nome}}</a>
               </div>
             </div>
             <a class="dropdown-item" (click)="downloadMusica(music)">Baixar Música</a>
             <a class="dropdown-item" *ngIf="music.criadorConteudo.username.toLowerCase() === username.toLowerCase()" (click)="deleteMusic(music.id)">Apagar Música</a>
           </div>
+          <div *ngIf="isEditor || music.criadorConteudo.username.toLowerCase()==username.toLowerCase()" class="btn btn-outline-primary" (click)="open(music)">Atualizar</div>
         </div>
     </div>
   </div>
@@ -45,3 +41,36 @@
 <div class="">
   <audio [src]="musicaSrcs[mediaId]" controls></audio>
 </div>
+
+
+<!-- Modal pra introduzir conteúdos no grupo-->
+<div class="modal" tabindex="-1" role="dialog" *ngIf="isVisible">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Atualizar dados da \música</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="musicUpdateForm" (ngSubmit)="atualizarMusica()">
+          <div class="">
+            <div class="me-3">
+              <label class="" for="nome">Nome do conteúdo::</label>
+              <br>
+              <input class="" id="nome" formControlName="nome" type="text">
+            </div>
+            <div class="me-3">
+              <label class="" for="descricao">Descrição do conteúdo:</label>
+              <br>
+              <textarea class="custom-input rounded-2" id="descricao" formControlName="descricao"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="close()">Fechar</button>
+        <button type="button" class="btn btn-primary" (click)="atualizarMusica()">Salvar mudanças</button>
+      </div>
+    </div>
+  </div>
+</div>
+

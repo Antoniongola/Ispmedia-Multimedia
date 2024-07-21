@@ -44,6 +44,7 @@ public class MusicaService {
         try {
             // Define os caminhos dos arquivos
             Utilizador criador= userRepo.findById(dto.getCriadorConteudo().getUsername()).get();
+            //Artista artistaSelected = artistaRepository.findById(dto.getId()).get();
             dto.setPath(musicFile.getOriginalFilename());
             dto.setCriadorConteudo(criador);
             dto.setDataType("musica");
@@ -92,6 +93,7 @@ public class MusicaService {
                 fm.saveFile(musicImage, TipoFicheiro.IMAGEM);
                 Album album = new Album();
                 album.setTitulo(dto.getTitulo());
+                album.setDataType("single");
                 album.setPontuacaoMedia(0);
                 album.setArtista(dto.getArtista());
                 album.setDataLancamento(dto.getDataLancamento());
@@ -105,6 +107,8 @@ public class MusicaService {
                 dto.setAlbum(album);
                 albumRepository.save(album);
                 this.repository.save(dto);
+                //artistaSelected.getAlbums().add(album);
+                //artistaRepository.save(artistaSelected);
                 fm.saveFile(musicFile, TipoFicheiro.MUSICA);
             }
             System.out.println("Pulou aqui o mambo do album");
@@ -113,7 +117,7 @@ public class MusicaService {
             System.out.println("chegou aqui no sficheiros enviados!!");
             return ResponseEntity.badRequest().body(new Response("ERRO COM OS FICHEIROS ENVIADOS"));
         } catch (Exception e) {
-            System.out.println("Ele entra aqui , granda matéria de erro!");
+            System.out.println("Ele entra aqui , granda matéria de erro: "+e.getMessage());
             return ResponseEntity.badRequest().body(new Response("Erro ao salvar a música: " + e.getMessage()));
         }
     }

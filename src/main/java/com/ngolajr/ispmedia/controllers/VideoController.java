@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,13 +29,6 @@ public class VideoController {
         return ResponseEntity.ok(this.service.createVideo(video, videoFile, 0L));
     }
 
-    /*
-    @PostMapping
-    public ResponseEntity<Object> uploadVideo(@RequestPart Video video, @RequestPart MultipartFile videoFile, @RequestPart MultipartFile videoImage) throws Exception {
-        return ResponseEntity.ok(this.service.createVideo(video, videoFile, 0L));
-    }
-    */
-
     @GetMapping("/{id}")
     public ResponseEntity<Video> selectVideoInfos(@PathVariable UUID id){
         return this.service.selectVideoInfos(id);
@@ -50,15 +44,15 @@ public class VideoController {
         return this.service.videoThumbnail(id);
     }
 
-    /*
-    @GetMapping("/{id}/video")
-    public ResponseEntity<Resource> verVideo(@PathVariable UUID id) throws FileNotFoundException {
-        return this.service.verVideo(id);
+    @GetMapping("/play/{id}")
+    public ResponseEntity<byte[]> playVideo(@PathVariable String id, @RequestHeader(value = "Range", required = false) String range) {
+        return this.service.playVideo(UUID.fromString(id), range);
     }
-    */
 
+    
     @GetMapping("/{id}/video")
-    public ResponseEntity<Resource> albumVideo(@PathVariable UUID id, @RequestHeader HttpHeaders headers) throws IOException {
+    public ResponseEntity<Resource> albumVideo(@PathVariable UUID id,
+                                               @RequestHeader HttpHeaders headers) throws IOException {
         return this.service.getVideoChunk(id, headers);
     }
 

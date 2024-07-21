@@ -4,12 +4,13 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, of} from "rxjs";
 import {SignupDto} from "../../dtos/SignupDto";
 import {LoginServiceService} from "../login/login-service.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/api';  // Altere para a URL correta do seu backend
+  private apiUrl = environment.apiUrl;  // Altere para a URL correta do seu backend
   token:any;
 
   constructor(private http: HttpClient, private loginService:LoginServiceService) {

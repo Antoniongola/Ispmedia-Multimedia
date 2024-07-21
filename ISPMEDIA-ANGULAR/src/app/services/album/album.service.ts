@@ -4,12 +4,13 @@ import {Album} from "../../entities/Album";
 import {Observable} from "rxjs";
 import {DomSanitizer} from "@angular/platform-browser";
 import {Artista} from "../../entities/Artista";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlbumService {
-  apiUri:string = "http://localhost:8080/api/conteudo/album";
+  apiUri:string = environment.apiUrl+"/conteudo/album";
   token=localStorage.getItem('jwtToken');
 
   constructor(private http:HttpClient,

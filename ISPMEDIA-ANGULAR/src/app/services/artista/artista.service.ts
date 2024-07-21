@@ -4,13 +4,14 @@ import {Observable} from "rxjs";
 import {LoginServiceService} from "../login/login-service.service";
 import {Artista} from "../../entities/Artista";
 import {DomSanitizer} from "@angular/platform-browser";
+import {environment} from "../../../environments/environment";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtistaService {
-  private apiUrl:string = "http://localhost:8080/api/conteudo/artista";
+  private apiUrl:string = environment.apiUrl+"/conteudo/artista";
   private token = this.loginService.getToken();
 
   constructor(private http: HttpClient,

@@ -3,6 +3,14 @@ import { Video } from "../../entities/Video";
 import { VideoService } from "../../services/video/video.service";
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import {UserService} from "../../services/user/user.service";
+import {Musica} from "../../entities/Musica";
+import {Conteudo} from "../../entities/Conteudo";
+import {Genero} from "../../entities/Genero";
+import {User} from "../../entities/User";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {ConteudoService} from "../../services/conteudo/conteudo.service";
+import {LoginServiceService} from "../../services/login/login-service.service";
 
 @Component({
   selector: 'app-videos',
@@ -17,20 +25,36 @@ export class VideosComponent implements OnInit {
   isPlaying = false;
   currentVideoTime = 0;
   videoDuration = 0;
+  username:any= "";
+  isEditor=false;
+  videoUpdateForm!:FormGroup;
+  id="";
 
   @ViewChild('videoPlayer', { static: false }) videoPlayer!: ElementRef<HTMLVideoElement>;
+  isVisible: boolean =false;
 
   constructor(
     private videoService: VideoService,
-    private sanitizer: DomSanitizer
+    private userService:UserService,
+    private fb:FormBuilder,
+    private conteudoService:ConteudoService,
+    private userLogin:LoginServiceService
   ) { }
   isMuted: boolean = false;
 
   ngOnInit() {
+    this.username = this.userLogin.getUsername();
+    this.userService.isEditor(this.username).subscribe(response=>{
+      this.isEditor=response;
+    });
+    this.videoUpdateForm = this.fb.group({
+      nome:'',
+      descricao:''
+    });
+
     this.videoService.allVideos().subscribe(response => {
       this.videos = response;
       this.videoService.loadImages(this.videos, this.videoThumbs);
-      this.videoService.loadVideos(this.videos, this.videoSrcs);
     });
   }
 
@@ -48,6 +72,40 @@ export class VideosComponent implements OnInit {
         console.error('Erro ao tentar reproduzir o vídeo:', error);
       }
     );
+  }
+
+  playVideoChunked(videoId: string) {
+    console.log('tocou num vídeo: ');
+    this.isPlaying = true;
+    //const videoElement = this.videoPlayer.nativeElement;
+
+    //this.videoPlayer.nativeElement.addEventListener('loadedmetadata', () => {
+      const range = `bytes=0-`;
+      console.log('antes de chamar a função!!');
+      this.videoService.getVideoStream(videoId, range).subscribe(blob => {
+        console.log('entra aqui no stream e pega o link')
+        const url = URL.createObjectURL(blob);
+        this.videoPlayer.nativeElement.src = url;
+        this.videoPlayer.nativeElement.load();
+        if (this.videoPlayer) {
+          //this.videoPlayer.nativeElement.play();
+          this.isPlaying = true;
+        }
+        this.videoPlayer.nativeElement.play();
+      });
+    //});
+
+    this.videoPlayer.nativeElement.addEventListener('seeking', () => {
+      const range = `bytes=${this.videoPlayer.nativeElement.currentTime}-`;
+      const tempoCorrentte = this.videoPlayer.nativeElement.currentTime;
+      this.videoService.getVideoStream(videoId, range).subscribe(blob => {
+        const url = URL.createObjectURL(blob);
+        this.videoPlayer.nativeElement.src = url;
+        this.videoSrcs[videoId] = url;
+        this.videoPlayer.nativeElement.currentTime = this.videoPlayer.nativeElement.currentTime;
+        this.videoPlayer.nativeElement.play();
+      });
+    });
   }
 
   togglePlayPause() {
@@ -94,5 +152,23 @@ export class VideosComponent implements OnInit {
   toggleMute() {
     this.isMuted = !this.isMuted;
     this.videoPlayer.nativeElement.muted = this.isMuted;
+  }
+
+  open(id:string) {
+    this.id = id;
+    this.isVisible = true;
+  }
+
+  close() {
+    this.isVisible = false;
+  }
+
+  atualizaConteudo(){
+    let content:Conteudo=new Conteudo(this.id, '', '', '', new Genero(), '', new User());
+    content.titulo = this.videoUpdateForm.get('nome')?.value;
+    content.descricao = this.videoUpdateForm.get('descricao')?.value;
+    this.conteudoService.updateConteudo(content, content.id).subscribe(response=>{
+      alert('CONTEÚDO ALTERADO COM SUCESSO');
+    })
   }
 }

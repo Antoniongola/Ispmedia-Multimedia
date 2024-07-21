@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LongPollingService {
 
-  private notificationsUrl = 'http://localhost:8080/api/notifications';
+  private notificationsUrl = environment.apiUrl+'/notifications';
 
   constructor(private http: HttpClient) { }
 

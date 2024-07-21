@@ -33,10 +33,11 @@ public class GrupoConviteService {
         repository.save(convite);
         Notificacao notificacao = new Notificacao();
         notificacao.setTipoNotificacao(TipoNotificacao.CONVITENOVOGRUPO);
-        notificacao.setDescricao(user.getNome()+" convidou você para fazer parte do grupo: <"+convite.getGrupo().getNome()+">");
+        notificacao.setDescricao(convite.getAnfitriao().getNome()+" convidou você para fazer parte do grupo: <"+convite.getGrupo().getNome()+">");
         notificacao.setEmissor(user);
         notificacao.setDestinatario(convite.getConvidado());
         notificacao.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
+        notificacao.setConvite(convite);
         notificacaoRepository.save(notificacao);
         return ResponseEntity.ok(new Response("CONVITE CRIADO COM SUCESSO PARA "+convite.getConvidado().getNome()));
     }
@@ -48,18 +49,17 @@ public class GrupoConviteService {
         repository.save(convite);
         for(Participante participante:grupo.getParticipantes()){
             if(participante.getTipo()==TipoParticipante.OWNER){
-                /*
                 if(!hasRequested){
                     repository.save(convite);
                     hasRequested=true;
                 }
-                */
                 Notificacao notificacao = new Notificacao();
                 notificacao.setTipoNotificacao(TipoNotificacao.PEDIDONOVOGRUPO);
                 notificacao.setDescricao(user.getNome()+" Pediu-te para fazer parte do grupo: <"+convite.getGrupo().getNome()+">");
                 notificacao.setEmissor(user);
                 notificacao.setDestinatario(participante.getUser());
                 notificacao.setEstadoEntregaNotificacao(EstadoEntrega.PENDENTE);
+                notificacao.setConvite(convite);
                 notificacaoRepository.save(notificacao);
             }
         }
@@ -117,7 +117,7 @@ public class GrupoConviteService {
     }
 
     public ResponseEntity<Response> responderPedidoGrupoUser(PedidoGrupoDto dto){
-
+        System.out.println("entrou aqui: ");
         if(this.repository.findById(dto.conviteId()).isEmpty()){
             return ResponseEntity.status(400).body(new Response("GRUPO NÃO EXISTENTE!!"));
         }
@@ -133,6 +133,7 @@ public class GrupoConviteService {
             Utilizador user = userRepo.findById(convidado).get();
             Utilizador chefe = userRepo.findById(anfitriao).get();
             Notificacao notificacao = new Notificacao();
+            Notificacao oldNews= this.notificacaoRepository.findById(dto.newsId()).get();
             notificacao.setEmissor(chefe);
             notificacao.setDestinatario(user);
             if(dto.resposta() == 1) {
@@ -145,10 +146,12 @@ public class GrupoConviteService {
                 grupo.setParticipantes(participantes);
                 grupoConvite.setEstadoConvite(EstadoConvite.ACEITE);
                 notificacao.setTipoNotificacao(TipoNotificacao.ACEITOUSERADICIONADONOGRUPO);
+                oldNews.setTipoNotificacao(TipoNotificacao.PARTICIPANTEGRUPO);
                 notificacao.setDescricao(chefe.getNome()+" aceitou o seu pedido para ser adicionado ao grupo!");
                 repository.save(grupoConvite);
                 grupoRepository.save(grupo);
                 notificacaoRepository.save(notificacao);
+                notificacaoRepository.save(oldNews);
                 return ResponseEntity.ok(new Response("PEDIDO ACEITE COM SUCESSO!"));
             }else{
                 grupoConvite.setEstadoConvite(EstadoConvite.RECUSADO);

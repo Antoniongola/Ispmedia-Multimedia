@@ -6,12 +6,13 @@ import {LoginResponse} from "../../dtos/LoginResponse";
 import {Router} from "@angular/router";
 import {User} from "../../entities/User";
 import {UserService} from "../user/user.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginServiceService {
-  private apiUrl:string = "http://localhost:8080/api/login";
+  private apiUrl:string = environment.apiUrl+"/login";
   user!:User;
   username:any ='';
   constructor(private http: HttpClient,

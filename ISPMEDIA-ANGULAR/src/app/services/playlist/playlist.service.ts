@@ -5,12 +5,13 @@ import {Observable} from "rxjs";
 import {Musica} from "../../entities/Musica";
 import {Response} from "../../entities/Response";
 import {Video} from "../../entities/Video";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlaylistService {
-  private baseUrl = 'http://localhost:8080/api/playlist';
+  private baseUrl = environment.apiUrl+'/playlist';
   token = localStorage.getItem('jwtToken');
 
   constructor(private http: HttpClient) { }

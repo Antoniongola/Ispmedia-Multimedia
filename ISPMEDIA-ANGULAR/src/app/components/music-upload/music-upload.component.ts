@@ -134,8 +134,11 @@ export class MusicUploadComponent implements OnInit{
       const autor:Artista=new Artista(this.musicForm.get('autor')?.value, '', '',
         '', new Genero(), '', new User(),[], 0, 0);
 
+      const artista: Artista=new Artista('', '', '', '', new Genero(), '',
+        new User(), [], 0, 0);
+
       let album:Album|null = new Album(this.musicForm.get('album')?.value,'', '', '',new Genero(), '',
-        new User(), [], null, [], 0, '', 0);
+        new User(), [], artista, [], 0, '', 0);
 
       if(this.musicForm.get('mostrarCampo')?.value)
         album = null;
