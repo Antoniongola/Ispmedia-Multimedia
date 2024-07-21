@@ -78,7 +78,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "ssl": false,
+            "ssl": true,
             "sslKey": "src/app/server.key",
             "sslCert": "src/app/server.crt"
           }
