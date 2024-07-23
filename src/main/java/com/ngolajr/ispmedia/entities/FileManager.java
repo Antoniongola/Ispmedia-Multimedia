@@ -31,6 +31,7 @@ public class FileManager {
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
+        System.out.println("aqui na função de salvar ficheiro");
         Path filePath = uploadPath.resolve(file.getOriginalFilename());
         file.transferTo(filePath.toFile());
     }

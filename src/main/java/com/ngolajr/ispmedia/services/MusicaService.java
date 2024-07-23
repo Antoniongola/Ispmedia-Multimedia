@@ -83,11 +83,12 @@ public class MusicaService {
                 Album album = albumOpt.get();
                 dto.setDataLancamento(album.getDataLancamento());
                 dto.setAlbum(album);
+                fm.saveFile(musicFile, TipoFicheiro.MUSICA);
                 repository.save(dto);
                 album.getMusics().add(dto);
                 //artistaRepository.save(autor);
                 albumRepository.save(album);
-                fm.saveFile(musicFile, TipoFicheiro.MUSICA);
+
             }else{
                 System.out.println("aqui é single");
                 fm.saveFile(musicImage, TipoFicheiro.IMAGEM);

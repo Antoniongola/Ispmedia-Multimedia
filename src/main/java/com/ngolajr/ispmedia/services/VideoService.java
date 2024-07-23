@@ -4,6 +4,7 @@ import com.ngolajr.ispmedia.dtos.Response;
 import com.ngolajr.ispmedia.entities.FileManager;
 import com.ngolajr.ispmedia.entities.Utilizador;
 import com.ngolajr.ispmedia.entities.Video;
+import com.ngolajr.ispmedia.entities.enums.TipoFicheiro;
 import com.ngolajr.ispmedia.repositories.UtilizadorRepository;
 import com.ngolajr.ispmedia.repositories.VideoRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Optional;
@@ -42,34 +44,7 @@ public class VideoService {
     private String imageLocation;
     @Value("${ffmpeg.path}")
     private String ffmpegPath;
-    /*
-    public ResponseEntity<Object> uploadVideo(Video video, MultipartFile videoFile, MultipartFile videoCover) {
-        try {
-            Utilizador criador = userRepo.findById(video.getCriadorConteudo().getUsername()).get();
-            video.setCriadorConteudo(criador);
-            video.setPath("compressed_"+videoFile.getOriginalFilename());
-            video.setThumbNailUri(videoCover.getOriginalFilename());
-            video.setGenero(null);
-            video.setDuration(videoFile.getResource().contentLength());
-            video.setStreams(0);
-            video.setPath(videoFile.getOriginalFilename());
-            video.setThumbNailUri(videoCover.getOriginalFilename());
-            System.out.println("TESTE, VENDO SE CHEGA AQUI");
-            File videoFicheiro = this.compressVideo(videoFile);
-            this.repository.save(video);
-            this.fm.saveFile(videoCover, TipoFicheiro.IMAGEM);
-            System.out.println("ERRO DEPOIS DE SAALVAR CAPA DO VÍDEO.");
-            //this.fm.saveFile((MultipartFile) videoFicheiro, TipoFicheiro.VIDEO);
-            return ResponseEntity.ok(new Response("UPLOAD FEITO COM SUCESSO"));
-        } catch (IOException e) {
-            System.out.println("ERRO: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("ERRO NO UPLOAD"));
-        } catch (InterruptedException e) {
-            System.out.println("ERRO, NÃO COMPRIMIU!");
-            throw new RuntimeException(e);
-        }
-    }
-    */
+
     public ResponseEntity<Video> selectVideoInfos(UUID id) {
         if (this.repository.existsById(id))
             return ResponseEntity.ok(this.repository.findById(id).get());
@@ -202,11 +177,12 @@ public class VideoService {
         }
 
         video.setDataType("video");
-        //String uploadDir = Paths.get("src", "main", "resources", "upload", "video").toString();
+        String uploadDir = Paths.get("src", "main", "resources", "static", "videos").toString();
         String originalFilePath = videoLocation + "\\"+file.getOriginalFilename();
         String compressedFilePath = videoLocationCompressed + "\\compressed_" + file.getOriginalFilename();
         File originalFile = new File(originalFilePath);
-        file.transferTo(originalFile);
+        //file.transferTo(originalFile);
+        //this.fm.saveFile(file, TipoFicheiro.VIDEO);
         video.setPath(file.getOriginalFilename());
         video.setCriadorConteudo(user);
         video.setGenero(null);
